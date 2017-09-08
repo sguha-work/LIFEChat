@@ -5,6 +5,15 @@ import * as $ from 'jquery';
 import { CommonService } from './../../services/common.service';
 import {Database} from './../../services/database.service';
 import {MessageService} from './../../services/message.service';
+
+interface FileReaderEventTarget extends EventTarget {
+  result:string
+}
+
+interface FileReaderEvent extends Event {
+  target: FileReaderEventTarget;
+  getMessage():string;
+}
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -63,13 +72,32 @@ export class SignupPage {
     $("#button_signup").removeAttr("disabled").css({
       "opacity": "1"
     });
+
+    
   }
 
   
-
+  private readURL(input) {
+    
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function (e: FileReaderEvent) {
+                $('#img_profileImage').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
   
 
-  
+  public triggerUploadImage() {
+    $("#file_image").trigger("click");
+  }
+
+  public displayImageThumbnail(event: any) {
+    this.readURL(event.currentTarget);
+  }
 
   
 

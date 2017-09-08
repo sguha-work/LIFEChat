@@ -65,71 +65,13 @@ export class SignupPage {
     });
   }
 
-  prepareSignUpObject(phoneNumber: string, password: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      let signupObject: any;
-      signupObject = {};
-      signupObject.phoneNumber = phoneNumber;
-      signupObject.password = password;
-      signupObject.userName = "";
-      signupObject.status = "";
-      resolve(signupObject);
-    });
-  }
+  
 
-  checkIfUserExists(phoneNumber): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.database.getFromDatabase(phoneNumber).then((data) => {
-        if(data === null) {
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      }).catch((message) => {
-        reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
-      });
-    });
-  }
+  
 
-  beginSighUpProcess(signupObject: any) {
-    this.checkIfUserExists(signupObject.phoneNumber).then((isUserExists) => {
-      if(isUserExists) {
-        if (confirm(this.message.getMessage("USER_ALREADY_EXISTS"))) {
-          this.common.showPage("page-login");
-        } else {
+  
 
-        }
-      } else {
-        this.database.writeToDatabase(signupObject.phoneNumber, signupObject).then(()=>{
-          alert(this.message.getMessage("SIGN_UP_SUCCESS"));
-          this.common.showPage("page-login");
-          this.enableSignUpButton();
-        }).catch(() => {
-          alert(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
-          this.enableSignUpButton();
-        });
-      }
-      this.enableSignUpButton();
-    }).catch((message) => {
-      alert(message);
-      this.enableSignUpButton();
-    });
-      
-  }
-
-  beginSignUp() {
-    let phoneNumber = $("page-signup #txt_userPhoneNumber").val().trim();
-    let password = $("page-signup #txt_password").val().trim();
-    if(this.validate(phoneNumber, password)) {
-      this.disableSignUpButton();
-      this.prepareSignUpObject(phoneNumber, password).then((signupObject) => {
-        this.beginSighUpProcess(signupObject);
-      }).catch((message) => {
-        // signup object preparation failed
-      });
-      
-    }
-  }
+  
 
   goToLoginPage() {
     this.common.showPage("page-login");

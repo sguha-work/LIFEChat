@@ -20,7 +20,7 @@ export class HeadingPage  implements AfterViewInit{
   }
 
   private displayPhoneNumber(phoneNumber: string) {
-    //$("#lbl_phoneNumber").text(phoneNumber);
+    
   }
 
   private populateData(data: any) {
@@ -28,9 +28,7 @@ export class HeadingPage  implements AfterViewInit{
   }
 
   private bindEvents() {
-    // this.events.subscribe("USER-INFO-RECEIVED", (data) => {
-    //   this.populateData(data);
-    // });
+   
   }
 
   public displayContacts() {
@@ -38,9 +36,7 @@ export class HeadingPage  implements AfterViewInit{
   }
 
   public changePhoneNumber() {
-    if(confirm("This will change your default phone number. Proceed?")) {
-      
-    }
+    
   }
 
   private adjustStyle() {

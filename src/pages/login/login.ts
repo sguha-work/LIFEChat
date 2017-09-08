@@ -64,50 +64,12 @@ export class LoginPage {
     });
   }
 
-  private postLoginActivity(data: any) {
-    this.common.showPage("page-contacts");
-    this.config.updateAfterLogIn(data).then().catch();
-  }
-
-  private beginLogInProcess(loginObject: any) {
-    this.disableLogInButton();
-    this.database.getFromDatabase(loginObject.phoneNumber).then((data) => {
-      if(data===null) {
-        alert(this.message.getMessage("PHONENUMBER_NOT_FOUND"));
-      } else {
-        if(data.password===loginObject.password) {
-          this.postLoginActivity(data);
-        } else {
-          alert(this.message.getMessage("PHONENUMBER_PASSWORD_MISMATCH"));
-        }
-      }
-      this.enableLogInButton();
-    }).catch((error) => {
-      alert(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
-      this.enableLogInButton();
-    });
-  }
   
-  private prepareLoginObject(phoneNumber: string, password: string): any {
-    let loginObject: any;
-    loginObject = {};
-    loginObject.phoneNumber = phoneNumber;
-    loginObject.password = password;
-    return loginObject;
-  }
 
   public goToSignUpPage() {
     this.common.showPage("page-signup");
   }
   
 
-  public beginLogin() {
-    let phoneNumber = $("page-login #txt_userPhoneNumber").val().trim();
-    let password = $("page-login #txt_password").val().trim();
-    if(this.validate(phoneNumber, password) === true) {
-      this.beginLogInProcess(this.prepareLoginObject(phoneNumber, password));
-    } else {
-      return false;
-    }
-  }
+  
 }

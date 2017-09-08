@@ -389,15 +389,17 @@ page-home {
         cursor: pointer;
     }
     .reply-main {
-        padding: 2px 5px !important;
+        //padding: 2px 5px !important;
     }
     .reply-main textarea {
-        width: 100%;
+        //width: 100%;
         resize: none;
         overflow: hidden;
-        padding: 5px !important;
+        //padding: 5px !important;
         outline: none;
+        width: 100%;
         border: none;
+        border-radius: 15%;
         text-indent: 5px;
         box-shadow: none;
         height: 100%;
@@ -504,10 +506,10 @@ page-home {
             font-size: 1.8em !important;
         }
         .reply-main {
-            padding: 2px 8px !important;
+            //padding: 2px 8px !important;
         }
         .reply-main textarea {
-            padding: 8px !important;
+            //padding: 8px !important;
             font-size: 18px;
         }
         .reply-recording {

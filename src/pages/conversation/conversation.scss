@@ -1,19 +1,22 @@
 page-conversation {
     height: 77%;
     .reply-emojis {
-        width: 10%;
+        width: 12%;
         float: left;
     }
     .reply-main {
-        width: 70%;
+        width: 64%;
         float: left;
+        padding: 0px 8px 0px 0px !important;
+        border-radius: 100px;
+        height: 30px;
     }
     .reply-recording {
-        width: 10%;
+        width: 12%;
         float: left;
     }
     .reply-send {
-        width: 10%;
+        width: 12%;
         float: left;
     }
 }

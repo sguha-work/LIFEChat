@@ -4,7 +4,6 @@ import { AfterViewInit } from '@angular/core';
 import {CommonService} from "./../../services/common.service";
 import * as $ from 'jquery';
 
-@IonicPage()
 @Component({
   selector: 'page-contacts',
   templateUrl: 'contacts.html',

@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import * as $ from 'jquery';
 
-@IonicPage()
 @Component({
   selector: 'page-conversation',
   templateUrl: 'conversation.html',

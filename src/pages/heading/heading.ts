@@ -4,7 +4,6 @@ import {CommonService} from "./../../services/common.service";
 import { AfterViewInit } from '@angular/core';
 import { Events } from 'ionic-angular';
 import * as $ from 'jquery';
-@IonicPage()
 @Component({
   selector: 'page-heading',
   templateUrl: 'heading.html',

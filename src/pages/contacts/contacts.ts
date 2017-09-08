@@ -17,7 +17,7 @@ export class ContactsPage   implements AfterViewInit {
     console.log('ionViewDidLoad ContactsPage');
   }
 
-  loadConversation() {
+  openConversation() {
     this.common.showPage("page-conversation");
   }
 

@@ -1,3 +1,19 @@
 page-conversation {
     height: 77%;
+    .reply-emojis {
+        width: 10%;
+        float: left;
+    }
+    .reply-main {
+        width: 70%;
+        float: left;
+    }
+    .reply-recording {
+        width: 10%;
+        float: left;
+    }
+    .reply-send {
+        width: 10%;
+        float: left;
+    }
 }

@@ -274,7 +274,7 @@ page-home {
         height: 100%;
         /*width: 100%;*/
         border-left: 1px solid rgba(0, 0, 0, .08);
-        overflow-y: auto;
+        overflow-y: hidden;
     }
     .message {
         padding: 0 !important;

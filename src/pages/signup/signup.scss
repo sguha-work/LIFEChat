@@ -1,0 +1,43 @@
+page-signup {
+    button {
+        background-color: #4CAF50 !important;
+        border: none;
+        color: white !important;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 14%;
+        width: 80%;
+    }
+    #txt_userPhoneNumber {
+        margin-left: 14%;
+        width: 80%;
+        margin-bottom: 10%;
+        border-bottom: 1px solid green;
+    }
+    #txt_password {
+        width: 80%;
+        margin-left: 14%;
+        margin-bottom: 10%;
+        border-bottom: 1px solid green;
+    }
+    .loginHeading {
+        margin-top: 10%;
+        color: gray;
+        font-size: 20px;
+        text-align: center;
+        margin-left: 25%;
+    }
+    .loginFooter {
+        margin-top: 10%;
+        color: gray;
+        font-size: 20px;
+        text-align: center;
+        margin-left: 25%;
+        a {
+            color: blue;
+        }
+    }
+}

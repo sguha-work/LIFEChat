@@ -1,3 +1,19 @@
 page-contacts {
-
+    .avatar-icon {
+        width: 20%;
+        float: left;
+    }
+    .contactDetails {
+        width: 80%;
+        float: left;
+        text-align: center;
+        .name {
+            font-size: 22px;
+            font-weight: bold;
+            text-overflow: ellipsis;
+        }
+        .lastSeen {
+            letter-spacing: 2px;
+        }
+    }
 }

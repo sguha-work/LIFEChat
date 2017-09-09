@@ -4,12 +4,12 @@ import {Database} from './database.service';
 import {MessageService} from './message.service';
 import {User} from './../interfaces/user.interface';
 @Injectable()
-export class SignUpService {
+export class LogInService {
     constructor(private database: Database, private message: MessageService) {
         
     }
 
-    storeUserDataToDatabase(userObject: User): Promise<any> {
+    loginUser(userObject: User): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {
                 resolve();
@@ -18,7 +18,22 @@ export class SignUpService {
             });
         });
     }
-    checkIfUserExists(phoneNumber: string): Promise<any> {
+
+    public getUserObject(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.database.getFromDatabase(phoneNumber).then((value) => {
+                if(value!==null) {
+                    resolve(value as User);
+                } else {
+                    reject(this.message.getMessage("PHONENUMBER_NOT_FOUND"));
+                }
+            }).catch(() => {
+                reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
+            });
+        });
+    }
+
+    public checkIfUserExists(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.getFromDatabase(phoneNumber).then((value) => {
                 if(value===null) {

@@ -11,21 +11,32 @@ import {ContactService} from "./../../services/contact.service";
   templateUrl: 'contacts.html',
 })
 export class ContactsPage   implements AfterViewInit {
-
+  public model: any;
+  public contactList;
   constructor(public navCtrl: NavController, public navParams: NavParams, private common: CommonService, private events: Events, private contacts: ContactService) {
+    this.model = {};
+    this.model.contactList = [];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactsPage');
   }
 
-  openConversation() {
-    this.common.showPage("page-conversation");
+  clickAction(phoneNumber: string,name: string, isInLife: boolean) {alert(name);
+    if(isInLife) {
+      this.common.showPage("page-conversation");
+    } else {
+      alert("Want to invite "+phoneNumber);
+    }
+    
   }
 
   private loadContactDetails() {
-    this.contacts.getContactList().then(() => {}).catch(() => {
-      
+    this.contacts.getContactList().then((contactList) => {
+      this.model.contactList = contactList;
+      contactList = null;
+    }).catch(() => {
+
     });
   }
 

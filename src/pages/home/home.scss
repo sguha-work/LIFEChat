@@ -447,6 +447,7 @@ page-home {
         }
         .sideBar {
             height: calc(100% - 130px);
+            overflow-y: scroll;
         }
         .sideBar-body {
             height: 80px;

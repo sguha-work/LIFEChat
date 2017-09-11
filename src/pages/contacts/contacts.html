@@ -5,9 +5,33 @@
                 <img src="assets/images/no-photo.jpg">
             </div>
             <div class="contactDetails">
-                <span class="name" (click)="openConversation()">Angshu Guha</span>
+                <span style="cursor: pointer" class="name">Angshu Guha</span>
                 <br><br>
                 <span class="lastSeen">8th SEP 2017 12:12 PM</span>
+            </div>
+        </div>
+    </div>
+    <div class="row sideBar-body">
+        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+            <div class="avatar-icon">
+                <img src="assets/images/no-photo.jpg">
+            </div>
+            <div class="contactDetails">
+                <span style="cursor: pointer" class="name">Angshu Guha</span>
+                <br><br>
+                <span class="lastSeen">8th SEP 2017 12:12 PM</span>
+            </div>
+        </div>
+    </div>
+    <div class="row sideBar-body" *ngFor="let contact of model.contactList">
+        <div class="col-sm-3 col-xs-3 sideBar-avatar">
+            <div class="avatar-icon">
+                <img src="assets/images/no-photo.jpg">
+            </div>
+            <div class="contactDetails">
+                <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
+                <br><br>
+                <span class="lastSeen">{{contact.phoneNumber}}</span>
             </div>
         </div>
     </div>

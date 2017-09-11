@@ -28,43 +28,16 @@ export class ContactService {
                                 if(phoneNumber.length === 10) {
                                     contactsArray.push({
                                         name: contacts[contactIndex]["_objectInstance"].displayName,
-                                        phoneNumber: phoneNumber
+                                        phoneNumber: phoneNumber,
+                                        isOnLIFEChat: false,
+                                        lifeObject: {}
                                     });
                                 }
                                 
                             }
-                        //}
-                        // contactsArray.push({
-                        //     name: contacts[contactIndex]["_objectInstance"].displayName,
-                        //     phoneNumber: phoneNumber
-                        // });
-
                     }
                 }
-                // if(contacts.length) {
-                //     for(let index=0; index<contacts.length; index++) {
-                //         let userName = typeof contacts[index]["_objectInstance"].displayName !== "undefined"?contacts[index]["_objectInstance"].displayName:"";
-                //         if(userName !== "") {
-                //             if(typeof contacts[index]["_objectInstance"].phoneNumbers !== "undefined") {
-                //                 let phoneNumbers = contacts[index]["_objectInstance"].phoneNumbers;
-                //                 if(phoneNumbers.length && typeof phoneNumbers[0].value !== "undefined" && phoneNumbers[0].value !== "") {
-                //                     for(let index2=0; index2<phoneNumbers.length; index2++) {
-                //                         if(typeof phoneNumbers[index2] !== "undefined" && phoneNumbers[index2] !== "") {
-                //                             contactsArray.push({
-                //                                 name: userName,
-                //                                 phoneNumber: phoneNumbers[index2].value
-                //                             });
-                //                         }
-                                        
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
-                
-                alert(JSON.stringify(contactsArray));
-                resolve(contacts);
+                resolve(contactsArray);
               }, (error) => {
                 alert("error");
               });

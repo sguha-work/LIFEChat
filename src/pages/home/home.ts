@@ -26,8 +26,10 @@ export class HomePage  implements AfterViewInit{
   private initialCheck() {
     if(1) {
       this.login.checkIfLocalLoginFileExists().then((value) => {
-        this.common.showPage("page-contacts");
         this.events.publish("USER-DETAILS-RECEIVED", value);
+        this.events.publish("LOAD-CONTACTS");
+        this.common.showPage("page-contacts");
+        
       }).catch(() => {
         this.common.showPage("page-login");  
       });

@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule  } from 'angularfire2/database';
+import { Contacts} from '@ionic-native/contacts';
 
 // custom services
 import {CommonService} from "./../services/common.service";
@@ -24,7 +25,8 @@ import {ConfigService} from "./../services/config.service";
 import {FileHandler} from "./../services/fileHandler.service";
 import {Database} from "./../services/database.service";
 import {SignUpService} from "./../services/signup.service";
-import {LogInService} from "./../services/login.service"
+import {LogInService} from "./../services/login.service";
+import {ContactService} from "./../services/contact.service";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -69,13 +71,15 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonService,
     File,
+    Contacts,
     MessageService,
     LanguageService,
     ConfigService,
     FileHandler,
     Database,
     SignUpService,
-    LogInService
+    LogInService,
+    ContactService
   ]
 })
 export class AppModule {}

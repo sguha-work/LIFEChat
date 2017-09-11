@@ -72,8 +72,9 @@ export class LoginPage {
           user = value;
           user.lastseen = Date.now();
           this.loginService.loginUser(user).then(() => {
-            this.common.showPage("page-contacts");
             this.events.publish("USER-DETAILS-RECEIVED", value);
+            this.events.publish("LOAD-CONTACTS");
+            this.common.showPage("page-contacts");
             this.enableLogInButton();
           }).catch((message) => {
             alert(message);

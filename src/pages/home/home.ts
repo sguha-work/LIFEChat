@@ -31,6 +31,7 @@ export class HomePage  implements AfterViewInit{
       // }).catch(() => {
       //   this.common.showPage("page-login");  
       // });
+      this.common.showPage("page-login");
     } else {
       this.common.showPage("page-login");
     }

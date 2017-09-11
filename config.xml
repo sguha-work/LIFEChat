@@ -3,7 +3,7 @@
     <name>LIFEChat</name>
     <description>A frsh new chat application</description>
     <author email="sguha1988.life@gmail.com" href="https://github.com/sguha-work">LIFE group</author>
-    <content original-src="index.html" src="http://100.96.125.145:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AfterViewInit } from '@angular/core';
 
 import * as $ from 'jquery';
 
@@ -7,7 +8,7 @@ import * as $ from 'jquery';
   selector: 'page-conversation',
   templateUrl: 'conversation.html',
 })
-export class ConversationPage {
+export class ConversationPage   implements AfterViewInit{
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -22,4 +23,7 @@ export class ConversationPage {
     console.log('ionViewDidLoad ConversationPage');
   }
 
+  ngAfterViewInit() {
+    $("page-conversation #txt_reply").focus();
+  }
 }

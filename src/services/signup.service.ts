@@ -22,9 +22,9 @@ export class SignUpService {
         return new Promise((resolve, reject) => {
             this.database.getFromDatabase(phoneNumber).then((value) => {
                 if(value===null) {
-                    resolve(this.message.getMessage("USER_ALREADY_EXISTS"));
+                    resolve(false);
                 } else {
-                    reject();
+                    resolve(this.message.getMessage("USER_ALREADY_EXISTS"));
                 }
             }).catch(() => {
                 reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));

@@ -50,6 +50,10 @@ const data = `{
     "USER_ALREADY_EXISTS": {
         "en": "The provided phone number already exists in database, want to login?",
         "hin": ""
+    },
+    "UNABLE_TO_PREPARE_LOCAL_USER_FILE": {
+        "en": "Unable to prepare local login file",
+        "hin": ""
     }
 }`;
 export class MessageData {

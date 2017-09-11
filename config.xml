@@ -3,7 +3,7 @@
     <name>LIFEChat</name>
     <description>A frsh new chat application</description>
     <author email="sguha1988.life@gmail.com" href="https://github.com/sguha-work">LIFE group</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://100.96.125.145:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -68,7 +68,9 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://169.254.162.61:8100" />
+    <allow-navigation href="http://100.96.125.145:8100" />
     <engine name="android" spec="^6.2.3" />
+    <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />

@@ -10,6 +10,7 @@ import { Platform } from 'ionic-angular';
 
 import { ConfigService } from './../../services/config.service';
 import { CommonService } from './../../services/common.service';
+import {LogInService} from './../../services/login.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -18,13 +19,18 @@ import * as $ from 'jquery';
 })
 export class HomePage  implements AfterViewInit{
 
-  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService, private platForm: Platform) {
+  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService, private platForm: Platform, private login: LogInService) {
        
   }
 
   private initialCheck() {
-    if(this.platForm.is("cordova")) {alert("x");
-      this.common.showPage("page-signup");
+    if(this.platForm.is("cordova")) {
+      // this.login.checkIfLocalLoginFileExists().then((value) => {
+      //   this.common.showPage("page-contacts");
+      //   this.events.publish("USER-DETAILS-RECEIVED", value);
+      // }).catch(() => {
+      //   this.common.showPage("page-login");  
+      // });
     } else {
       this.common.showPage("page-login");
     }

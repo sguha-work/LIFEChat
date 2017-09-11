@@ -21,9 +21,10 @@ import {CommonService} from "./../services/common.service";
 import {MessageService} from "./../services/message.service";
 import {LanguageService} from "./../services/language.service";
 import {ConfigService} from "./../services/config.service";
-//import {FileHandler} from "./../services/fileHandler.service";
+import {FileHandler} from "./../services/fileHandler.service";
 import {Database} from "./../services/database.service";
 import {SignUpService} from "./../services/signup.service";
+import {LogInService} from "./../services/login.service"
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -71,9 +72,10 @@ export const firebaseConfig = {
     MessageService,
     LanguageService,
     ConfigService,
-    //FileHandler,
+    FileHandler,
     Database,
-    SignUpService
+    SignUpService,
+    LogInService
   ]
 })
 export class AppModule {}

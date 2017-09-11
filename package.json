@@ -28,6 +28,7 @@
         "@ionic/storage": "2.0.1",
         "angularfire2": "^4.0.0-rc.2",
         "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-file": "^4.3.3",
@@ -62,7 +63,8 @@
             "cordova-plugin-sim": {}
         },
         "platforms": [
-            "android"
+            "android",
+            "browser"
         ]
     }
 }

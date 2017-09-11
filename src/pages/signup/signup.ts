@@ -58,6 +58,7 @@ export class SignupPage {
   public beginSignUp() {
     let phoneNumber = $("page-signup #txt_userPhoneNumber").val().trim();
     let password = $("page-signup #txt_password").val().trim();
+    this.disableSignUpButton();
     if(this.validate(phoneNumber, password) === true) {
       this.signup.checkIfUserExists(phoneNumber).then((value) => {
         if(value === false) {
@@ -74,31 +75,37 @@ export class SignupPage {
           user.lastseen = Date.now();
           this.signup.storeUserDataToDatabase(user).then(() => {
             alert(this.message.getMessage("SIGN_UP_SUCCESS"));
+            this.enableSignUpButton();
             this.common.showPage("page-login");
           }).catch((message) => {
             // sign up failed due to no internet
             alert(message);
+            this.enableSignUpButton();
           });
         } else {
           // user exists
           alert(value);
+          this.enableSignUpButton();
         }
       }).catch((message) => {
         alert(message);
+        this.enableSignUpButton();
       });
       
       
+    } else {
+      this.enableSignUpButton();
     }
   }
 
   private disableSignUpButton() {
-    $("#button_signup").prop("disabled", "disabled").css({
+    $("page-signup #button_signup").prop("disabled", "disabled").css({
       "opacity": "0.5"
     });
   }
 
   private enableSignUpButton() {
-    $("#button_signup").removeAttr("disabled").css({
+    $("page-signup #button_signup").removeAttr("disabled").css({
       "opacity": "1"
     });
 

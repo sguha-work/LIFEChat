@@ -6,6 +6,7 @@ import {ContactsPage} from './../contacts/contacts';
 import { AfterViewInit } from '@angular/core';
 import { SearchPage } from './../search/search';
 import { Events } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 import { ConfigService } from './../../services/config.service';
 import { CommonService } from './../../services/common.service';
@@ -17,15 +18,22 @@ import * as $ from 'jquery';
 })
 export class HomePage  implements AfterViewInit{
 
-  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService) {
-   
-    
+  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService, private platForm: Platform) {
+       
   }
 
+  private initialCheck() {
+    if(this.platForm.is("cordova")) {alert("x");
+      this.common.showPage("page-signup");
+    } else {
+      this.common.showPage("page-login");
+    }
+  }
   
   
 
   ngAfterViewInit() {
+    this.initialCheck();
     if($(window).width() < 800) {
       $("page-conversation").hide();
     } else {
@@ -33,3 +41,4 @@ export class HomePage  implements AfterViewInit{
     }
   }
 }
+ 

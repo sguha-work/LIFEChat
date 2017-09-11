@@ -73,7 +73,7 @@ export class SignupPage {
           }
           user.lastseen = Date.now();
           this.signup.storeUserDataToDatabase(user).then(() => {
-            alert("Sign up successfull. Click ok to go to login page");
+            alert(this.message.getMessage("SIGN_UP_SUCCESS"));
             this.common.showPage("page-login");
           }).catch((message) => {
             // sign up failed due to no internet
@@ -88,8 +88,6 @@ export class SignupPage {
       });
       
       
-    } else {
-      alert("no");
     }
   }
 

@@ -147,10 +147,11 @@ page-home {
         box-shadow: none;
     }
     .sideBar {
+        overflow-y: scroll;
+        //position: fixed;
         padding: 0 !important;
         margin: 0 !important;
         background-color: #fff;
-        overflow-y: auto;
         border: 1px solid #f7f7f7;
         height: calc(100% - 120px);
     }
@@ -447,7 +448,6 @@ page-home {
         }
         .sideBar {
             height: calc(100% - 130px);
-            overflow-y: scroll;
         }
         .sideBar-body {
             height: 80px;

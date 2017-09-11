@@ -1,4 +1,4 @@
-<div class="row sideBar">
+<div class="row sideBar" style="">
     <div class="row sideBar-body">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
@@ -11,18 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="row sideBar-body">
-        <div class="col-sm-3 col-xs-3 sideBar-avatar">
-            <div class="avatar-icon">
-                <img src="assets/images/no-photo.jpg">
-            </div>
-            <div class="contactDetails">
-                <span style="cursor: pointer" class="name">Angshu Guha</span>
-                <br><br>
-                <span class="lastSeen">8th SEP 2017 12:12 PM</span>
-            </div>
-        </div>
-    </div>
+
     <div class="row sideBar-body" *ngFor="let contact of model.contactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">

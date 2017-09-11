@@ -49,5 +49,6 @@ export class ContactsPage   implements AfterViewInit {
 
   ngAfterViewInit() {
     this.bindEvents();
+    $("page-contacts .sideBar").css({"height":"438px"});
   }
 }

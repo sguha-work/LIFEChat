@@ -12,33 +12,39 @@ export class LogInService {
         
     }
 
-    // public prepareLocalLoginFile(userObject: User): Promise<any> {
-    //     return new Promise((resolve, reject) => {
-    //         if(this.platform.is("cordova")) {
-    //             this.file.writeFile(JSON.stringify(userObject), "user").then(() => {}).catch(() => {
-    //                 reject(this.message.getMessage("UNABLE_TO_PREPARE_LOCAL_USER_FILE"));
-    //             });
-    //         } else {
-    //             reject();
-    //         }
-    //     });
+    public prepareLocalLoginFile(userObject: User): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // if(this.platform.is("cordova")) {
+            //     this.file.writeFile(JSON.stringify(userObject), "user").then(() => {}).catch(() => {
+            //         reject(this.message.getMessage("UNABLE_TO_PREPARE_LOCAL_USER_FILE"));
+            //     });
+            // } else {
+            //     reject();
+            // }
+            localStorage["user"] = JSON.stringify(userObject);
+        });
         
-    // }
+    }
 
-    // public checkIfLocalLoginFileExists(): Promise<any> {
-    //     return new Promise((resolve, reject) => {
-    //         this.file.readFileContent("user").then((value) => {
-    //             resolve(JSON.parse(value) as User);
-    //         }).catch((message) => {
-    //             reject(message)
-    //         });
-    //     });
-    // }
+    public checkIfLocalLoginFileExists(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // this.file.readFileContent("user").then((value) => {
+            //     resolve(JSON.parse(value) as User);
+            // }).catch((message) => {
+            //     reject(message)
+            // });
+            if(localStorage["user"]) {
+                resolve(JSON.parse(localStorage["user"]) as User);
+            } else {
+                reject();
+            }
+        });
+    }
 
     loginUser(userObject: User): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {
-                //this.prepareLocalLoginFile(userObject);
+                this.prepareLocalLoginFile(userObject);
                 resolve();
             }).catch(() => {
                 reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));

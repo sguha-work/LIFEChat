@@ -24,28 +24,29 @@ export class HomePage  implements AfterViewInit{
   }
 
   private initialCheck() {
-    if(this.platForm.is("cordova")) {
-      // this.login.checkIfLocalLoginFileExists().then((value) => {
-      //   this.common.showPage("page-contacts");
-      //   this.events.publish("USER-DETAILS-RECEIVED", value);
-      // }).catch(() => {
-      //   this.common.showPage("page-login");  
-      // });
+    if(1) {
+      this.login.checkIfLocalLoginFileExists().then((value) => {
+        this.common.showPage("page-contacts");
+        this.events.publish("USER-DETAILS-RECEIVED", value);
+      }).catch(() => {
+        this.common.showPage("page-login");  
+      });
       this.common.showPage("page-login");
     } else {
       this.common.showPage("page-login");
     }
+    //this.common.showPage("page-conversation");
   }
   
   
 
   ngAfterViewInit() {
-    this.initialCheck();
     if($(window).width() < 800) {
       $("page-conversation").hide();
     } else {
       $("page-conversation").show();
     }
+    this.initialCheck();
   }
 }
  

@@ -69,6 +69,9 @@ export class ContactsPage   implements AfterViewInit {
     }
     Promise.all(promiseArray).then(() => {
       //this.gettingLIFEContactLoader = false;
+      if(this.model.LIFEContactList.length === 0) {
+        $("#div_noLifeContacts").show();
+      }
     }).catch(() => {
       //this.gettingLIFEContactLoader = false;
     });
@@ -84,6 +87,8 @@ export class ContactsPage   implements AfterViewInit {
       if(this.model.contactList.length) {
         this.distinguishLIFEContacts();
       } else {
+        $("#div_noContacts").show();
+        $("#div_noLifeContacts").show();
         this.model.LIFEContactList = [];
         this.gettingLIFEContactLoader = false;
       }

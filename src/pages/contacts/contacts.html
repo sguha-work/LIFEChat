@@ -1,26 +1,26 @@
 <div class="row labelDiv">LIFE contacts</div>
 <i class="fa fa-refresh fa-spin" *ngIf="gettingLIFEContactLoader" aria-hidden="true"></i>
-<div class="row sideBar" style="" *ngIf="!model.LIFEContactList.length">
+<div class="row sideBar" style="display:none" id="div_noLifeContacts">
     <div class="row sideBar-body">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
                 <img src="assets/images/sad-face.png">
             </div>
             <div class="contactDetails">
-                <span style="cursor: pointer" class="name">No Contacts</span>
+                <span style="" class="name">No Contacts</span>
             </div>
         </div>
     </div>
 
 </div>
-<div class="row sideBar" style="" *ngIf="model.LIFEContactList.length">
+<div class="row sideBar" style="" [hidden]="!model.LIFEContactList.length">
     <div class="row sideBar-body" *ngFor="let contact of model.LIFEContactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
                 <img src="{{contact.lifeObject.picture?contact.lifeObject.picture:'assets/images/no-photo.jpg'}}">
             </div>
             <div class="contactDetails">
-                <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
+                <span style="" class="name" (click)="clickAction(contact.phoneNumber,contact.name, true)">{{contact.name}}</span>
                 <br><br>
 
                 <span class="lastSeen"><marquee behaviour="alternate">Last seen at {{contact.lifeObject.lastseen}} </marquee></span>
@@ -31,14 +31,14 @@
 </div>
 <div class="row labelDiv">Other contacts</div>
 <i class="fa fa-refresh fa-spin" *ngIf="gettingContactLoader" aria-hidden="true"></i>
-<div class="row sideBar" style="" *ngIf="model.contactList.length">
+<div class="row sideBar" style="" [hidden]="!model.contactList.length">
     <div class="row sideBar-body" *ngFor="let contact of model.contactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
                 <img src="assets/images/no-photo.jpg">
             </div>
             <div class="contactDetails">
-                <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
+                <span style="" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
                 <br><br>
                 <span class="phoneNumber">{{contact.phoneNumber}}</span>
             </div>
@@ -46,14 +46,14 @@
     </div>
 
 </div>
-<div class="row sideBar" style="" *ngIf="!model.contactList.length">
+<div class="row sideBar" style="display: none" id="div_noContacts">
     <div class="row sideBar-body">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
                 <img src="assets/images/sad-face.png">
             </div>
             <div class="contactDetails">
-                <span style="cursor: pointer" class="name">No Contacts</span>
+                <span style="" class="name">No Contacts</span>
             </div>
         </div>
     </div>

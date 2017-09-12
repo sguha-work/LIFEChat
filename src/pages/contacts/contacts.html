@@ -1,6 +1,6 @@
 <div class="row labelDiv">LIFE contacts</div>
 <i class="fa fa-refresh fa-spin" *ngIf="gettingLIFEContactLoader" aria-hidden="true"></i>
-<!-- <div class="row sideBar" style="display:none" id="div_noLifeContacts">
+<div class="row sideBar" style="display:none" id="div_noLifeContacts">
     <div class="row sideBar-body">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
@@ -12,8 +12,8 @@
         </div>
     </div>
 
-</div> -->
-<div class="row sideBar" style=" ">
+</div>
+<div class="row sideBar" style=" " id="div_LIFEContacts">
     <div class="row sideBar-body" *ngFor="let contact of model.LIFEContactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
@@ -31,7 +31,7 @@
 </div>
 <div class="row labelDiv">Other contacts</div>
 <i class="fa fa-refresh fa-spin" *ngIf="gettingContactLoader" aria-hidden="true"></i>
-<!-- <div class="row sideBar" style="display:none" id="div_noContacts">
+<div class="row sideBar" style="display:none" id="div_noContacts">
     <div class="row sideBar-body">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
@@ -43,17 +43,17 @@
         </div>
     </div>
 
-</div> -->
-<div class="row sideBar" style="">
-    <div class="row sideBar-body" *ngFor="let contact of model.contactList">
-        <div class="col-sm-3 col-xs-3 sideBar-avatar">
-            <div class="avatar-icon">
-                <img src="assets/images/no-photo.jpg">
+</div>
+<div class="row sideBar" style="" id="div_contacts">
+    <div class=" row sideBar-body " *ngFor="let contact of model.contactList ">
+        <div class="col-sm-3 col-xs-3 sideBar-avatar ">
+            <div class="avatar-icon ">
+                <img src="assets/images/no-photo.jpg ">
             </div>
-            <div class="contactDetails">
-                <span style="" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
+            <div class="contactDetails ">
+                <span style=" " class="name " (click)="clickAction(contact.phoneNumber,contact.name, false) ">{{contact.name}}</span>
                 <br><br>
-                <span class="phoneNumber">{{contact.phoneNumber}}</span>
+                <span class="phoneNumber ">{{contact.phoneNumber}}</span>
             </div>
         </div>
     </div>

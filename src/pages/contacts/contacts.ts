@@ -93,6 +93,11 @@ export class ContactsPage   implements AfterViewInit {
       } else {
         this.model.LIFEContactList = [];
         this.gettingLIFEContactLoader = false;
+        $("#div_noLifeContacts").show();
+        $("#div_LIFEContacts").hide();
+
+        $("#div_noContacts").show();
+        $("#div_contacts").hide();
       }
       
     }).catch(() => {

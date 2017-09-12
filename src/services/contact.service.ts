@@ -18,12 +18,35 @@ export class ContactService {
         });
     }
 
+    private getTimeFromTimeStamp(timeStamp) {
+        let date = new Date(timeStamp);
+        let year    = date.getFullYear();
+        let month   = date.getMonth()+1;
+        let day     = date.getDate();
+        let hour    = date.getHours().toString();
+        let minute  = date.getMinutes();
+        let seconds = date.getSeconds();
+        if(parseInt(hour)>12) {
+            hour = (parseInt(hour) - 12).toString()+":"+minute+":"+seconds+" PM";
+        } else {
+            if(hour === "00") {
+                hour = "12";
+            }
+            hour = hour+":"+minute+":"+seconds+" AM";
+        }
+         
+        return day+"-"+month+"-"+year+" "+hour+" "+minute+":"+seconds;
+    }
+
     public isALIFEMember(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.getFromDatabase(phoneNumber).then((value) => {
                 if(value === null) {
                     resolve(false);
                 } else {
+                    if(value.lastseen) {
+                       value.lastseen = this.getTimeFromTimeStamp(value.lastseen);
+                    }
                     resolve(value)
                 }
             }).catch(() => {
@@ -35,12 +58,12 @@ export class ContactService {
     public getContactList(): Promise<any> {
         let contactsArray = [];
         let tempPhoneArray = [];
-        contactsArray.push({
-            name: "Admin",
-            phoneNumber: 9830612244,
-            isOnLIFEChat: true,
-            lifeObject: {}
-        });
+        // contactsArray.push({
+        //     name: "Admin",
+        //     phoneNumber: 9830612244,
+        //     isOnLIFEChat: true,
+        //     lifeObject: {}
+        // });
         return new Promise((resolve, reject) => {
             this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
                 

@@ -9,7 +9,8 @@
             <div class="contactDetails">
                 <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
                 <br><br>
-                <span class="lastSeen">{{contact.lifeObject.lastseen}}</span>
+
+                <span class="lastSeen"><marquee behaviour="alternate">Last seen at {{contact.lifeObject.lastseen}}</marquee></span>
             </div>
         </div>
     </div>
@@ -26,7 +27,7 @@
             <div class="contactDetails">
                 <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
                 <br><br>
-                <span class="lastSeen">{{contact.phoneNumber}}</span>
+                <span class="phoneNumber">{{contact.phoneNumber}}</span>
             </div>
         </div>
     </div>

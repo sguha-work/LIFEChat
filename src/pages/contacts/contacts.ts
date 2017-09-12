@@ -81,7 +81,13 @@ export class ContactsPage   implements AfterViewInit {
       this.model.contactList = contactList;
       contactList = null;
       this.gettingContactLoader = false;
-      this.distinguishLIFEContacts();
+      if(this.model.contactList.length) {
+        this.distinguishLIFEContacts();
+      } else {
+        this.model.LIFEContactList = [];
+        this.gettingLIFEContactLoader = false;
+      }
+      
     }).catch(() => {
 
     });

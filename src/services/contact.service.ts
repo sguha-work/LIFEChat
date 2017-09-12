@@ -16,22 +16,25 @@ export class ContactService {
         return new Promise((resolve, reject) => {
             this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
                 let contactsArray = [];
+                let tempPhoneArray = [];
                 if(contacts.length) {
                     for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
                         
                         //if(contacts[contactIndex]["_objectInstance"].phoneNumbers.length > 1) {
                             for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
                                 let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
+                                phoneNumber = phoneNumber.split(" ").join("").split("-").join("");
                                 if(phoneNumber.length > 10) {
                                     phoneNumber = phoneNumber.slice(-10);
                                 }
-                                if(phoneNumber.length === 10) {
+                                if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1) {
                                     contactsArray.push({
                                         name: contacts[contactIndex]["_objectInstance"].displayName,
                                         phoneNumber: phoneNumber,
                                         isOnLIFEChat: false,
                                         lifeObject: {}
                                     });
+                                    tempPhoneArray.push(phoneNumber);
                                 }
                                 
                             }

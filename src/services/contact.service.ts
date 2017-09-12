@@ -13,16 +13,17 @@ export class ContactService {
     }
 
     public getContactList(): Promise<any> {
+        let contactsArray = [];
+        let tempPhoneArray = [];
+        contactsArray.push({
+            name: "Admin",
+            phoneNumber: 9830612244,
+            isOnLIFEChat: true,
+            lifeObject: {}
+        });
         return new Promise((resolve, reject) => {
             this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
-                let contactsArray = [];
-                let tempPhoneArray = [];
-                contactsArray.push({
-                    name: "Admin",
-                    phoneNumber: 9830612244,
-                    isOnLIFEChat: true,
-                    lifeObject: {}
-                });
+                
                 if(contacts.length) {
                     for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
                         
@@ -48,7 +49,7 @@ export class ContactService {
                 }
                 resolve(contactsArray);
               }, (error) => {
-                alert("error");
+                resolve(contactsArray);
               });
         });
         

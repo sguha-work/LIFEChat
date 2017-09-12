@@ -71,9 +71,12 @@ export class ContactsPage   implements AfterViewInit {
       //this.gettingLIFEContactLoader = false;
       if(this.model.LIFEContactList.length === 0) {
         $("#div_noLifeContacts").show();
+      } else {
+        $("#div_noLifeContacts").hide();
       }
     }).catch(() => {
       //this.gettingLIFEContactLoader = false;
+      $("#div_noLifeContacts").show();
     });
   }
 
@@ -85,6 +88,7 @@ export class ContactsPage   implements AfterViewInit {
       contactList = null;
       this.gettingContactLoader = false;
       if(this.model.contactList.length) {
+        $("#div_noContacts").hide();
         this.distinguishLIFEContacts();
       } else {
         $("#div_noContacts").show();

@@ -16,6 +16,7 @@ export class ContactsPage   implements AfterViewInit {
   constructor(public navCtrl: NavController, public navParams: NavParams, private common: CommonService, private events: Events, private contacts: ContactService) {
     this.model = {};
     this.model.contactList = [];
+    this.model.LIFEContactList = [];
   }
 
   ionViewDidLoad() {
@@ -31,10 +32,33 @@ export class ContactsPage   implements AfterViewInit {
     
   }
 
+  private distinguishLIFEContacts() {
+    let promiseArray = [];
+    for(let index=0; index<this.model.contactList.length; index++) {
+      let promise = new Promise((resolve, reject) => {
+        this.contacts.isALIFEMember(this.model.contactList[index].phoneNumber).then((value) => {
+          if(value === false) {
+            resolve();
+          } else {
+            this.model.contactList[index].lifeObject = value;
+            this.model.contactList[index].isOnLIFEChat = true;
+            this.model.LIFEContactList.push(this.model.contactList[index]);
+            this.model.contactList.slice(index, 1);
+          }
+        }).catch(()=> {
+          resolve();
+        });
+      });
+      promiseArray.push(promise);
+    }
+    Promise.all(promiseArray).then(() => {}).catch(() => {});
+  }
+
   private loadContactDetails() {
     this.contacts.getContactList().then((contactList) => {
       this.model.contactList = contactList;
       contactList = null;
+      this.distinguishLIFEContacts();
     }).catch(() => {
 
     });
@@ -49,6 +73,6 @@ export class ContactsPage   implements AfterViewInit {
 
   ngAfterViewInit() {
     this.bindEvents();
-    $("page-contacts .sideBar").css({"height":"438px"});
+    $("page-contacts .sideBar").css({"height":"210px"});
   }
 }

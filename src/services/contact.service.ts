@@ -18,6 +18,20 @@ export class ContactService {
         });
     }
 
+    public isALIFEMember(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.database.getFromDatabase(phoneNumber).then((value) => {
+                if(value === null) {
+                    resolve(false);
+                } else {
+                    resolve(value)
+                }
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
     public getContactList(): Promise<any> {
         let contactsArray = [];
         let tempPhoneArray = [];
@@ -32,25 +46,22 @@ export class ContactService {
                 
                 if(contacts.length) {
                     for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
-                        
-                        //if(contacts[contactIndex]["_objectInstance"].phoneNumbers.length > 1) {
-                            for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
-                                let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
-                                phoneNumber = phoneNumber.split(" ").join("").split("-").join("");
-                                if(phoneNumber.length > 10) {
-                                    phoneNumber = phoneNumber.slice(-10);
-                                }
-                                if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName.trim() !== "") {
-                                    contactsArray.push({
-                                        name: contacts[contactIndex]["_objectInstance"].displayName,
-                                        phoneNumber: phoneNumber,
-                                        isOnLIFEChat: false,
-                                        lifeObject: {}
-                                    });
-                                    tempPhoneArray.push(phoneNumber);
-                                }
-                                
+                        for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
+                            let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
+                            phoneNumber = phoneNumber.split(" ").join("").split("-").join("");
+                            if(phoneNumber.length > 10) {
+                                phoneNumber = phoneNumber.slice(-10);
                             }
+                            if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
+                                contactsArray.push({
+                                    name: contacts[contactIndex]["_objectInstance"].displayName,
+                                    phoneNumber: phoneNumber,
+                                    isOnLIFEChat: false,
+                                    lifeObject: {}
+                                });
+                                tempPhoneArray.push(phoneNumber);
+                            }
+                        }
                     }
                 }
                 resolve(contactsArray);

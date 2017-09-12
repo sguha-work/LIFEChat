@@ -1,16 +1,23 @@
+<div class="row labelDiv">LIFE contacts</div>
+<i class="fa fa-refresh fa-spin" *ngIf="!model.LIFEContactList.length" aria-hidden="true"></i>
 <div class="row sideBar" style="">
-    <!-- <div class="row sideBar-body">
+    <div class="row sideBar-body" *ngFor="let contact of model.LIFEContactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">
-                <img src="assets/images/no-photo.jpg">
+                <img src="{{contact.lifeObject.picture?contact.lifeObject.picture:'assets/images/no-photo.jpg'}}">
             </div>
             <div class="contactDetails">
-                <span style="cursor: pointer" class="name">Angshu Guha</span>
+                <span style="cursor: pointer" class="name" (click)="clickAction(contact.phoneNumber,contact.name, false)">{{contact.name}}</span>
                 <br><br>
-                <span class="lastSeen">8th SEP 2017 12:12 PM</span>
+                <span class="lastSeen">{{contact.lifeObject.lastseen}}</span>
             </div>
         </div>
-    </div> -->
+    </div>
+
+</div>
+<div class="row labelDiv">Other contacts</div>
+<i class="fa fa-refresh fa-spin" *ngIf="!model.contactList.length" aria-hidden="true"></i>
+<div class="row sideBar" style="">
     <div class="row sideBar-body" *ngFor="let contact of model.contactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
             <div class="avatar-icon">

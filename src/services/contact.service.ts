@@ -17,6 +17,12 @@ export class ContactService {
             this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
                 let contactsArray = [];
                 let tempPhoneArray = [];
+                contactsArray.push({
+                    name: "Admin",
+                    phoneNumber: 9830612244,
+                    isOnLIFEChat: true,
+                    lifeObject: {}
+                });
                 if(contacts.length) {
                     for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
                         

@@ -70,13 +70,14 @@ export class ContactsPage   implements AfterViewInit {
     Promise.all(promiseArray).then(() => {
       //this.gettingLIFEContactLoader = false;
       if(this.model.LIFEContactList.length === 0) {
-        $("#div_noLifeContacts").show();
+        
       } else {
-        $("#div_noLifeContacts").hide();
+        
+        this.applyHeightToEnableScroll();
       }
     }).catch(() => {
       //this.gettingLIFEContactLoader = false;
-      $("#div_noLifeContacts").show();
+      
     });
   }
 
@@ -88,11 +89,8 @@ export class ContactsPage   implements AfterViewInit {
       contactList = null;
       this.gettingContactLoader = false;
       if(this.model.contactList.length) {
-        $("#div_noContacts").hide();
         this.distinguishLIFEContacts();
       } else {
-        $("#div_noContacts").show();
-        $("#div_noLifeContacts").show();
         this.model.LIFEContactList = [];
         this.gettingLIFEContactLoader = false;
       }
@@ -109,8 +107,12 @@ export class ContactsPage   implements AfterViewInit {
     
   }
 
+  private applyHeightToEnableScroll() {
+    $("page-contacts .sideBar").css({"height":"210px"});
+  }
+
   ngAfterViewInit() {
     this.bindEvents();
-    $("page-contacts .sideBar").css({"height":"210px"});
+    this.applyHeightToEnableScroll();
   }
 }

@@ -12,6 +12,12 @@ export class ContactService {
         
     }
 
+    public checkIfContactExistsInDatabase(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            
+        });
+    }
+
     public getContactList(): Promise<any> {
         let contactsArray = [];
         let tempPhoneArray = [];
@@ -34,7 +40,7 @@ export class ContactService {
                                 if(phoneNumber.length > 10) {
                                     phoneNumber = phoneNumber.slice(-10);
                                 }
-                                if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1) {
+                                if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName.trim() !== "") {
                                     contactsArray.push({
                                         name: contacts[contactIndex]["_objectInstance"].displayName,
                                         phoneNumber: phoneNumber,

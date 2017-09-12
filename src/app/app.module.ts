@@ -16,6 +16,7 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule  } from 'angularfire2/database';
 import { Contacts} from '@ionic-native/contacts';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 // custom services
 import {CommonService} from "./../services/common.service";
@@ -72,6 +73,8 @@ export const firebaseConfig = {
     CommonService,
     File,
     Contacts,
+    SocialSharing,
+    
     MessageService,
     LanguageService,
     ConfigService,

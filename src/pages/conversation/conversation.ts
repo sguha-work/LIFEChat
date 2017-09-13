@@ -34,9 +34,12 @@ export class ConversationPage   implements AfterViewInit{
   }
 
   private loadConversation(data: any) {
-    this.model.phoneNumber = data[0];
-    this.model.name = data[1];
-    this.alterImageIfNeeded(data[2]);
+    if(Array.isArray(data)) {
+      this.model.phoneNumber = data[0];
+      this.model.name = data[1];
+      this.alterImageIfNeeded(data[2]);
+    }
+    
   }
 
   private bindEvents() {

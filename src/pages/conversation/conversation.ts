@@ -35,6 +35,7 @@ export class ConversationPage   implements AfterViewInit{
 
   private loadConversation(data: any) {
     if(Array.isArray(data)) {
+      // if data is array then data[2] will be the life object
       this.model.phoneNumber = data[0];
       this.model.name = data[1];
       this.alterImageIfNeeded(data[2]);

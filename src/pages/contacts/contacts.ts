@@ -29,9 +29,10 @@ export class ContactsPage   implements AfterViewInit {
     console.log('ionViewDidLoad ContactsPage');
   }
 
-  clickAction(phoneNumber: string,name: string, isInLife: boolean) {
+  clickAction(phoneNumber: string,name: string, isInLife: boolean, lifeObject?: any) {
     if(isInLife) {
       this.common.showPage("page-conversation");
+      this.events.publish("LOAD-CONVERSATION", [phoneNumber, name, lifeObject]);
     } else {
       this.shareLIFEChat(phoneNumber, name);
     }
@@ -49,6 +50,10 @@ export class ContactsPage   implements AfterViewInit {
     for(let index=0; index<this.model.contactList.length; index++) {
       let promise = new Promise((resolve, reject) => {
         this.contacts.isALIFEMember(this.model.contactList[index].phoneNumber).then((value) => {
+          if(index===(this.model.contactList.length-1)) {
+            // all contacts parsed
+            this.gettingLIFEContactLoader = false;
+          }
           if(value === false) {
             //this.gettingLIFEContactLoader = false;
             resolve();
@@ -67,12 +72,11 @@ export class ContactsPage   implements AfterViewInit {
       promiseArray.push(promise);
     }
     this.gettingLIFEContactLoader = true;
-    Promise.all(promiseArray).then(() => {
+    Promise.all(promiseArray).then(() => {alert("x");
       this.gettingLIFEContactLoader = false;
       if(this.model.LIFEContactList.length === 0) {
         
       } else {
-        
         this.applyHeightToEnableScroll();
       }
     }).catch(() => {

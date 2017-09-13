@@ -20,7 +20,7 @@
                 <img src="{{contact.lifeObject.picture?contact.lifeObject.picture:'assets/images/no-photo.jpg'}}">
             </div>
             <div class="contactDetails">
-                <span style="" class="name" (click)="clickAction(contact.phoneNumber,contact.name, true)">{{contact.name}}</span>
+                <span style="" class="name" (click)="clickAction(contact.phoneNumber,contact.name, true, contact.lifeObject)">{{contact.name}}</span>
                 <br><br>
 
                 <span class="lastSeen"><marquee behaviour="alternate">Last seen at {{contact.lifeObject.lastseen}} </marquee></span>

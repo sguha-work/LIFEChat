@@ -6,9 +6,11 @@ import {ContactsPage} from './../contacts/contacts';
 import { AfterViewInit } from '@angular/core';
 import { SearchPage } from './../search/search';
 import { Events } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 import { ConfigService } from './../../services/config.service';
 import { CommonService } from './../../services/common.service';
+import {LogInService} from './../../services/login.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -17,11 +19,26 @@ import * as $ from 'jquery';
 })
 export class HomePage  implements AfterViewInit{
 
-  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService) {
-   
-    
+  constructor(public navCtrl: NavController, private config: ConfigService, public events: Events, private common: CommonService, private platForm: Platform, private login: LogInService) {
+       
   }
 
+  private initialCheck() {
+    if(1) {
+      this.login.checkIfLocalLoginFileExists().then((value) => {
+        this.events.publish("USER-DETAILS-RECEIVED", value);
+        this.events.publish("LOAD-CONTACTS");
+        this.common.showPage("page-contacts");
+        
+      }).catch(() => {
+        this.common.showPage("page-login");  
+      });
+      this.common.showPage("page-login");
+    } else {
+      this.common.showPage("page-login");
+    }
+    //this.common.showPage("page-conversation");
+  }
   
   
 
@@ -31,5 +48,7 @@ export class HomePage  implements AfterViewInit{
     } else {
       $("page-conversation").show();
     }
+    this.initialCheck();
   }
 }
+ 

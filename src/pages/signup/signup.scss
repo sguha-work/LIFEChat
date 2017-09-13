@@ -1,4 +1,8 @@
 page-signup {
+    .form-group {
+        height: calc(100% - 38px);
+        overflow-y: scroll;
+    }
     button {
         background-color: #4CAF50 !important;
         border: none;

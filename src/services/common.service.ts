@@ -22,4 +22,21 @@ export class CommonService {
         }
 
     }
+
+    public validatePhoneNumber(phoneNumber: string): boolean {
+        if(isNaN(parseInt(phoneNumber))) {
+            return false;
+        }
+        if(phoneNumber.length !== 10) {
+            return false;
+        }
+        return true;
+    }
+
+    public validatePassword(password: string): boolean {
+        if(password.length < 5) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -5,6 +5,8 @@ import * as $ from 'jquery';
 import { CommonService } from './../../services/common.service';
 import {Database} from './../../services/database.service';
 import {MessageService} from './../../services/message.service';
+import {SignUpService} from './../../services/signup.service';
+import {User} from './../../interfaces/user.interface';
 
 interface FileReaderEventTarget extends EventTarget {
   result:string
@@ -20,56 +22,90 @@ interface FileReaderEvent extends Event {
 })
 export class SignupPage {
 
-  constructor(public navCtrl: NavController,  private common: CommonService, private database: Database,  private message: MessageService) {
+  private imageData;
+
+  constructor(public navCtrl: NavController,  private common: CommonService, private database: Database,  private message: MessageService, private signup: SignUpService) {
+    this.imageData = null;
   }
 
   private validate(phn: string, password: string): boolean {
-    let phoneNumberDOM = $("#txt_userPhoneNumber");
-    let passwordDOM = $("#txt_password");
-    if(isNaN(parseInt(phn))) {
-      passwordDOM.css({
-        "border": "1px solide red"
+    let phoneNumberDOM = $("page-signup #txt_userPhoneNumber");
+    let passwordDOM = $("page-signup #txt_password");
+    
+    if(this.common.validatePhoneNumber(phn)) {
+      phoneNumberDOM.css({
+        "border-bottom": "1px solid green"
+      });
+    } else {
+      phoneNumberDOM.css({
+        "border-bottom": "1px solid red"
       });
       return false;
-    } else {
-      passwordDOM.css({
-        "border": "1px solide green"
-      });
     }
-    if(phn.length !== 10) {
+    if(this.common.validatePassword(password)) {
       passwordDOM.css({
-        "border": "1px solide red"
+        "border-bottom": "1px solid green"
       });
-      return false;
     } else {
       passwordDOM.css({
-        "border": "1px solide green"
-      });
-    }
-
-    if(password === "" || password.length<5) {
-      passwordDOM.css({
-        "border-bottom": "1px solide red"
+        "border-bottom": "1px solid red"
       });
       return false;
-    } else {
-      passwordDOM.css({
-        "border-bottom": "1px solide green"
-      });
     }
     return true;
   }
 
-  
+  public beginSignUp() {
+    let phoneNumber = $("page-signup #txt_userPhoneNumber").val().trim();
+    let password = $("page-signup #txt_password").val().trim();
+    this.disableSignUpButton();
+    if(this.validate(phoneNumber, password) === true) {
+      this.signup.checkIfUserExists(phoneNumber).then((value) => {
+        if(value === false) {
+          // user doesnot exists continuing signup process
+          let user: User;
+          user = {phoneNumber: "", password: "", picture: "", lastseen: 0};
+          user.phoneNumber = phoneNumber;
+          user.password = password;
+          if(this.imageData !== null) {
+            user.picture = this.imageData;
+          } else {
+            user.picture = "";
+          }
+          user.lastseen = Date.now();
+          this.signup.storeUserDataToDatabase(user).then(() => {
+            alert(this.message.getMessage("SIGN_UP_SUCCESS"));
+            this.enableSignUpButton();
+            this.common.showPage("page-login");
+          }).catch((message) => {
+            // sign up failed due to no internet
+            alert(message);
+            this.enableSignUpButton();
+          });
+        } else {
+          // user exists
+          alert(value);
+          this.enableSignUpButton();
+        }
+      }).catch((message) => {
+        alert(message);
+        this.enableSignUpButton();
+      });
+      
+      
+    } else {
+      this.enableSignUpButton();
+    }
+  }
 
   private disableSignUpButton() {
-    $("#button_signup").prop("disabled", "disabled").css({
+    $("page-signup #button_signup").prop("disabled", "disabled").css({
       "opacity": "0.5"
     });
   }
 
   private enableSignUpButton() {
-    $("#button_signup").removeAttr("disabled").css({
+    $("page-signup #button_signup").removeAttr("disabled").css({
       "opacity": "1"
     });
 
@@ -82,8 +118,9 @@ export class SignupPage {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
     
-            reader.onload = function (e: FileReaderEvent) {
+            reader.onload = (e: FileReaderEvent) => {
                 $('#img_profileImage').attr('src', e.target.result);
+                this.imageData = e.target.result;
             }
     
             reader.readAsDataURL(input.files[0]);

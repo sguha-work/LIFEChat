@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import { Events } from 'ionic-angular';
 import {Database} from './database.service';
 import {MessageService} from './message.service';
+import {LocalStorageService} from './localStorage.service';
 import {User} from './../interfaces/user.interface';
 import { Contacts} from '@ionic-native/contacts';
 import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class ContactService {
-    constructor(private database: Database, private message: MessageService, private platform: Platform, private contacts: Contacts) {
+    constructor(private database: Database, private message: MessageService, private platform: Platform, private contacts: Contacts, private ls: LocalStorageService) {
         
     }
 
@@ -68,6 +69,7 @@ export class ContactService {
             this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
                 
                 if(contacts.length) {
+                    let userData = this.ls.getFromSession("user");
                     for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
                         for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
                             let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
@@ -76,13 +78,15 @@ export class ContactService {
                                 phoneNumber = phoneNumber.slice(-10);
                             }
                             if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
-                                contactsArray.push({
-                                    name: contacts[contactIndex]["_objectInstance"].displayName,
-                                    phoneNumber: phoneNumber,
-                                    isOnLIFEChat: false,
-                                    lifeObject: {}
-                                });
-                                tempPhoneArray.push(phoneNumber);
+                                if(phoneNumber !== userData.phoneNumber) {
+                                    contactsArray.push({
+                                        name: contacts[contactIndex]["_objectInstance"].displayName,
+                                        phoneNumber: phoneNumber,
+                                        isOnLIFEChat: false,
+                                        lifeObject: {}
+                                    });
+                                    tempPhoneArray.push(phoneNumber);
+                                }
                             }
                         }
                     }

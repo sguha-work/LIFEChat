@@ -48,27 +48,27 @@ export class ContactsPage   implements AfterViewInit {
     let promiseArray = [];
     for(let index=0; index<this.model.contactList.length; index++) {
       let promise = new Promise((resolve, reject) => {
-        this.gettingLIFEContactLoader = true;
         this.contacts.isALIFEMember(this.model.contactList[index].phoneNumber).then((value) => {
           if(value === false) {
-            this.gettingLIFEContactLoader = false;
+            //this.gettingLIFEContactLoader = false;
             resolve();
           } else {
-            this.gettingLIFEContactLoader = false;
+            //this.gettingLIFEContactLoader = false;
             this.model.contactList[index].lifeObject = value;
             this.model.contactList[index].isOnLIFEChat = true;
             this.model.LIFEContactList.push(this.model.contactList[index]);
             this.model.contactList.slice(index, 1);
           }
         }).catch(()=> {
-          this.gettingLIFEContactLoader = false;
+          //this.gettingLIFEContactLoader = false;
           resolve();
         });
       });
       promiseArray.push(promise);
     }
+    this.gettingLIFEContactLoader = true;
     Promise.all(promiseArray).then(() => {
-      //this.gettingLIFEContactLoader = false;
+      this.gettingLIFEContactLoader = false;
       if(this.model.LIFEContactList.length === 0) {
         
       } else {
@@ -76,8 +76,7 @@ export class ContactsPage   implements AfterViewInit {
         this.applyHeightToEnableScroll();
       }
     }).catch(() => {
-      //this.gettingLIFEContactLoader = false;
-      
+      this.gettingLIFEContactLoader = false;
     });
   }
 

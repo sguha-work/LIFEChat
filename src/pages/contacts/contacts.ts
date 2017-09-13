@@ -39,6 +39,17 @@ export class ContactsPage   implements AfterViewInit {
     
   }
 
+  public refreshContacts() {
+    $("#icon_refreshContactList").hide();
+    this.clearCache();
+    this.loadContactDetails();
+  }
+
+  private clearCache() {
+    this.model.contactList = [];
+    this.model.LIFEContactList = [];
+  }
+
   private shareLIFEChat(phoneNumber: string, name: string) {
     if(confirm("Want to share LIFEChat to "+name+"?")) {
       this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application", null, null, "https://drive.google.com/open?id=0B7H8-Q6hAIvNdFNmZUxYSlRGZTA"); 
@@ -53,6 +64,7 @@ export class ContactsPage   implements AfterViewInit {
           if(index===(this.model.contactList.length-1)) {
             // all contacts parsed
             this.gettingLIFEContactLoader = false;
+            $("#icon_refreshContactList").show();
           }
           if(value === false) {
             //this.gettingLIFEContactLoader = false;
@@ -101,6 +113,8 @@ export class ContactsPage   implements AfterViewInit {
 
         $("#div_noContacts").show();
         $("#div_contacts").hide();
+
+        $("#icon_refreshContactList").show();
       }
       
     }).catch(() => {
@@ -122,5 +136,6 @@ export class ContactsPage   implements AfterViewInit {
   ngAfterViewInit() {
     this.bindEvents();
     this.applyHeightToEnableScroll();
+    
   }
 }

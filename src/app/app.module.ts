@@ -18,6 +18,7 @@ import { AngularFireDatabaseModule  } from 'angularfire2/database';
 import { Contacts} from '@ionic-native/contacts';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { EmailComposer } from '@ionic-native/email-composer';
+import * as firebase from 'firebase';
 
 // custom services
 import {CommonService} from "./../services/common.service";
@@ -31,6 +32,7 @@ import {LogInService} from "./../services/login.service";
 import {ContactService} from "./../services/contact.service";
 import {LocalStorageService} from './../services/localStorage.service';
 import {EmailService} from './../services/email.service';
+import {ConversationService} from './../services/conversation.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -40,6 +42,7 @@ export const firebaseConfig = {
   storageBucket: "lifechat-909d7.appspot.com",
   messagingSenderId: "580846990214"
 };
+//const messaging = .messaging();
 @NgModule({
   declarations: [
     MyApp,
@@ -88,7 +91,8 @@ export const firebaseConfig = {
     LogInService,
     ContactService,
     LocalStorageService,
-    EmailService
+    EmailService,
+    ConversationService
   ]
 })
 export class AppModule {}

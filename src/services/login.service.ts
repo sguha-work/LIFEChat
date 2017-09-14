@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import { Events } from 'ionic-angular';
 import {Database} from './database.service';
 import {MessageService} from './message.service';
 import {User} from './../interfaces/user.interface';
@@ -32,12 +31,23 @@ export class LogInService {
 
     loginUser(userObject: User): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {
-                this.prepareLocalLoginFile(userObject);
-                resolve();
+            this.database.getFromDatabase(userObject.phoneNumber+"/chat").then((value) => {
+                if(value===null) {
+                    // no previous chat history
+                    userObject.chat = {};
+                } else {
+                    userObject.chat = value;
+                }
+                this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {
+                    this.prepareLocalLoginFile(userObject);
+                    resolve();
+                }).catch(() => {
+                    reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
+                });
             }).catch(() => {
                 reject(this.message.getMessage("UNABLE_TO_CONTACT_DATABASE"));
             });
+            
         });
     }
 

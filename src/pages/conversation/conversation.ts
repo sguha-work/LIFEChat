@@ -4,6 +4,9 @@ import { AfterViewInit } from '@angular/core';
 import { Events } from 'ionic-angular';
 import * as $ from 'jquery';
 
+import {ConversationService} from './../../services/conversation.service';
+import {LocalStorageService} from './../../services/localStorage.service';
+import {Message} from './../../interfaces/message.interface';
 @Component({
   selector: 'page-conversation',
   templateUrl: 'conversation.html',
@@ -11,7 +14,7 @@ import * as $ from 'jquery';
 export class ConversationPage   implements AfterViewInit{
 
   public model: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private events: Events, private conversation: ConversationService, private localStorage: LocalStorageService) {
     this.model = {};
   }
 
@@ -33,19 +36,47 @@ export class ConversationPage   implements AfterViewInit{
     }
   }
 
-  private loadConversation(data: any) {
-    if(Array.isArray(data)) {
-      // if data is array then data[2] will be the life object
-      this.model.phoneNumber = data[0];
-      this.model.name = data[1];
-      this.alterImageIfNeeded(data[2]);
+  private loadConversation(userData: any) {
+    // loading user details
+    if(Array.isArray(userData)) {
+      // if userData is array then userData[2] will be the life object
+      this.model.phoneNumber = userData[0];
+      this.model.name = userData[1];
+      this.alterImageIfNeeded(userData[2]);
     }
+
+    // loading conversation
     
   }
 
+  private enableSendButton() {
+    $("#button_send").css({
+      "pointer-events": "all"
+    });
+  }
+
+  private disableSendButton() {
+    $("#button_send").css({
+      "pointer-events": "none"
+    });
+  }
+
+  public sendMessage() {
+    let reply = $("#txt_reply").val().trim();
+    $("#txt_reply").val("");
+    let myData = this.localStorage.getFromSession("user");
+    let messageObject: Message;
+    messageObject.to = this.model.phoneNumber;
+    messageObject.senton = Date.now();
+    messageObject.deliverredon = 0;
+    messageObject.from = myData.phoneNumber;
+    messageObject.status = 0;
+    this.conversation.sendMessage(messageObject);
+  }
+
   private bindEvents() {
-    this.events.subscribe("LOAD-CONVERSATION", (data: string) => {
-      this.loadConversation(data);
+    this.events.subscribe("LOAD-CONVERSATION", (userData: string) => {
+      this.loadConversation(userData);
     });
   }
 

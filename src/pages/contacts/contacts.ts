@@ -84,7 +84,7 @@ export class ContactsPage   implements AfterViewInit {
       promiseArray.push(promise);
     }
     this.gettingLIFEContactLoader = true;
-    Promise.all(promiseArray).then(() => {alert("x");
+    Promise.all(promiseArray).then(() => {
       this.gettingLIFEContactLoader = false;
       if(this.model.LIFEContactList.length === 0) {
         

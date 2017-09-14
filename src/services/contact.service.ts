@@ -36,7 +36,7 @@ export class ContactService {
             hour = hour+":"+minute+":"+seconds+" AM";
         }
          
-        return day+"-"+month+"-"+year+" "+hour+" "+minute+":"+seconds;
+        return day+"-"+month+"-"+year+" "+hour;
     }
 
     public isALIFEMember(phoneNumber: string): Promise<any> {

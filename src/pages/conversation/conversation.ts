@@ -64,8 +64,9 @@ export class ConversationPage   implements AfterViewInit{
     let reply = $("#txt_reply").val().trim();
     $("#txt_reply").val("");
     let myData = this.localStorageService.getFromSession("user");
-    let messageObject: Message;
+    let messageObject: any;
     this.disableSendButton();
+    messageObject = {};
     messageObject.to = this.model.phoneNumber;
     messageObject.senton = Date.now();
     messageObject.deliverredon = 0;
@@ -73,8 +74,7 @@ export class ConversationPage   implements AfterViewInit{
     messageObject.status = 0;
     messageObject.readon = 0;
     messageObject.message = reply;
-
-    this.conversation.sendMessage(messageObject).then(() => {
+    this.conversation.sendMessage(messageObject as Message).then(() => {
       this.enableSendButton();
     }).catch(() => {
       this.enableSendButton();
@@ -84,7 +84,15 @@ export class ConversationPage   implements AfterViewInit{
   private bindEvents() {
     this.events.subscribe("LOAD-CONVERSATION", (userData: string) => {
       this.loadConversation(userData);
+      if(this.localStorageService.getFromSession("user") !== null) {
+        this.conversation.invokeReadConnection(this.model.phoneNumber, this.localStorageService.getFromSession("user")["phoneNumber"]);
+      }
     });
+    this.events.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
+      alert(JSON.stringify(msgObject));
+    });
+    
+    
   }
 
   ngAfterViewInit() {

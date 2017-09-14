@@ -3,8 +3,8 @@
     <div class="col-sm-12">
         <div class="form-group has-feedback">
             <img id="img_profileImage" class="uploadImage" (click)="triggerUploadImage()" src="assets/images/no-photo.jpg">
+            <input id="txt_userPhoneNumber" type="text" class="inputbox form-control" name="searchText" placeholder="Phone number(10 digits)">
             <input id="txt_userEmail" type="text" class="inputbox form-control" name="searchText" placeholder="Email for back up">
-            <input id="txt_userPhoneNumber" type="text" class="inputbox form-control" name="searchText" placeholder="Phone number">
             <input id="txt_password" type="password" class="inputbox form-control" name="searchText" placeholder="Password">
             <input type="file" style="display:none" id="file_image" (change)="displayImageThumbnail($event)" />
             <button class="" id="button_signup" (click)="beginSignUp()">Tap me to Sign up</button>

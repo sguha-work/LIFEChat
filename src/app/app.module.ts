@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule  } from 'angularfire2/database';
 import { Contacts} from '@ionic-native/contacts';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 // custom services
 import {CommonService} from "./../services/common.service";
@@ -29,6 +30,7 @@ import {SignUpService} from "./../services/signup.service";
 import {LogInService} from "./../services/login.service";
 import {ContactService} from "./../services/contact.service";
 import {LocalStorageService} from './../services/localStorage.service';
+import {EmailService} from './../services/email.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -75,6 +77,7 @@ export const firebaseConfig = {
     File,
     Contacts,
     SocialSharing,
+    EmailComposer,
     
     MessageService,
     LanguageService,
@@ -84,7 +87,8 @@ export const firebaseConfig = {
     SignUpService,
     LogInService,
     ContactService,
-    LocalStorageService
+    LocalStorageService,
+    EmailService
   ]
 })
 export class AppModule {}

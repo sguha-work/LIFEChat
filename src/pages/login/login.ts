@@ -8,6 +8,7 @@ import { CommonService } from './../../services/common.service';
 import {Database} from './../../services/database.service';
 import {MessageService} from './../../services/message.service';
 import {LogInService} from './../../services/login.service';
+import {EmailService} from './../../services/email.service';
 import {User} from './../../interfaces/user.interface';
 
 @Component({
@@ -16,7 +17,7 @@ import {User} from './../../interfaces/user.interface';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, private common: CommonService, private database: Database,  private message: MessageService, private config: ConfigService, private loginService: LogInService, private events: Events) {
+  constructor(public navCtrl: NavController, private common: CommonService, private database: Database,  private message: MessageService, private config: ConfigService, private loginService: LogInService, private events: Events, private email: EmailService) {
   } 
 
   private validate(phn: string, password: string): boolean {
@@ -94,6 +95,14 @@ export class LoginPage {
     this.common.showPage("page-signup");
   }
   
-
+  public requestForPassword() {
+    let phoneNumber = prompt("Enter your registered phone number. Password will be sent to associated email id with the phone number");
+    if(this.common.validatePhoneNumber(phoneNumber)) {
+      this.email.openSendMailWindow("Password request for "+phoneNumber, "Need to know the password for mobile number "+phoneNumber);
+    } else {
+      alert("Invalid phone number");
+    }
+    
+  }
   
 }

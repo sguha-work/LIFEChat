@@ -28,10 +28,11 @@ export class SignupPage {
     this.imageData = null;
   }
 
-  private validate(phn: string, password: string): boolean {
+  private validate(phn: string, password: string, email: string): boolean {
     let phoneNumberDOM = $("page-signup #txt_userPhoneNumber");
     let passwordDOM = $("page-signup #txt_password");
-    
+    let emailDOM = $("page-signup #txt_userEmail");
+
     if(this.common.validatePhoneNumber(phn)) {
       phoneNumberDOM.css({
         "border-bottom": "1px solid green"
@@ -52,21 +53,34 @@ export class SignupPage {
       });
       return false;
     }
+
+    if(this.common.validatePassword(email)) {
+      emailDOM.css({
+        "border-bottom": "1px solid green"
+      });
+    } else {
+      emailDOM.css({
+        "border-bottom": "1px solid red"
+      });
+      return false;
+    }
     return true;
   }
 
   public beginSignUp() {
     let phoneNumber = $("page-signup #txt_userPhoneNumber").val().trim();
     let password = $("page-signup #txt_password").val().trim();
+    let email = $("page-signup #txt_userEmail").val().trim();
     this.disableSignUpButton();
-    if(this.validate(phoneNumber, password) === true) {
+    if(this.validate(phoneNumber, password, email) === true) {
       this.signup.checkIfUserExists(phoneNumber).then((value) => {
         if(value === false) {
           // user doesnot exists continuing signup process
           let user: User;
-          user = {phoneNumber: "", password: "", picture: "", lastseen: 0};
+          user = {phoneNumber: "", password: "", picture: "", lastseen: 0, email: ""};
           user.phoneNumber = phoneNumber;
           user.password = password;
+          user.email =email;
           if(this.imageData !== null) {
             user.picture = this.imageData;
           } else {

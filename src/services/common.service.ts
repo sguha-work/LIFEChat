@@ -2,9 +2,14 @@ import {Injectable} from '@angular/core';
 import { Events } from 'ionic-angular';
 import * as $ from 'jquery';
 
+import {Database} from './database.service';
 @Injectable()
 export class CommonService {
     
+    constructor(private database: Database) {
+
+    }
+
     public showPage(pageName: string): void {
         let pageArray = [
             "page-contacts",
@@ -43,5 +48,9 @@ export class CommonService {
     public validateEmail(email: string): boolean {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
+    }
+
+    public invokeReadConnection(myPhoneNumber: string) {
+        this.database.receiveConversation(myPhoneNumber);
     }
 }

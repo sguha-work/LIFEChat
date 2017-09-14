@@ -45,8 +45,8 @@ export class Database {
        
    }
 
-   public receiveConversation(senderPhoneNumber: string, myPhoneNumber: string) {
-        let starCountRef = this.db.database.ref('/' + myPhoneNumber + '/chat/'+senderPhoneNumber);
+   public receiveConversation(myPhoneNumber: string) {
+        let starCountRef = this.db.database.ref('/' + myPhoneNumber + '/chat/');
         starCountRef.on('value', (snapshot) => {
             this.events.publish("MESSAGE-RECEIVED", snapshot.val());
         });

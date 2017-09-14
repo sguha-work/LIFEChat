@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 
 import {CommonService} from "./../../services/common.service";
 import {ContactService} from "./../../services/contact.service";
+import {LocalStorageService} from "./../../services/localStorage.service";
 @Component({
   selector: 'page-contacts',
   templateUrl: 'contacts.html',
@@ -17,7 +18,7 @@ export class ContactsPage   implements AfterViewInit {
   public gettingLIFEContactLoader: boolean;
   public gettingContactLoader: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private common: CommonService, private events: Events, private contacts: ContactService,  private socialSharing: SocialSharing) {
+  constructor(private common: CommonService, private events: Events, private contacts: ContactService,  private socialSharing: SocialSharing, private localStorageService: LocalStorageService) {
     this.model = {};
     this.model.contactList = [];
     this.model.LIFEContactList = [];
@@ -65,6 +66,7 @@ export class ContactsPage   implements AfterViewInit {
             // all contacts parsed
             this.gettingLIFEContactLoader = false;
             $("#icon_refreshContactList").show();
+            this.common.invokeReadConnection(this.localStorageService.getFromSession("user")["phoneNumber"]);
           }
           if(value === false) {
             //this.gettingLIFEContactLoader = false;

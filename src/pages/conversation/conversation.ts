@@ -84,9 +84,7 @@ export class ConversationPage   implements AfterViewInit{
   private bindEvents() {
     this.events.subscribe("LOAD-CONVERSATION", (userData: string) => {
       this.loadConversation(userData);
-      if(this.localStorageService.getFromSession("user") !== null) {
-        this.conversation.invokeReadConnection(this.model.phoneNumber, this.localStorageService.getFromSession("user")["phoneNumber"]);
-      }
+     
     });
     this.events.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
       alert(JSON.stringify(msgObject));

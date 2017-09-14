@@ -33,7 +33,5 @@ export class ConversationService {
         
     }
 
-    public invokeReadConnection(senderPhoneNumber: string, myPhoneNumber: string) {
-        this.database.receiveConversation(senderPhoneNumber, myPhoneNumber);
-    }
+    
 }

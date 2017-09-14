@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
 import { Events } from 'ionic-angular';
 import * as $ from 'jquery';
@@ -14,7 +13,7 @@ import {Message} from './../../interfaces/message.interface';
 export class ConversationPage   implements AfterViewInit{
 
   public model: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private events: Events, private conversation: ConversationService, private localStorage: LocalStorageService) {
+  constructor(private events: Events, private conversation: ConversationService, private localStorageService: LocalStorageService) {
     this.model = {};
   }
 
@@ -64,14 +63,22 @@ export class ConversationPage   implements AfterViewInit{
   public sendMessage() {
     let reply = $("#txt_reply").val().trim();
     $("#txt_reply").val("");
-    let myData = this.localStorage.getFromSession("user");
+    let myData = this.localStorageService.getFromSession("user");
     let messageObject: Message;
+    this.disableSendButton();
     messageObject.to = this.model.phoneNumber;
     messageObject.senton = Date.now();
     messageObject.deliverredon = 0;
     messageObject.from = myData.phoneNumber;
     messageObject.status = 0;
-    this.conversation.sendMessage(messageObject);
+    messageObject.readon = 0;
+    messageObject.message = reply;
+
+    this.conversation.sendMessage(messageObject).then(() => {
+      this.enableSendButton();
+    }).catch(() => {
+      this.enableSendButton();
+    });
   }
 
   private bindEvents() {

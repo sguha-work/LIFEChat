@@ -8,6 +8,7 @@ import * as $ from 'jquery';
 import {CommonService} from "./../../services/common.service";
 import {ContactService} from "./../../services/contact.service";
 import {LocalStorageService} from "./../../services/localStorage.service";
+import {Message} from './../../interfaces/message.interface';
 @Component({
   selector: 'page-contacts',
   templateUrl: 'contacts.html',
@@ -127,6 +128,9 @@ export class ContactsPage   implements AfterViewInit {
   private bindEvents() {
     this.events.subscribe("LOAD-CONTACTS", () => {
       this.loadContactDetails();
+    });
+    this.events.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
+      alert(JSON.stringify(msgObject));
     });
     
   }

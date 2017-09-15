@@ -34,10 +34,9 @@ export class Database {
        return new Promise((resolve, reject) => {
         this.db.database.ref("/"+key).push(data,(error) => {
             if(error) {
-                alert("failed");
+                alert("Failed to deliver the message");
                 reject();
             } else {
-                alert("messege to databse");
                 resolve();
             }
         })

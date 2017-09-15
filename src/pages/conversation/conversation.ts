@@ -86,9 +86,6 @@ export class ConversationPage   implements AfterViewInit{
       this.loadConversation(userData);
      
     });
-    this.events.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
-      alert(JSON.stringify(msgObject));
-    });
     
     
   }

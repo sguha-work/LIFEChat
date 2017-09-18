@@ -35,6 +35,10 @@ export class ConversationPage   implements AfterViewInit{
     }
   }
 
+  private beginLoadingConversationData(phoneNumber: string) {
+    this.conversation.getConversationData(phoneNumber);
+  }
+
   private loadConversation(userData: any) {
     // loading user details
     if(Array.isArray(userData)) {
@@ -42,6 +46,7 @@ export class ConversationPage   implements AfterViewInit{
       this.model.phoneNumber = userData[0];
       this.model.name = userData[1];
       this.alterImageIfNeeded(userData[2]);
+      this.beginLoadingConversationData(this.model.phoneNumber);
     }
 
     // loading conversation

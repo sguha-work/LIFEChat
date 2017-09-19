@@ -23,110 +23,14 @@
     <!-- Heading End -->
     <!-- Message Box -->
     <div class="row message" id="conversation">
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-receiver">
-                <div class="receiver">
+        <div class="row message-body" *ngFor="let message of model.chatData">
+            <div class="col-sm-12 message-main-{{message.receiveOrSentText}}">
+                <div class="{{message.receiveOrSentText}}">
                     <div class="message-text">
-                        Hyy, Its Awesome..!
+                        {{message.text}}
                     </div>
                     <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-receiver">
-                <div class="receiver">
-                    <div class="message-text">
-                        Hyy, Its Awesome..!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-receiver">
-                <div class="receiver">
-                    <div class="message-text">
-                        Hyy, Its Awesome..!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
-                </span>
-                </div>
-            </div>
-        </div>
-        <div class="row message-body">
-            <div class="col-sm-12 message-main-sender">
-                <div class="sender">
-                    <div class="message-text">
-                        Thanks n I know its awesome...!
-                    </div>
-                    <span class="message-time pull-right">
-                Sun
+                {{message.time}}
                 </span>
                 </div>
             </div>

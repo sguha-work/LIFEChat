@@ -7,13 +7,14 @@ import {Database} from './database.service';
 import {Message} from './../interfaces/message.interface';
 import {FileHandler} from './fileHandler.service';
 import {LocalStorageService} from './localStorage.service';
+import {CommonService} from './common.service';
 
 @Injectable()
 export class ConversationService {
 
     private _messaging: firebase.messaging.Messaging;
 
-    constructor(@Inject(FirebaseApp) private _firebaseApp: firebase.app.App, private database: Database, private fileHandler: FileHandler, private event: Events, private localStorageService: LocalStorageService) {
+    constructor(@Inject(FirebaseApp) private _firebaseApp: firebase.app.App, private database: Database, private fileHandler: FileHandler, private event: Events, private localStorageService: LocalStorageService, private common: CommonService) {
         //this._messaging = firebase.messaging(this._firebaseApp);
         //this._messaging.requestPermission().then(() => {}).catch((error) => {});
         this.event.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
@@ -50,6 +51,31 @@ export class ConversationService {
         }
         Promise.all(promiseArray);
     }
+
+    public prepareChatDataFromRawData(rawData: any): Array<any> {
+        let timeStampKeys = Object.keys(rawData);
+        let messageArray = [];
+        let myData = this.localStorageService.getFromSession("user");
+        for(let keysIndex=0; keysIndex<timeStampKeys.length; keysIndex++) {
+            let rawMessage = rawData[timeStampKeys[keysIndex]];
+            let firebaseKeys = Object.keys(rawMessage);
+            for(let fbKeyIndex=0; fbKeyIndex<firebaseKeys.length; fbKeyIndex++) {
+                let messageChunk = rawMessage[firebaseKeys[fbKeyIndex]];
+
+                let newMessageObject: any;
+                newMessageObject = {};
+                newMessageObject.text = messageChunk.message;
+                newMessageObject.time = this.common.getTimeFromTimeStamp(messageChunk.senton);
+                if(messageChunk.to === myData.phoneNumber) {
+                    newMessageObject.receiveOrSentText = "receiver";
+                } else {
+                    newMessageObject.receiveOrSentText = "sender";
+                }
+                messageArray.push(newMessageObject);
+            }
+        }
+        return messageArray;
+      }
 
     public sendMessageFileWork(messageObject: Message) {
         let fileName = this.getChatFilePrefix()+"-"+messageObject.to;
@@ -129,15 +155,22 @@ export class ConversationService {
 
     public getConversationData(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getConversationFileNameLists(phoneNumber).then((fileNameList) => {alert(JSON.stringify(fileNameList))
-                this.localStorageService.setInSession("conversation-file-name-list", JSON.stringify(fileNameList));
-                let fileName = fileNameList[0];alert(fileName);
-                this.fileHandler.readFileContent(fileName).then((data)=>{
-                    //returning data from latest chat file
-                    resolve(data);
-                }).catch();
+            this.getConversationFileNameLists(phoneNumber).then((fileNameList) => {
+                if(JSON.stringify(fileNameList) === "[]") {
+                    reject();
+                }
+                else {
+                    this.localStorageService.setInSession("conversation-file-name-list", JSON.stringify(fileNameList));
+                    let fileName = fileNameList[0];
+                    this.fileHandler.readFileContent(fileName).then((data)=>{
+                        //returning data from latest chat file
+                        resolve(JSON.parse(data));
+                    }).catch(() => {
+                        reject();
+                    });    
+                }
             }).catch(() => {
-
+                reject();
             });
         });
         

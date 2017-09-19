@@ -80,6 +80,32 @@ export class ConversationService {
         
     }
 
+    private ddmmyyToTimeStamp(ddmmyy: string) {
+        let array = [];
+        array = ddmmyy.split("-");
+        let newDate=array[1]+"/"+array[0]+"/"+array[2];
+        return (new Date(newDate).getTime());
+    }
+
+    private sortFileNameArrayDateWise(fileNameArray: Array<string>):Array<string> {
+        for(let index1=0; index1<fileNameArray.length; index1++) {
+            let fileNameTempArray = fileNameArray[index1].split("-");
+            fileNameTempArray.pop();
+            let timeStamp1 = this.ddmmyyToTimeStamp(fileNameTempArray.join("-"));
+            for(let index2=index1+1; index2<fileNameArray.length; index2++) {
+                fileNameTempArray = fileNameArray[index2].split("-");
+                fileNameTempArray.pop();
+                let timeStamp2 = this.ddmmyyToTimeStamp(fileNameTempArray.join("-"));
+                if(timeStamp1<timeStamp2) {
+                    let tempFileName = fileNameArray[index1];
+                    fileNameArray[index1] = fileNameArray[index2];
+                    fileNameArray[index2] = tempFileName;
+                }
+            }
+        }
+        return fileNameArray;
+    }
+
     private getConversationFileNameLists(phoneNumber: string) {
         return new Promise((resolve, reject) => {
             let fileNameArray = [];
@@ -91,6 +117,7 @@ export class ConversationService {
                        }
                    }
                }
+               fileNameArray = this.sortFileNameArrayDateWise(fileNameArray);
                resolve(fileNameArray);
             }).catch(() => {
                 resolve(fileNameArray);

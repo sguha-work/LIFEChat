@@ -7,7 +7,8 @@ export class LocalStorageService {
     public keyList;
     constructor() {
         this.keyList = [
-            "user"
+            "user",
+            "conversation-file-name-list"
         ];
     }
 

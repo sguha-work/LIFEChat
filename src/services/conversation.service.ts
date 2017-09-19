@@ -6,13 +6,14 @@ import { Events } from 'ionic-angular';
 import {Database} from './database.service';
 import {Message} from './../interfaces/message.interface';
 import {FileHandler} from './fileHandler.service';
+import {LocalStorageService} from './localStorage.service';
 
 @Injectable()
 export class ConversationService {
 
     private _messaging: firebase.messaging.Messaging;
 
-    constructor(@Inject(FirebaseApp) private _firebaseApp: firebase.app.App, private database: Database, private fileHandler: FileHandler, private event: Events) {
+    constructor(@Inject(FirebaseApp) private _firebaseApp: firebase.app.App, private database: Database, private fileHandler: FileHandler, private event: Events, private localStorageService: LocalStorageService) {
         //this._messaging = firebase.messaging(this._firebaseApp);
         //this._messaging.requestPermission().then(() => {}).catch((error) => {});
         this.event.subscribe("MESSAGE-RECEIVED", (msgObject: Message) => {
@@ -30,7 +31,7 @@ export class ConversationService {
         let keys = Object.keys(messageObject);
         for(let index=0; index<keys.length; index++) {
             let promise = new Promise((resolve, reject) => {
-                let fileName = this.getChatFilePrefix()+"-"+keys[index];alert(fileName);
+                let fileName = this.getChatFilePrefix()+"-"+keys[index];
                 this.fileHandler.checkIfFileExists(fileName).then((value)=>{
                     let data = JSON.parse(value);
                     data[Date.now()] = messageObject[keys[index]];
@@ -112,7 +113,7 @@ export class ConversationService {
             this.fileHandler.getDirectoryContents().then((value) => {
                for(let index=0; index< value.length; index++) {
                    if(value[index].isFile) {
-                       if(value[index].name.indexOf("phoneNumber") !== -1 ) {
+                       if(value[index].name.indexOf(phoneNumber) !== -1 ) {
                         fileNameArray.push(value[index].name);
                        }
                    }
@@ -128,8 +129,13 @@ export class ConversationService {
 
     public getConversationData(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getConversationFileNameLists(phoneNumber).then((list) => {
-                
+            this.getConversationFileNameLists(phoneNumber).then((fileNameList) => {alert(JSON.stringify(fileNameList))
+                this.localStorageService.setInSession("conversation-file-name-list", JSON.stringify(fileNameList));
+                let fileName = fileNameList[0];alert(fileName);
+                this.fileHandler.readFileContent(fileName).then((data)=>{
+                    //returning data from latest chat file
+                    resolve(data);
+                }).catch();
             }).catch(() => {
 
             });

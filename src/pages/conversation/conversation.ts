@@ -35,8 +35,14 @@ export class ConversationPage   implements AfterViewInit{
     }
   }
 
+  private prepareChatDataFromRawData(rawData: any): Array<any> {
+    return [];
+  }
+
   private beginLoadingConversationData(phoneNumber: string) {
-    this.conversation.getConversationData(phoneNumber);
+    this.conversation.getConversationData(phoneNumber).then((chatData) => {
+      this.model.chatData = this.prepareChatDataFromRawData(chatData);
+    }).catch(() => {});
   }
 
   private loadConversation(userData: any) {

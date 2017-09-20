@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 import {ConversationService} from './../../services/conversation.service';
 import {LocalStorageService} from './../../services/localStorage.service';
 import {Message} from './../../interfaces/message.interface';
+import {FileHandler} from './../../services/fileHandler.service';
 @Component({
   selector: 'page-conversation',
   templateUrl: 'conversation.html',
@@ -13,7 +14,7 @@ import {Message} from './../../interfaces/message.interface';
 export class ConversationPage   implements AfterViewInit{
 
   public model: any;
-  constructor(private events: Events, private conversation: ConversationService, private localStorageService: LocalStorageService) {
+  constructor(private events: Events, private conversation: ConversationService, private localStorageService: LocalStorageService, private fileHandler: FileHandler) {
     this.model = {};
   }
 
@@ -84,10 +85,11 @@ export class ConversationPage   implements AfterViewInit{
     messageObject.readon = 0;
     messageObject.message = reply;
     this.conversation.sendMessage(messageObject as Message).then(() => {
-      this.enableSendButton();
+      
     }).catch(() => {
-      this.enableSendButton();
+      
     });
+    this.enableSendButton();
   }
 
   private bindEvents() {
@@ -96,6 +98,12 @@ export class ConversationPage   implements AfterViewInit{
      
     });
     
+    this.events.subscribe("MESSAGE-UPDATED", (fileName: string) => {
+      this.fileHandler.readFileContent(fileName).then((chatData) => {
+        this.model.chatData = this.conversation.prepareChatDataFromRawData(chatData);
+      }).catch();
+      
+    });
     
   }
 

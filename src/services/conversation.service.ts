@@ -30,6 +30,7 @@ export class ConversationService {
     public receiveMessageFileWork(messageObject: Message) {
         let promiseArray = [];
         let keys = Object.keys(messageObject);
+        let myData = this.localStorageService.getFromSession("user");
         for(let index=0; index<keys.length; index++) {
             let promise = new Promise((resolve, reject) => {
                 let fileName = this.getChatFilePrefix()+"-"+keys[index];
@@ -44,6 +45,7 @@ export class ConversationService {
                     data[Date.now()] = messageObject[keys[index]];
                     this.fileHandler.writeFile(JSON.stringify(data), fileName).then(() => {
                         //this.event.publish("MESSAGE-UPDATED", fileName);
+                        this.database.deleteChat(myData.phoneNumber);
                     }).catch(() => {});
                 });
             });

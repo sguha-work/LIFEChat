@@ -45,10 +45,17 @@ export class Database {
    }
 
    public receiveConversation(myPhoneNumber: string) {
-        let starCountRef = this.db.database.ref('/' + myPhoneNumber + '/chat/');
-        starCountRef.on('value', (snapshot) => {
+        let databaseReference = this.db.database.ref('/' + myPhoneNumber + '/chat/');
+        databaseReference.on('value', (snapshot) => {
             this.events.publish("MESSAGE-RECEIVED", snapshot.val());
         });
+   }
+
+   public deleteChat(myPhoneNumber: string) {
+    let databaseReference = this.db.database.ref('/' + myPhoneNumber + '/chat/');
+    databaseReference.remove(() => {
+        // deleted from database
+    });
    }
    
 }

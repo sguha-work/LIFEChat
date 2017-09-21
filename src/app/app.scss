@@ -35,3 +35,10 @@ ion-content,
 .toolbar-title {
     color: white;
 }
+
+.member {
+    background-color: #7DA9EE;
+    .item-inner {
+        border-bottom: none !important;
+    }
+}

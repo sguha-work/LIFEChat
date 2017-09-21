@@ -17,7 +17,7 @@ import { ConversationPage } from '../pages/conversation/conversation';
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = JoinLIFEPage;
+    rootPage:any = ConversationPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

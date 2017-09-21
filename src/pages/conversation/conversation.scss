@@ -15,6 +15,9 @@ page-conversation {
     .sent {
         background-color: white;
     }
+    ion-list {
+        padding-top: 10% !important;
+    }
     .member {
         background-color: #7DA9EE;
         .item-inner {

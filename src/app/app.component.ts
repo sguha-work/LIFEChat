@@ -17,7 +17,7 @@ import { ConversationPage } from '../pages/conversation/conversation';
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = ConversationPage;
+    rootPage:any = TabsControllerPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -30,7 +30,15 @@ export class MyApp {
 
   // public methods
   public action(actionName: string): void {
-    this.navCtrl.push(LoginPage);
+    switch (actionName) {
+      case "login":
+        this.navCtrl.push(LoginPage);
+      break;
+      case "conversation":  
+        this.navCtrl.push(ConversationPage);
+      break;
+    }
+    
     this.closeMenu();
   }
 

@@ -3,10 +3,12 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+// my declaration
+import * as $ from 'jquery';
 
 
-import { HomePage } from '../pages/home/home';
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
@@ -24,5 +26,14 @@ export class MyApp {
       splashScreen.hide();
     });
   }
-  
+
+  // public methods
+  public action(actionName: string): void {
+    this.navCtrl.push(LoginPage);
+    this.closeMenu();
+  }
+
+  public closeMenu(): void {
+    $("#menu-button-close").trigger('click');
+  }
 }

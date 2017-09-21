@@ -1,0 +1,18 @@
+page-conversation {
+    .received {
+        background-color: #e1ffc7;
+    }
+    .message {
+        border-radius: 30px;
+        margin-top: 15px;
+        i {
+            margin-left: 10px;
+        }
+    }
+    .time {
+        text-align: right;
+    }
+    .sent {
+        background-color: white;
+    }
+}

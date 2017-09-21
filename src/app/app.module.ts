@@ -8,6 +8,7 @@ import { PhotoPage } from '../pages/photo/photo';
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
 import { JoinLIFEPage } from '../pages/join-life/join-life';
+import { ConversationPage } from '../pages/conversation/conversation';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,7 +22,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PhotoPage,
     TabsControllerPage,
     LoginPage,
-    JoinLIFEPage
+    JoinLIFEPage,
+    ConversationPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     PhotoPage,
     TabsControllerPage,
     LoginPage,
-    JoinLIFEPage
+    JoinLIFEPage,
+    ConversationPage
   ],
   providers: [
     StatusBar,

@@ -10,14 +10,14 @@ import * as $ from 'jquery';
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
 import { JoinLIFEPage } from '../pages/join-life/join-life';
-
+import { ConversationPage } from '../pages/conversation/conversation';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = JoinLIFEPage;
+    rootPage:any = ConversationPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

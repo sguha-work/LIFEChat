@@ -39,7 +39,7 @@ export class FileService {
     }
 
     private prepareMessageData() {
-
+        alert("prepare message data");
     }
 
     private getPath() {

@@ -10,7 +10,7 @@ import * as $ from 'jquery';
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
 
-import {FileService} from './../services/file.service';
+import {LoginService} from './../services/login.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,17 +19,22 @@ export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
     rootPage:any = TabsControllerPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private loginService: LoginService) {
+    // platform.ready().then(() => {
+    //   // Okay, so the platform is ready and our plugins are available.
+    //   // Here you can do any higher level native things you might need.
+    //   statusBar.styleDefault();
+    //   splashScreen.hide();
+    // });
+    this.redirectToLoginIfuserDoesnotExists();
   }
 
-  redirectToLoginIfuserDoesnotExists() {
-
+  private redirectToLoginIfuserDoesnotExists() {
+    this.loginService.isLoggedIn().then(() => {
+      this.navCtrl.push(TabsControllerPage);
+    }).catch(() => {
+      this.navCtrl.push(LoginPage);
+    });
   }
 
   // public methods

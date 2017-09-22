@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule  } from 'angularfire2/database';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { File } from '@ionic-native/file';
 
 import { HomePage } from '../pages/home/home';
 import { ContactsPage } from '../pages/contacts/contacts';
@@ -21,6 +22,7 @@ import { ImagePage } from '../pages/image/image';
 
 import {FileService} from './../services/file.service';
 import {Database} from './../services/database.service';
+import {LoginService} from './../services/login.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -65,8 +67,11 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Database
+    Database,
+    FileService,
+    LoginService
   ]
 })
 export class AppModule {}

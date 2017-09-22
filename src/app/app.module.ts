@@ -23,6 +23,7 @@ import { ImagePage } from '../pages/image/image';
 import {FileService} from './../services/file.service';
 import {Database} from './../services/database.service';
 import {LoginService} from './../services/login.service';
+import {CommonService} from './../services/common.service';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -71,7 +72,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Database,
     FileService,
-    LoginService
+    LoginService,
+    CommonService
   ]
 })
 export class AppModule {}

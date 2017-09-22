@@ -17,7 +17,7 @@ import {LoginService} from './../services/login.service';
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = TabsControllerPage;
+    rootPage:any = "";
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private loginService: LoginService) {
     // platform.ready().then(() => {

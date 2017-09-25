@@ -7,26 +7,35 @@ export class Database {
    constructor(private db: AngularFireDatabase, private events: Events) {
    }
 
-   public writeToDatabase(key: string, data: any): Promise<any> {
+    public writeToDatabase(key: string, data: any): Promise<any> {
         return new Promise((resolve, reject) => {
-        this.db.database.ref('/'+key).set(data).then(() => {
-            resolve();
-        }).catch((error) => {
-            reject();
-        });
+            this.db.database.ref('/'+key).set(data).then(() => {
+                resolve();
+            }).catch((error) => {
+                reject();
+            });
        });
-       
-   }
+    }
 
-   public getFromDatabase(key: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-        this.db.database.ref('/'+key).once('value').then((data) => {
-            resolve(data.val());
-        }).catch((error) => {
-            reject(error);
+    public updateToDatabase(key: string, data: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.db.database.ref('/'+key).update(data).then(() => {
+                resolve();
+            }).catch((error) => {
+                reject();
+            });
+       });
+    }
+
+    public getFromDatabase(key: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.db.database.ref('/'+key).once('value').then((data) => {
+                resolve(data.val());
+            }).catch((error) => {
+                reject(error);
+            });
         });
-    });
-   }
+    }
 
    public writeMessageToDatabase(key: string, data: any) {
        return new Promise((resolve, reject) => {

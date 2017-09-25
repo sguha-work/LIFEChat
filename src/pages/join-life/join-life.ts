@@ -117,7 +117,7 @@ export class JoinLIFEPage implements AfterViewInit{
       if(this.imageData !== null) {
         user.image = this.imageData;
       }
-      this.signUp.getDeviceID().then((uuid) => {
+      this.common.getDeviceID().then((uuid) => {
         user.loggedInDeviceId = uuid.toString();
         this.startDatabaseActivity(user);
       }).catch(() => {

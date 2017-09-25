@@ -9,6 +9,26 @@ export class CommonService {
 
     }
 
+    public getTimeFromTimeStamp(timeStamp) {
+        let date = new Date(timeStamp);
+        let year    = date.getFullYear();
+        let month   = date.getMonth()+1;
+        let day     = date.getDate();
+        let hour    = date.getHours().toString();
+        let minute  = date.getMinutes();
+        let seconds = date.getSeconds();
+        if(parseInt(hour)>12) {
+            hour = (parseInt(hour) - 12).toString()+":"+minute+":"+seconds+" PM";
+        } else {
+            if(hour === "00") {
+                hour = "12";
+            }
+            hour = hour+":"+minute+":"+seconds+" AM";
+        }
+         
+        return day+"-"+month+"-"+year+" "+hour;
+    }
+
     public validatePhoneNumber(phoneNumber: string): boolean {
         if(isNaN(parseInt(phoneNumber))) {
             return false;

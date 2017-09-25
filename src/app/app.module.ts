@@ -10,6 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { Contacts} from '@ionic-native/contacts';
 
 import { HomePage } from '../pages/home/home';
 import { ContactsPage } from '../pages/contacts/contacts';
@@ -28,6 +29,7 @@ import {LoginService} from './../services/login.service';
 import {CommonService} from './../services/common.service';
 import {SignupService} from "./../services/signup.service";
 import {AlertService} from "./../services/alert.service";
+import {ContactService} from "./../services/contact.service";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -75,13 +77,15 @@ export const firebaseConfig = {
     File,
     UniqueDeviceID,
     AndroidPermissions,
+    Contacts,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Database,
     FileService,
     LoginService,
     CommonService,
     SignupService,
-    AlertService
+    AlertService,
+    ContactService
   ]
 })
 export class AppModule {}

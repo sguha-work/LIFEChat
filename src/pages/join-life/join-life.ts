@@ -132,11 +132,11 @@ export class JoinLIFEPage implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.phoneNUmberDOM = $("#txt_phoneNumber input");
-    this.passwordDOM = $("#txt_password input");
-    this.emailDOM = $("#txt_email input");
-    this.imageThumbnailDOM = $('#img_profileImage');
-    this.imageDOM = $("#file_image input");
+    this.phoneNUmberDOM = $("page-join-life #txt_phoneNumber input");
+    this.passwordDOM = $("page-join-life #txt_password input");
+    this.emailDOM = $("page-join-life #txt_email input");
+    this.imageThumbnailDOM = $('page-join-life #img_profileImage');
+    this.imageDOM = $("page-join-life #file_image input");
   }
 
   displayImageThumbnail(event: any) {

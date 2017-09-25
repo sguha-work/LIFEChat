@@ -1,7 +1,5 @@
-import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Events } from 'ionic-angular';
 
 @Injectable()

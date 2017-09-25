@@ -74,9 +74,9 @@ export class LoginPage  implements AfterViewInit {
               user.loggedInDeviceId = value;
 
               this.login.updateUserStatus(phoneNumber, user).then(() => {
-                if(this.platform.is("cordova")) {
+                //if(this.platform.is("cordova")) {
                     this.login.createLocalLoginEntry(user);
-                }
+                //}
                 this.navCtrl.push(TabsControllerPage);
               }).catch(() => {
                 this.alertService.showAlert("Unable to connect to database", "Connection problem");

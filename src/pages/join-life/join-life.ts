@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 
 import {CommonService} from "./../../services/common.service";
 import {SignupService} from "./../../services/signup.service";
+import {AlertService} from "./../../services/alert.service";
 import {User} from "./../../interfaces/user.interface";
 
 interface FileReaderEventTarget extends EventTarget {
@@ -29,7 +30,7 @@ export class JoinLIFEPage implements AfterViewInit{
   private imageThumbnailDOM: any;
   private imageData: any;
 
-  constructor(public navCtrl: NavController, private common: CommonService, private signUp: SignupService) {
+  constructor(public navCtrl: NavController, private common: CommonService, private signUp: SignupService, private alertService: AlertService) {
     this.imageData = null;
   }
 
@@ -89,8 +90,9 @@ export class JoinLIFEPage implements AfterViewInit{
   
   beginSignUp() {
     if(this.validate()) {
-      let user: User;
-      
+      let user: any;
+      user = {};
+      user as User;
       user.phoneNumber = this.phoneNUmberDOM.val().toString().trim();
       user.password = this.passwordDOM.val().toString().trim();
       user.email = this.emailDOM.val().toString().trim();
@@ -98,7 +100,9 @@ export class JoinLIFEPage implements AfterViewInit{
         user.image = this.imageData;
       }
       this.signUp.getDeviceID().then((uuid) => {
-        alert(JSON.stringify(uuid));
+        user.loggedInDeviceId = uuid.toString();
+      }).catch(() => {
+        this.alertService.showAlert("Error fetching device id, user cannot be registerred. Make sure to give call/phone access.", "Error");
       });
 
     }

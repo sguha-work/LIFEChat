@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
+import {FileService} from './file.service';
 @Injectable()
 export class CommonService {
 
-    constructor(private uniqueDeviceID: UniqueDeviceID) {
+    constructor(private uniqueDeviceID: UniqueDeviceID, private file: FileService) {
 
     }
 
@@ -36,6 +37,17 @@ export class CommonService {
                 resolve(uuid);
             }).catch((error: any) => {
                 reject();
+            });
+        });
+    }
+
+    public getPresentUserData(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.readFile("user").then((value) => {
+                let userData = JSON.parse(value);
+                resolve(userData);
+            }).catch(() => {
+                // cant read user data
             });
         });
     }

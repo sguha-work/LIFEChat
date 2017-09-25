@@ -46,6 +46,17 @@ export class FileService {
         return this.file.dataDirectory+"/"+rootFolderName;
     }
 
+    public readFile(fileName): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.readAsText(this.getPath(), fileName).then((value) => {
+                resolve(value);
+            }).catch(() => {
+                reject();
+            });
+        });
+        
+    }
+
     public checkIfFileExists(fileName): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.readAsText(this.getPath(), fileName).then((value) => {

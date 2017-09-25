@@ -17,7 +17,7 @@
                 <ion-label stacked>
                     Phone number
                 </ion-label>
-                <ion-input type="tel" placeholder="Enter 10 digit phone number"></ion-input>
+                <ion-input type="tel" id="txt_phoneNumber" placeholder="Enter 10 digit phone number"></ion-input>
             </ion-item>
         </ion-list>
         <div class="spacer" style="height:40px;" id="login-spacer6"></div>
@@ -30,10 +30,10 @@
             <ion-label stacked>
                 Password
             </ion-label>
-            <ion-input type="password" placeholder="Your account password"></ion-input>
+            <ion-input type="password" id="txt_password" placeholder="Your account password"></ion-input>
         </ion-item>
         <div class="spacer" style="height:40px;" id="login-spacer3"></div>
-        <button id="login-button5" ion-button color="calm" block>
+        <button id="login-button5" (click)="beginLoginProcess()" ion-button color="calm" block>
       Log in
     </button>
         <button id="" (click)="gotoSignUp()" ion-button clear color="positive" block href-inappbrowser="/#">

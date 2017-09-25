@@ -51,36 +51,36 @@ export class JoinLIFEPage implements AfterViewInit{
     let phoneNUmber = this.phoneNUmberDOM.val().toString().trim();
     if(!this.common.validatePhoneNumber(phoneNUmber)) {
       this.phoneNUmberDOM.css({
-        "border-bottom": "1px solid red;"
+        "border-bottom": "1px solid red"
       });
       return false;
     } else {
       this.phoneNUmberDOM.css({
-        "border-bottom": "1px solid transparent;"
+        "border-bottom": "1px solid transparent"
       });
     }
 
     let password = this.passwordDOM.val().toString().trim();
     if(!this.common.validatePassword(password)) {
       this.passwordDOM.css({
-        "border-bottom": "1px solid red;"
+        "border-bottom": "1px solid red"
       });
       return false;
     } else {
       this.passwordDOM.css({
-        "border-bottom": "1px solid transparent;"
+        "border-bottom": "1px solid transparent"
       });
     }
 
     let email = this.emailDOM.val().toString().trim();
     if(!this.common.validateEmail(email)) {
       this.emailDOM.css({
-        "border-bottom": "1px solid red;"
+        "border-bottom": "1px solid red"
       });
       return false;
     } else {
       this.emailDOM.css({
-        "border-bottom": "1px solid transparent;"
+        "border-bottom": "1px solid transparent"
       });
     }
 
@@ -109,11 +109,11 @@ export class JoinLIFEPage implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.phoneNUmberDOM = $("#txt_phoneNumber");
-    this.passwordDOM = $("#txt_password");
-    this.emailDOM = $("#txt_email");
+    this.phoneNUmberDOM = $("#txt_phoneNumber input");
+    this.passwordDOM = $("#txt_password input");
+    this.emailDOM = $("#txt_email input");
     this.imageThumbnailDOM = $('#img_profileImage');
-    this.imageDOM = $("#file_image");
+    this.imageDOM = $("#file_image input");
   }
 
   displayImageThumbnail(event: any) {

@@ -161,7 +161,13 @@ export class JoinLIFEPage implements AfterViewInit{
   }
 
   displayImageThumbnail(event: any) {
-    this.readURL(event.currentTarget);
+    let extension = event.currentTarget.value.toString().split(".").pop();
+    if(extension==="jpg" || extension === "png" || extension === "jpeg") {
+      this.readURL(event.currentTarget);
+    } else {
+      this.alertService.showAlert("Only JPEG and PNG image files are supported", "Error");
+    }
+    
   }
 
   gotoLoginPage() {

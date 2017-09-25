@@ -20,6 +20,7 @@ export class LoginPage  implements AfterViewInit {
 
   private phoneNumberDOM: any;
   private passwordDOM: any;
+  private loginButtonDOM: any;
 
   constructor(public navCtrl: NavController,  private common: CommonService, private login: LoginService, private alertService: AlertService, private platform: Platform) {
   }
@@ -51,20 +52,37 @@ export class LoginPage  implements AfterViewInit {
     return true;
   }
 
+  private disableLoginButton() {
+    this.loginButtonDOM.css({
+      "opacity": "0.5",
+      "pointer-events": "none"
+    });
+  }
+  
+  private enableLoginButton() {
+    this.loginButtonDOM.css({
+      "opacity": "1",
+      "pointer-events": "all"
+    });
+  }
+
   gotoSignUp() {
     this.navCtrl.push(JoinLIFEPage);
   }
 
   beginLoginProcess() {
     if(this.validate()) {
+      this.disableLoginButton();
       let phoneNumber = this.phoneNumberDOM.val().toString().trim();
       let password = this.passwordDOM.val().toString().trim();
       this.login.loginUser(phoneNumber).then((userData) => {
         if( userData===null ) {
           this.alertService.showAlert("This phonenumber is not registered. Please sign up first", "Login Failed");    
+          this.enableLoginButton();
         } else {
           if(userData.password !== password) {
             this.alertService.showAlert("Password missmatch", "Login Failed");                
+            this.enableLoginButton();
           } else {
             this.common.getDeviceID().then((value) => {
               let user: any;
@@ -80,6 +98,7 @@ export class LoginPage  implements AfterViewInit {
                 this.navCtrl.push(TabsControllerPage);
               }).catch(() => {
                 this.alertService.showAlert("Unable to connect to database", "Connection problem");
+                this.enableLoginButton();
               });
               
             }).catch(() => {
@@ -97,5 +116,6 @@ export class LoginPage  implements AfterViewInit {
   ngAfterViewInit() {
     this.phoneNumberDOM = $("page-login #txt_phoneNumber input");
     this.passwordDOM = $("page-login #txt_password input");
+    this.loginButtonDOM = $("page-login #button_login");
   }
 }

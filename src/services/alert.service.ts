@@ -13,8 +13,11 @@ export class AlertService {
         }
         let alert = this.alertCtrl.create({
             title: title,
-            subTitle: "message",
-            buttons: ['Dismiss']
+            message: message,
+            buttons: [{
+                text: 'Dismiss',
+                role: 'cancel',
+              }]
         });
         alert.present();
     }

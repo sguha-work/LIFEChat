@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
 import * as $ from 'jquery';
 
+import { LoginPage } from '../login/login';
 import {CommonService} from "./../../services/common.service";
 import {SignupService} from "./../../services/signup.service";
 import {AlertService} from "./../../services/alert.service";
@@ -46,6 +47,23 @@ export class JoinLIFEPage implements AfterViewInit{
   
           reader.readAsDataURL(input.files[0]);
       }
+  }
+
+  private startDatabaseActivity(user: User) {
+    this.signUp.isUserExists(user.phoneNumber).then((value) => {
+      if(value) {
+        this.alertService.showAlert("User already exists, please sign in", "User already exists");
+      } else {
+        this.signUp.writeUserDataToDatabase(user).then(() => {
+          this.alertService.showAlert("Registration done, please sign in", "Registration Successfull");
+          this.navCtrl.push(LoginPage);
+        }).catch(() => {
+          this.alertService.showAlert("Unable to connect to database", "Connection problem");    
+        });
+      }
+    }).catch(() => {
+      this.alertService.showAlert("Unable to connect to database", "Connection problem");
+    });
   }
 
   private validate() {
@@ -101,6 +119,7 @@ export class JoinLIFEPage implements AfterViewInit{
       }
       this.signUp.getDeviceID().then((uuid) => {
         user.loggedInDeviceId = uuid.toString();
+        this.startDatabaseActivity(user);
       }).catch(() => {
         this.alertService.showAlert("Error fetching device id, user cannot be registerred. Make sure to give call/phone access.", "Error");
       });
@@ -122,5 +141,9 @@ export class JoinLIFEPage implements AfterViewInit{
 
   displayImageThumbnail(event: any) {
     this.readURL(event.currentTarget);
+  }
+
+  gotoLoginPage() {
+    this.navCtrl.push(LoginPage);
   }
 }

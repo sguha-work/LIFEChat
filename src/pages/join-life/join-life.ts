@@ -30,6 +30,7 @@ export class JoinLIFEPage implements AfterViewInit{
   private imageDOM: any;
   private imageThumbnailDOM: any;
   private imageData: any;
+  private signUpButtonDOM: any;
 
   constructor(public navCtrl: NavController, private common: CommonService, private signUp: SignupService, private alertService: AlertService) {
     this.imageData = null;
@@ -53,16 +54,19 @@ export class JoinLIFEPage implements AfterViewInit{
     this.signUp.isUserExists(user.phoneNumber).then((value) => {
       if(value) {
         this.alertService.showAlert("User already exists, please sign in", "User already exists");
+        this.enableSignUpButton();
       } else {
         this.signUp.writeUserDataToDatabase(user).then(() => {
           this.alertService.showAlert("Registration done, please sign in", "Registration Successfull");
           this.navCtrl.push(LoginPage);
         }).catch(() => {
           this.alertService.showAlert("Unable to connect to database", "Connection problem");    
+          this.enableSignUpButton();
         });
       }
     }).catch(() => {
       this.alertService.showAlert("Unable to connect to database", "Connection problem");
+      this.enableSignUpButton();
     });
   }
 
@@ -105,9 +109,24 @@ export class JoinLIFEPage implements AfterViewInit{
 
     return true;
   }
+
+  private disableSignUpButton() {
+    this.signUpButtonDOM.css({
+      "opacity": "0.5",
+      "pointer-events": "none"
+    });
+  }
   
+  private enableSignUpButton() {
+    this.signUpButtonDOM.css({
+      "opacity": "1",
+      "pointer-events": "all"
+    });
+  }
+
   beginSignUp() {
     if(this.validate()) {
+      this.disableSignUpButton();
       let user: any;
       user = {};
       user as User;
@@ -121,6 +140,7 @@ export class JoinLIFEPage implements AfterViewInit{
         user.loggedInDeviceId = uuid.toString();
         this.startDatabaseActivity(user);
       }).catch(() => {
+        this.enableSignUpButton();
         this.alertService.showAlert("Error fetching device id, user cannot be registerred. Make sure to give call/phone access.", "Error");
       });
 
@@ -137,6 +157,7 @@ export class JoinLIFEPage implements AfterViewInit{
     this.emailDOM = $("page-join-life #txt_email input");
     this.imageThumbnailDOM = $('page-join-life #img_profileImage');
     this.imageDOM = $("page-join-life #file_image input");
+    this.signUpButtonDOM = $("page-join-life #button_signUp");
   }
 
   displayImageThumbnail(event: any) {

@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { File } from '@ionic-native/file';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import { HomePage } from '../pages/home/home';
 import { ContactsPage } from '../pages/contacts/contacts';
@@ -73,6 +74,7 @@ export const firebaseConfig = {
     SplashScreen,
     File,
     UniqueDeviceID,
+    AndroidPermissions,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Database,
     FileService,

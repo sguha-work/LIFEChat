@@ -12,13 +12,21 @@ export class LoginService {
 
     public isLoggedIn(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.fileService.checkIfFileExists("user").then(() => {
-                resolve();
+            this.fileService.checkIfFileExists("user").then((userValue) => {
+                let user = JSON.parse(userValue);
+                user.lastSeen = Date.now();
+                this.updateUserStatus(user.phoneNumber, user);
+                this.fileService.writeFile(JSON.stringify(user), "user");
+                resolve(userValue);
             }).catch(() => {
                 reject();
             });
         });
         
+    }
+
+    public createLocalLoginEntry(user: User) {
+        this.fileService.writeFile(JSON.stringify(user), "user");
     }
 
     public loginUser(phoneNumber: string): Promise<any> {

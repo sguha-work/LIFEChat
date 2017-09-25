@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import * as $ from 'jquery';
 
 import { JoinLIFEPage } from '../join-life/join-life';
@@ -17,21 +18,21 @@ import {User} from "./../../interfaces/user.interface";
 })
 export class LoginPage  implements AfterViewInit {
 
-  private phoneNUmberDOM: any;
+  private phoneNumberDOM: any;
   private passwordDOM: any;
 
-  constructor(public navCtrl: NavController,  private common: CommonService, private login: LoginService, private alertService: AlertService) {
+  constructor(public navCtrl: NavController,  private common: CommonService, private login: LoginService, private alertService: AlertService, private platform: Platform) {
   }
 
   private validate() {
-    let phoneNUmber = this.phoneNUmberDOM.val().toString().trim();
+    let phoneNUmber = this.phoneNumberDOM.val().toString().trim();
     if(!this.common.validatePhoneNumber(phoneNUmber)) {
-      this.phoneNUmberDOM.css({
+      this.phoneNumberDOM.css({
         "border-bottom": "1px solid red"
       });
       return false;
     } else {
-      this.phoneNUmberDOM.css({
+      this.phoneNumberDOM.css({
         "border-bottom": "1px solid transparent"
       });
     }
@@ -56,23 +57,26 @@ export class LoginPage  implements AfterViewInit {
 
   beginLoginProcess() {
     if(this.validate()) {
-      let phoneNUmber = this.phoneNUmberDOM.val().toString().trim();
+      let phoneNumber = this.phoneNumberDOM.val().toString().trim();
       let password = this.passwordDOM.val().toString().trim();
-      this.login.loginUser(phoneNUmber).then((value) => {
-        if( value===null ) {
+      this.login.loginUser(phoneNumber).then((userData) => {
+        if( userData===null ) {
           this.alertService.showAlert("This phonenumber is not registered. Please sign up first", "Login Failed");    
         } else {
-          if(value.password !== password) {
+          if(userData.password !== password) {
             this.alertService.showAlert("Password missmatch", "Login Failed");                
           } else {
             this.common.getDeviceID().then((value) => {
               let user: any;
-              user = {};
+              user = userData;
               user.lastLogIn = Date.now();
               user.lastSeen = Date.now();
               user.loggedInDeviceId = value;
 
-              this.login.updateUserStatus(phoneNUmber, user).then(() => {
+              this.login.updateUserStatus(phoneNumber, user).then(() => {
+                if(this.platform.is("cordova")) {
+                    this.login.createLocalLoginEntry(user);
+                }
                 this.navCtrl.push(TabsControllerPage);
               }).catch(() => {
                 this.alertService.showAlert("Unable to connect to database", "Connection problem");
@@ -91,7 +95,7 @@ export class LoginPage  implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.phoneNUmberDOM = $("page-login #txt_phoneNumber input");
+    this.phoneNumberDOM = $("page-login #txt_phoneNumber input");
     this.passwordDOM = $("page-login #txt_password input");
   }
 }

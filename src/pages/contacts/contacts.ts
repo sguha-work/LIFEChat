@@ -30,11 +30,15 @@ export class ContactsPage {
       
     });
   }
+
   refreshPhoneContact() {
     this.contactService.refreshPhoneContactList(this.model.userData.phoneNumber).then((value) => {
       this.model.contacts = value;
     }).catch(() => {
       // unable to get phone contacts
     });
+  }
+  shareLIFELink(phoneNumber: string, name: string) {
+    this.contactService.shareLIFEChat(phoneNumber, name);
   }
 }

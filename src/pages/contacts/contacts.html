@@ -12,12 +12,12 @@
 <ion-content padding id="page3">
     <ion-list id="contacts-list3">
         <ion-item color="calm" id="contacts-list-item1" *ngFor="let contact of model.contacts">
-            <ion-avatar item-left>
+            <!-- <ion-avatar item-left>
                 <img src="assets/img/no-photo_40x40.png" />
-            </ion-avatar>
-            <h2>
+            </ion-avatar> -->
+            <h2 (click)="shareLIFELink(contact.phoneNumber, contact.name)">
                 {{contact.name}}
-                <p style="white-space:normal;">{{contact.phoneNumber}}</p>
+                <p style="white-space:normal;">{{contact.phoneNumber}} (Tap to share LIFE)</p>
 
             </h2>
         </ion-item>

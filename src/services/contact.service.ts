@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Contacts} from '@ionic-native/contacts';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import {Database} from './database.service';
 import {FileService} from './file.service';
@@ -8,7 +9,7 @@ import {User} from './../interfaces/user.interface';
 
 @Injectable()
 export class ContactService {
-    constructor(private file: FileService, private contacts: Contacts) {
+    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing) {
 
     }
 
@@ -66,7 +67,7 @@ export class ContactService {
                             if(phoneNumber.length > 10) {
                                 phoneNumber = phoneNumber.slice(-10);
                             }
-                            if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
+                            if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && (phoneNumber[0]==="9" || phoneNumber[0]==="8" || phoneNumber[0]==="7") && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
                                 if(phoneNumber !== userPhoneNumber) {
                                     contactsArray.push({
                                         name: contacts[contactIndex]["_objectInstance"].displayName,
@@ -86,4 +87,9 @@ export class ContactService {
         
     
     }
+    public shareLIFEChat(phoneNumber: string, name: string) {
+        //if(confirm("Want to share LIFEChat to "+name+"?")) {
+          this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/drive/folders/0B7H8-Q6hAIvNdFNmZUxYSlRGZTA?usp=sharing"); 
+        //}
+      }
 }

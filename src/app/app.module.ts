@@ -11,6 +11,7 @@ import { File } from '@ionic-native/file';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { Contacts} from '@ionic-native/contacts';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { HomePage } from '../pages/home/home';
 import { ContactsPage } from '../pages/contacts/contacts';
@@ -78,6 +79,7 @@ export const firebaseConfig = {
     UniqueDeviceID,
     AndroidPermissions,
     Contacts,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Database,
     FileService,

@@ -9,7 +9,7 @@ import {User} from './../interfaces/user.interface';
 
 @Injectable()
 export class ContactService {
-    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing) {
+    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing, private database: Database) {
 
     }
 
@@ -23,15 +23,101 @@ export class ContactService {
         });
     }
 
-    public getLIFEContacts() {
+    private getListOfLIFEAccount(phoneContacts: any): Promise<any> {
+        let lifeContactsArray = [];
+        return new Promise((resolve, reject) => {
+            let promiseArray = [];
+            for(let phoneContactIndex=0; phoneContactIndex<phoneContacts.length; phoneContactIndex++) {
+                let promiseObject = new Promise((res, rej) => {
+                    this.database.getFromDatabase(phoneContacts[phoneContactIndex].phoneNumber).then((dataFromDatabase) => {
+                        if(dataFromDatabase === null) {
+                            res();
+                        } else {
+                            let imageName = "image_"+dataFromDatabase.phoneNumber
+                            this.file.writeFile(dataFromDatabase.image, imageName).then(() => {
+                                dataFromDatabase.image = imageName;
+                                lifeContactsArray.push(dataFromDatabase);
+                                res();
+                            }).catch(() => {
+                                dataFromDatabase.image = "";
+                                lifeContactsArray.push(dataFromDatabase);
+                                res();
+                            });
+                            
+                        }
+                    }).catch(() => {
+                        res();
+                    });                    
+                });
+                promiseArray.push(promiseObject);
+            }
+            Promise.all(promiseArray).then(() => {
+                resolve(lifeContactsArray);
+            }).catch(() => {
+                // unable to refresh LIFE contacts
+                reject();
+            });
+        });
+    }
 
+    private createLocalBackupForLIFEContacts(lifeContactsArray: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.writeFile(JSON.stringify(lifeContactsArray), "LIFEcontacts").then(() => {
+                resolve();
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public getLIFEContacts(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.checkIfFileExists("LIFEcontacts").then((dataFromFile) => {
+                resolve(JSON.parse(dataFromFile));
+            }).catch(() => {
+                // no local life contacts file so creating
+                this.refreshLIFEContacts(phoneNumber).then((lifeContacts) => {
+                    resolve(lifeContacts);
+                }).catch(() => {
+                    reject();
+                });
+            });
+        });
+        
+    }
+
+    public refreshLIFEContacts(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.refreshPhoneContactList(phoneNumber).then((phoneContacts) => {
+                this.getListOfLIFEAccount(phoneContacts).then((lifeContactsArray) => {
+                    this.createLocalBackupForLIFEContacts(lifeContactsArray).then(()=>{
+                        // resolving with localbackup
+                        resolve(lifeContactsArray);
+                    }).catch(() => {
+                        // resolving without local backup
+                        resolve(lifeContactsArray);
+                    });
+                }).catch(() => {
+                    reject();
+                });
+            }).catch(() => {
+                // unable to refresh contacts
+            });
+        });
+        
     }
 
     public refreshPhoneContactList(phoneNumber): Promise<any> {
         return new Promise((resolve, reject) => {
             this.readPhoneContactList(phoneNumber).then((contactsArray) => {
-                this.createLocalBackupForContacts(contactsArray);
-                resolve(contactsArray);
+                this.createLocalBackupForContacts(contactsArray).then(() => {
+                    // resolving after local backup is done
+                    resolve(contactsArray);
+                }).catch(() => {
+                    // resolving without creating local backup
+                    resolve(contactsArray);
+                });
+                
             }).catch(() => {
                 reject();
             });

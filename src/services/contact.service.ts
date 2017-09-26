@@ -36,6 +36,7 @@ export class ContactService {
                             let imageName = "image_"+dataFromDatabase.phoneNumber
                             this.file.writeFile(dataFromDatabase.image, imageName).then(() => {
                                 dataFromDatabase.image = imageName;
+                                dataFromDatabase.name = phoneContacts[phoneContactIndex].name;
                                 lifeContactsArray.push(dataFromDatabase);
                                 res();
                             }).catch(() => {

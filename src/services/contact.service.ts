@@ -12,7 +12,7 @@ export class ContactService {
 
     }
 
-    public createLocalBackupForContacts(contactsArray: any): Promise<any> {
+    private createLocalBackupForContacts(contactsArray: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.writeFile(JSON.stringify(contactsArray), "contacts").then(() => {
                 resolve();
@@ -22,13 +22,28 @@ export class ContactService {
         });
     }
 
-    public getContacts(phoneNumber: string): Promise<any> {
+    public getLIFEContacts() {
+
+    }
+
+    public refreshPhoneContactList(phoneNumber): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.readPhoneContactList(phoneNumber).then((contactsArray) => {
+                this.createLocalBackupForContacts(contactsArray);
+                resolve(contactsArray);
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public getPhoneContacts(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.checkIfFileExists("contacts").then((value) => {
                 let contactList = JSON.parse(value);
                 resolve(contactList);
             }).catch(() => {
-                this.refreshContactList(phoneNumber).then((contactsArray) => {
+                this.readPhoneContactList(phoneNumber).then((contactsArray) => {
                     this.createLocalBackupForContacts(contactsArray);
                     resolve(contactsArray);
                 }).catch(() => {
@@ -38,7 +53,7 @@ export class ContactService {
         });
     }
 
-    public refreshContactList(userPhoneNumber: string): Promise<any> {
+    private readPhoneContactList(userPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             let contactsArray = [];
             let tempPhoneArray = [];
@@ -55,9 +70,7 @@ export class ContactService {
                                 if(phoneNumber !== userPhoneNumber) {
                                     contactsArray.push({
                                         name: contacts[contactIndex]["_objectInstance"].displayName,
-                                        phoneNumber: phoneNumber,
-                                        isOnLIFEChat: false,
-                                        lifeObject: {}
+                                        phoneNumber: phoneNumber
                                     });
                                     tempPhoneArray.push(phoneNumber);
                                 }

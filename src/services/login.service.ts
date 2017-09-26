@@ -26,8 +26,15 @@ export class LoginService {
         
     }
 
-    public createLocalLoginEntry(user: User) {
-        this.fileService.writeFile(JSON.stringify(user), "user");
+    public createLocalLoginEntry(user: User): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.fileService.writeFile(JSON.stringify(user), "user").then(() => {
+                resolve();
+            }).catch(() => {
+                reject();
+            });
+        });
+        
     }
 
     public loginUser(phoneNumber: string): Promise<any> {
@@ -42,8 +49,8 @@ export class LoginService {
 
     public updateUserStatus(phoneNumber: string, data: any): Promise<any> {
         return new Promise((resolve, reject) => {
+            this.events.publish("USER_UPDATED");
             this.database.updateToDatabase(phoneNumber, data).then(() => {
-                this.events.publish("USER_UPDATED");
                 resolve();
             }).catch(() => {
                 reject();

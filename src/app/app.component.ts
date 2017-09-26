@@ -21,7 +21,7 @@ import {CommonService} from './../services/common.service';
 export class MyApp  implements AfterViewInit {
   @ViewChild(Nav) navCtrl: Nav;
     rootPage:any = "";
-
+  public model: any;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private loginService: LoginService, private events: Events, private common: CommonService) {
     // platform.ready().then(() => {
     //   // Okay, so the platform is ready and our plugins are available.
@@ -30,6 +30,8 @@ export class MyApp  implements AfterViewInit {
     //   splashScreen.hide();
     // });
     this.redirectToLoginIfuserDoesnotExists();
+    this.model = {};
+    this.model.imageData = "assets/img/no-photo_40x40.png";
   }
 
   private redirectToLoginIfuserDoesnotExists() {
@@ -43,10 +45,14 @@ export class MyApp  implements AfterViewInit {
   private updateDisplayebleUserData() {
     this.common.getPresentUserData().then((userData) => {
       // updating user data
-      $("#lbl_myPhoneNumber").text(userData.phoneNumber);
+      this.model.phoneNumber = userData.phoneNumber;
       if(typeof userData.image !== "undefined" && userData.image !== null && userData.image !== "") {
-        $("#img_myProfilePhoto").attr("src", userData.image);
+        this.model.imageData = userData.image;
       }
+      // $("#lbl_myPhoneNumber").text(userData.phoneNumber);
+      // if(typeof userData.image !== "undefined" && userData.image !== null && userData.image !== "") {
+      //   $("#img_myProfilePhoto").attr("src", userData.image);
+      // }
       
     }).catch(() => {
       // failed to update user data

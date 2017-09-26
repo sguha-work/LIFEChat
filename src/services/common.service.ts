@@ -68,6 +68,7 @@ export class CommonService {
                 resolve(userData);
             }).catch(() => {
                 // cant read user data
+                
             });
         });
     }

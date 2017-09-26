@@ -90,16 +90,15 @@ export class LoginPage  implements AfterViewInit {
               user.lastLogIn = Date.now();
               user.lastSeen = Date.now();
               user.loggedInDeviceId = value;
-
-              this.login.updateUserStatus(phoneNumber, user).then(() => {
-                //if(this.platform.is("cordova")) {
-                    this.login.createLocalLoginEntry(user);
-                //}
-                this.navCtrl.push(TabsControllerPage);
-              }).catch(() => {
-                this.alertService.showAlert("Unable to connect to database", "Connection problem");
-                this.enableLoginButton();
-              });
+              this.login.createLocalLoginEntry(user).then(() => {
+                this.login.updateUserStatus(phoneNumber, user).then(() => {
+                  this.navCtrl.push(TabsControllerPage);
+                }).catch(() => {
+                  this.alertService.showAlert("Unable to connect to database", "Connection problem");
+                  this.enableLoginButton();
+                });
+              }).catch();
+              
               
             }).catch(() => {
               this.alertService.showAlert("Error fetching device id, user cannot be registerred. Make sure to give call/phone access.", "Error");

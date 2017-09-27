@@ -43,6 +43,7 @@ export class HomePage {
     for(let index=0; index<imageObjectLength; index++) {
       let promise = new Promise((res, rej) => {
         let imageFileName = $("page-home img[data-image-file-name]").eq(index).next().val();
+        $("page-home img[data-image-file-name]").eq(index).next().remove();
         if(imageFileName === "" || imageFileName === null) {
           $("page-home img[data-image-file-name]").eq(index).attr("src", "assets/img/no-photo_40x40.png");
           res();

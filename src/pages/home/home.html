@@ -12,10 +12,11 @@
 <ion-content padding id="page2">
     <ion-list id="contacts-list3">
         <ion-item color="calm" id="contacts-list-item1" *ngFor="let contact of model.lifeContacts">
-            <ion-avatar item-left>
-                <img src="assets/img/no-photo_40x40.png" />
+            <ion-avatar (click)="openProfile(contact.phoneNumber)" item-left>
+                <img data-image-file-name="" src="assets/img/no-photo_40x40.png" />
+                <input type="hidden" value="{{contact.image}}" />
             </ion-avatar>
-            <h2>
+            <h2 (click)="openConversation(contact.phoneNumber)">
                 {{contact.name}}
                 <p style="white-space:normal;">{{contact.phoneNumber}} </p>
                 <p style="white-space:normal;">Last seen {{contact.lastSeen}}</p>

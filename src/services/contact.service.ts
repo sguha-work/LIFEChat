@@ -33,17 +33,23 @@ export class ContactService {
                         if(dataFromDatabase === null) {
                             res();
                         } else {
-                            let imageName = "image_"+dataFromDatabase.phoneNumber
-                            this.file.writeFile(dataFromDatabase.image, imageName).then(() => {
-                                dataFromDatabase.image = imageName;
-                                dataFromDatabase.name = phoneContacts[phoneContactIndex].name;
+                            let imageName = "image_"+dataFromDatabase.phoneNumber;
+                            dataFromDatabase.name = phoneContacts[phoneContactIndex].name;
+                            if(typeof dataFromDatabase.image === "undefined" || dataFromDatabase.image === null || dataFromDatabase.image === "") {
                                 lifeContactsArray.push(dataFromDatabase);
                                 res();
-                            }).catch(() => {
-                                dataFromDatabase.image = "";
-                                lifeContactsArray.push(dataFromDatabase);
-                                res();
-                            });
+                            } else {
+                                this.file.writeFile(dataFromDatabase.image, imageName).then(() => {
+                                    dataFromDatabase.image = imageName;
+                                    lifeContactsArray.push(dataFromDatabase);
+                                    res();
+                                }).catch(() => {
+                                    dataFromDatabase.image = "";
+                                    lifeContactsArray.push(dataFromDatabase);
+                                    res();
+                                });
+                            }
+                            
                             
                         }
                     }).catch(() => {
@@ -59,6 +65,40 @@ export class ContactService {
                 reject();
             });
         });
+    }
+
+    private readPhoneContactList(userPhoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let contactsArray = [];
+            let tempPhoneArray = [];
+            this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
+                if(contacts.length) {
+                    for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
+                        for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
+                            let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
+                            phoneNumber = phoneNumber.split(" ").join("").split("-").join("");
+                            if(phoneNumber.length > 10) {
+                                phoneNumber = phoneNumber.slice(-10);
+                            }
+                            if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && (phoneNumber[0]==="9" || phoneNumber[0]==="8" || phoneNumber[0]==="7") && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
+                                if(phoneNumber !== userPhoneNumber) {
+                                    contactsArray.push({
+                                        name: contacts[contactIndex]["_objectInstance"].displayName,
+                                        phoneNumber: phoneNumber
+                                    });
+                                    tempPhoneArray.push(phoneNumber);
+                                }
+                            }
+                        }
+                    }
+                }
+                resolve(contactsArray);
+              }, (error) => {
+                resolve(contactsArray);
+              });
+        });
+        
+    
     }
 
     private createLocalBackupForLIFEContacts(lifeContactsArray: any): Promise<any> {
@@ -141,42 +181,20 @@ export class ContactService {
         });
     }
 
-    private readPhoneContactList(userPhoneNumber: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            let contactsArray = [];
-            let tempPhoneArray = [];
-            this.contacts.find(["displayName"], {filter:"",multiple: true,desiredFields:["displayNames", "phoneNumbers"],hasPhoneNumber: true}).then((contacts) => {
-                if(contacts.length) {
-                    for(let contactIndex=0; contactIndex<contacts.length; contactIndex++) {
-                        for(let index=0; index<contacts[contactIndex]["_objectInstance"].phoneNumbers.length; index++) {
-                            let phoneNumber = contacts[contactIndex]["_objectInstance"].phoneNumbers[index].value;
-                            phoneNumber = phoneNumber.split(" ").join("").split("-").join("");
-                            if(phoneNumber.length > 10) {
-                                phoneNumber = phoneNumber.slice(-10);
-                            }
-                            if(phoneNumber.length === 10 && tempPhoneArray.indexOf(phoneNumber) === -1 && (phoneNumber[0]==="9" || phoneNumber[0]==="8" || phoneNumber[0]==="7") && typeof contacts[contactIndex]["_objectInstance"].displayName !== "undefined" && contacts[contactIndex]["_objectInstance"].displayName !== null) {
-                                if(phoneNumber !== userPhoneNumber) {
-                                    contactsArray.push({
-                                        name: contacts[contactIndex]["_objectInstance"].displayName,
-                                        phoneNumber: phoneNumber
-                                    });
-                                    tempPhoneArray.push(phoneNumber);
-                                }
-                            }
-                        }
-                    }
-                }
-                resolve(contactsArray);
-              }, (error) => {
-                resolve(contactsArray);
-              });
-        });
-        
     
-    }
     public shareLIFEChat(phoneNumber: string, name: string) {
-        //if(confirm("Want to share LIFEChat to "+name+"?")) {
-          this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/drive/folders/0B7H8-Q6hAIvNdFNmZUxYSlRGZTA?usp=sharing"); 
-        //}
-      }
+    //if(confirm("Want to share LIFEChat to "+name+"?")) {
+        this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/drive/folders/0B7H8-Q6hAIvNdFNmZUxYSlRGZTA?usp=sharing"); 
+    //}
+    }
+
+    public getImageDataFromFileName(fileName: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.readFile(fileName).then((value) => {
+                resolve(value);
+            }).catch(() => {
+                resolve("assets/img/no-photo_40x40.png");
+            });
+        });
+    }
 }

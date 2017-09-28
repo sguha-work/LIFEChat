@@ -1,7 +1,19 @@
 import {Injectable} from '@angular/core';
-import * as firebase from 'firebase'; 
 import { AngularFireDatabase } from 'angularfire2/database';
-import { FirebaseListObservable } from 'angularfire2';
+import { FirebaseListObservable } from 'angularfire2/database';
+import * as firebase from 'firebase'; 
+
+export class Upload {
+  $key: string;
+  file:File;
+  name:string;
+  url:string;
+  progress:number;
+  createdAt: Date = new Date();
+  constructor(file:File) {
+    this.file = file;
+  }
+}
 
 @Injectable()
 export class UploadService {
@@ -14,7 +26,7 @@ export class UploadService {
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
         // upload in progress
-        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        upload.progress = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100
       },
       (error) => {
         // upload failed

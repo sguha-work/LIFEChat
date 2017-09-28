@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
+import {User} from './../interfaces/user.interface';
+
 import {FileService} from './file.service';
 @Injectable()
 export class CommonService {
@@ -65,10 +67,10 @@ export class CommonService {
         return new Promise((resolve, reject) => {
             this.file.readFile("user").then((value) => {
                 let userData = JSON.parse(value);
-                resolve(userData);
+                resolve(userData as User);
             }).catch(() => {
                 // cant read user data
-                
+                reject();
             });
         });
     }

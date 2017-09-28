@@ -52,7 +52,7 @@ export class Database {
    }
 
    public receiveConversation(myPhoneNumber: string) {
-        let databaseReference = this.db.database.ref('/' + myPhoneNumber + '/chat/');
+        let databaseReference = this.db.database.ref('/' + '/chat/' + myPhoneNumber + '/');
         databaseReference.on('value', (snapshot) => {
             this.events.publish("MESSAGES-RECEIVED", snapshot.val());
         });

@@ -39,7 +39,7 @@ export class Database {
 
    public writeMessageToDatabase(key: string, data: any) {
        return new Promise((resolve, reject) => {
-        this.db.database.ref("/"+key).push(data,(error) => {
+        this.db.database.ref("/chat/"+key).push(data,(error) => {
             if(error) {
                 alert("Failed to deliver the message");
                 reject();
@@ -51,7 +51,7 @@ export class Database {
        
    }
 
-   public receiveConversation(myPhoneNumber: string) {
+   public turnOnConversationConnection(myPhoneNumber: string) {
         let databaseReference = this.db.database.ref('/' + '/chat/' + myPhoneNumber + '/');
         databaseReference.on('value', (snapshot) => {
             this.events.publish("MESSAGES-RECEIVED", snapshot.val());

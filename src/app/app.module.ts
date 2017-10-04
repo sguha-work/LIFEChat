@@ -31,6 +31,7 @@ import {CommonService} from './../services/common.service';
 import {SignupService} from "./../services/signup.service";
 import {AlertService} from "./../services/alert.service";
 import {ContactService} from "./../services/contact.service";
+import {ConversationService} from "./../services/conversation.service";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
@@ -87,7 +88,8 @@ export const firebaseConfig = {
     CommonService,
     SignupService,
     AlertService,
-    ContactService
+    ContactService,
+    ConversationService
   ]
 })
 export class AppModule {}

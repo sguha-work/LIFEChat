@@ -8,6 +8,9 @@ import { NavController } from 'ionic-angular';
 export class ConversationPage {
 
   constructor(public navCtrl: NavController) {
+    alert("conversation");
   }
-  
+  sendMessage() {
+    alert("send messege called");
+  }
 }

@@ -113,7 +113,7 @@ export class ContactService {
 
     public getLIFEContacts(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.checkIfFileExists("LIFEcontacts").then((dataFromFile) => {alert("x");
+            this.file.checkIfFileExists("LIFEcontacts").then((dataFromFile) => {
                 resolve(JSON.parse(dataFromFile));
             }).catch(() => {
                 // no local life contacts file so creating
@@ -125,6 +125,12 @@ export class ContactService {
             });
         });
         
+    }
+
+    public getLIFEContactDetails(contactPhoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            
+        });
     }
 
     public refreshLIFEContacts(phoneNumber: string): Promise<any> {

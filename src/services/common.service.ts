@@ -74,4 +74,9 @@ export class CommonService {
             });
         });
     }
+
+    public getMMYYYY(): string {
+        let date = new Date();
+        return date.getMonth() + "-" + date.getFullYear();
+    }
 }

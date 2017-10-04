@@ -115,4 +115,10 @@ export class ConversationService {
             });
         });
     }
+
+    public getCurrentUserData() {
+        let userData = JSON.parse(sessionStorage["currentActiveUser"]);
+        sessionStorage["currentActiveUser"] = null;
+        return userData
+    }
 }

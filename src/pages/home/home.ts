@@ -108,7 +108,7 @@ export class HomePage {
 
   openConversation(phoneNumber: string) {
     this.contactService.getLIFEContactDetails(phoneNumber).then((contactData) => {
-      alert(JSON.stringify(contactData));
+      sessionStorage["currentActiveUser"] = JSON.stringify(contactData);
       this.navCtrl.push(ConversationPage);
     }).catch(() => {
       // nothing to do

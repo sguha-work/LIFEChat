@@ -111,7 +111,7 @@ export class ContactService {
         });
     }
 
-    public getLIFEContacts(phoneNumber: string): Promise<any> {
+    public getLIFEContacts(phoneNumber?: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.checkIfFileExists("LIFEcontacts").then((dataFromFile) => {
                 resolve(JSON.parse(dataFromFile));
@@ -129,7 +129,16 @@ export class ContactService {
 
     public getLIFEContactDetails(contactPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            
+            this.getLIFEContacts().then((lifeContactsData) => {
+                for(let contactIndex=0; contactIndex<lifeContactsData.length; contactIndex++) {
+                    if(lifeContactsData[contactIndex].phoneNumber === contactPhoneNumber) {
+                        resolve(lifeContactsData[contactIndex]);
+                        break;
+                    }
+                }
+            }).catch(() => {
+                reject();
+            });
         });
     }
 

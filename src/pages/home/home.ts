@@ -107,7 +107,13 @@ export class HomePage {
   }
 
   openConversation(phoneNumber: string) {
-    this.navCtrl.push(ConversationPage);
+    this.contactService.getLIFEContactDetails(phoneNumber).then((contactData) => {
+      alert(JSON.stringify(contactData));
+      this.navCtrl.push(ConversationPage);
+    }).catch(() => {
+      // nothing to do
+    });
+    
   }
   
 }

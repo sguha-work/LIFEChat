@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import * as $ from 'jquery';
 
 import {CommonService} from './../../services/common.service';
 import {ConversationService} from './../../services/conversation.service';
@@ -29,6 +30,8 @@ export class ConversationPage {
   }
 
   sendMessage() {
-    alert("send messege called");
+    alert($("#txt_message").val());
+    let messageText = $("#txt_message").val();
+    this.conversation.sendMessage(messageText, this.model.user.phoneNumber);
   }
 }

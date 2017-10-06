@@ -16,7 +16,8 @@ export class ConversationService {
     }
 
     private createMessageObject(messageText: string, toPhoneNumber: string): Promise<any> {
-        let messageObject: Message;
+        let messageObject: any;
+        messageObject = {};
         return new Promise((resolve, reject) => {
             messageObject.to = toPhoneNumber;
             messageObject.message = messageText;
@@ -25,6 +26,8 @@ export class ConversationService {
                 this.common.getPresentUserData().then((userData: User) => {
                     messageObject.from = userData.phoneNumber;
                     messageObject.sentFromDevice = userData.loggedInDeviceId;
+                    localStorage["userPhoneNumber"] = userData.phoneNumber;
+                    localStorage["deviceId"] = userData.loggedInDeviceId;
                     resolve(messageObject);
                 }).catch(() => {
                     // unable to fetch user information
@@ -57,7 +60,7 @@ export class ConversationService {
     
     private backupConversationToLocalFile(messageText: string, toPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.createMessageObject(messageText, toPhoneNumber).then((messageObject: Message) => {
+            this.createMessageObject(messageText, toPhoneNumber).then((messageObject: Message) => {alert(JSON.stringify(messageObject));
                 let chatFileName = toPhoneNumber+"-"+this.common.getMMYYYY()+".chat";
                 this.file.checkIfFileExists(chatFileName).then(() => {
                     this.writeMessgeObjectToChatFile(messageObject, chatFileName).then(() => {

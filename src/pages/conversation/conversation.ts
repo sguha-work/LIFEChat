@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import {CommonService} from './../../services/common.service';
 import {ConversationService} from './../../services/conversation.service';
+import {FileService} from './../../services/file.service';
 
 import {Message} from './../../interfaces/message.interface';
 
@@ -11,10 +13,21 @@ import {Message} from './../../interfaces/message.interface';
 })
 export class ConversationPage {
   public model: any;
-  constructor(public navCtrl: NavController, private conversation: ConversationService) {
+  constructor(public navCtrl: NavController, private conversation: ConversationService, private common: CommonService, private file: FileService) {
     this.model = {};
-    this.model.user = this.conversation.getCurrentUserData();alert("hello"+JSON.stringify(this.model.user));
+    this.model.user = this.conversation.getCurrentUserData();
+    this.displayImage(this.model.user.image);
+    this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);alert(JSON.stringify(this.model.user));
   }
+
+  private displayImage(imageName: any) {
+    this.file.readFile(imageName).then((dataFromFile) => {
+      this.model.user.image = dataFromFile;
+    }).catch(() => {
+      this.model.user.image = "assets/img/no-photo_40x40.png";
+    });
+  }
+
   sendMessage() {
     alert("send messege called");
   }

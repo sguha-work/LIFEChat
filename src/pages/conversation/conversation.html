@@ -5,12 +5,12 @@
         </button>
         <ion-item class="member" color="calm" id="contacts-list-item1">
             <ion-avatar item-right>
-                <img src="assets/img/no-photo_40x40.png" />
+                <img src="{{model.user.image}}" />
             </ion-avatar>
             <h2>
                 {{model.user.name}}
                 <br>
-                <p direction="left" style="margin-top: 2px;white-space:normal;font-size: 10px;text-align: right;">Last seen 25-07-2017 12:12 PM</p>
+                <p direction="left" style="margin-top: 2px;white-space:normal;font-size: 10px;text-align: right;">Last seen {{model.user.lastSeen}}</p>
             </h2>
         </ion-item>
     </ion-navbar>

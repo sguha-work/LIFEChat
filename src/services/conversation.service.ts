@@ -43,15 +43,15 @@ export class ConversationService {
 
     private writeMessgeObjectToChatFile(messegeObject: Message, chatFileName: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.readFile(chatFileName).then((dataFromFile) => {alert(21);
+            this.file.readFile(chatFileName).then((dataFromFile) => {
                 let chatData = JSON.parse(dataFromFile);
                 chatData.push(messegeObject);
-                this.file.writeFile(JSON.stringify(chatData), chatFileName).then(() => {alert(22);
+                this.file.writeFile(JSON.stringify(chatData), chatFileName).then(() => {
                     resolve();
-                }).catch(() => {alert(23);
+                }).catch(() => {
                     // unable to write file so rejecting
                 });
-            }).catch(() => {alert(24)
+            }).catch(() => {
                 // unable to read chat file so rejecting
                 reject();
             });
@@ -62,27 +62,27 @@ export class ConversationService {
         return new Promise((resolve, reject) => {
             this.createMessageObject(messageText, toPhoneNumber).then((messageObject: Message) => {
                 let chatFileName = toPhoneNumber+"-"+this.common.getMMYYYY()+".chat";
-                this.file.checkIfFileExists(chatFileName).then(() => {alert(1);
+                this.file.checkIfFileExists(chatFileName).then((data) => {
                     this.writeMessgeObjectToChatFile(messageObject, chatFileName).then(() => {
-                        resolve();
-                    }).catch(() => {alert(2);
+                        resolve(messageObject);
+                    }).catch(() => {
                         // unable to write chat object to file so rejecting
                         reject();
                     });
-                }).catch(() => {alert(3);
-                    this.file.writeFile("{}", chatFileName).then(() => {alert(4);
-                        this.writeMessgeObjectToChatFile(messageObject, chatFileName).then(() => {alert(5);
-                            resolve();
-                        }).catch(() => {alert(6);
+                }).catch(() => {
+                    this.file.writeFile("[]", chatFileName).then(() => {
+                        this.writeMessgeObjectToChatFile(messageObject, chatFileName).then(() => {
+                            resolve(messageObject);
+                        }).catch(() => {
                             // unable to write chat object to file so rejecting
                             reject();
                         });
-                    }).catch(() => {alert(7);
+                    }).catch(() => {
                         // unable to create file so rejecting
                         reject();
                     });
                 });
-            }).catch(() => {alert(8);
+            }).catch(() => {
                 // unable to get user data
                 reject();
             });

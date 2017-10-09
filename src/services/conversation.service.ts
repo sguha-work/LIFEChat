@@ -34,16 +34,20 @@ export class ConversationService {
                 let messageArray = JSON.parse(dataFromFile);
                 messageArray.push(message);
                 this.file.writeFile(JSON.stringify(messageArray), chatFileName).then(() => {
+                    this.events.publish("CHAT-FILE-UPDATED", message.from);
                     resolve();
                 }).catch(() => {
+                    this.events.publish("CHAT-FILE-UPDATED", message.from);
                     resolve();
                 });
             }).catch(() => {
                 let messageArray = [];
                 messageArray.push(message);
                 this.file.writeFile(JSON.stringify(messageArray), chatFileName).then(() => {
+                    this.events.publish("CHAT-FILE-UPDATED", message.from);
                     resolve();
                 }).catch(() => {
+                    this.events.publish("CHAT-FILE-UPDATED", message.from);
                     resolve();
                 });
             });

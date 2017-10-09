@@ -31,6 +31,9 @@ export class ConversationPage {
 
   sendMessage() {
     let messageText = $("#txt_message").val();
-    this.conversation.sendMessage(messageText, this.model.user.phoneNumber);
+    if(messageText.trim() !== "") {
+      this.conversation.sendMessage(messageText, this.model.user.phoneNumber);
+    }
+    $("#txt_message").val("");
   }
 }

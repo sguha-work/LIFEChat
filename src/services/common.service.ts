@@ -79,4 +79,9 @@ export class CommonService {
         let date = new Date();
         return date.getMonth() + "-" + date.getFullYear();
     }
+
+    public getChatFileName(phoneNumber: string): string {
+        let chatFileName = phoneNumber+"-"+this.getMMYYYY()+".chat";
+        return chatFileName;
+    }
 }

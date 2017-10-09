@@ -11,8 +11,77 @@ import {User} from './../interfaces/user.interface';
 @Injectable()
 export class ConversationService {
 
-    constructor(private common: CommonService, private file: FileService, private database: Database) {
+    constructor(private common: CommonService, private file: FileService, private database: Database, private events: Events) {
+        this.bindEvents();
+    }
 
+    private bindEvents() {
+        this.events.subscribe("MESSAGES-RECEIVED", (value) => {
+            this.receiveMessage(value);
+        });
+    }
+
+    private prepareAndShowNotofication(messages: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+        })
+    }
+
+    private writeMessegeToProperFile(message: Message): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let chatFileName = this.common.getChatFileName(message.from);
+            this.file.checkIfFileExists(chatFileName).then((dataFromFile) => {
+                let messageArray = JSON.parse(dataFromFile);
+                messageArray.push(message);
+                this.file.writeFile(JSON.stringify(messageArray), chatFileName).then(() => {
+                    resolve();
+                }).catch(() => {
+                    resolve();
+                });
+            }).catch(() => {
+                let messageArray = [];
+                messageArray.push(message);
+                this.file.writeFile(JSON.stringify(messageArray), chatFileName).then(() => {
+                    resolve();
+                }).catch(() => {
+                    resolve();
+                });
+            });
+        });
+    }
+
+    private updateMessagesToFile(messages: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let keys = Object.keys(messages);
+            let promiseArray = [];
+            for(let keysIndex=0; keysIndex<keys.length; keysIndex++) {
+                let promise = new Promise((res, rej) => {
+                    this.writeMessegeToProperFile(messages[keys[keysIndex]]).then(() => {
+                        res();
+                    }).catch(() => {
+                        res();
+                    });
+                });
+                promiseArray.push(promise);
+            }
+            Promise.all(promiseArray).then(() => {
+                resolve();
+            }).catch(() => {
+                resolve();
+            });
+        })
+    }
+
+    private clearChatDatabase() {
+        alert("database clear called");
+    }
+
+    private receiveMessage(value: any) {
+        //alert("new message "+JSON.stringify(value));
+        this.prepareAndShowNotofication(value);
+        this.updateMessagesToFile(value).then(() => {
+            this.clearChatDatabase();
+        }).catch(() => {});
     }
 
     private createMessageObject(messageText: string, toPhoneNumber: string): Promise<any> {
@@ -61,7 +130,7 @@ export class ConversationService {
     private backupConversationToLocalFile(messageText: string, toPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.createMessageObject(messageText, toPhoneNumber).then((messageObject: Message) => {
-                let chatFileName = toPhoneNumber+"-"+this.common.getMMYYYY()+".chat";
+                let chatFileName = this.common.getChatFileName(toPhoneNumber);
                 this.file.checkIfFileExists(chatFileName).then((data) => {
                     this.writeMessgeObjectToChatFile(messageObject, chatFileName).then(() => {
                         resolve(messageObject);

@@ -7,6 +7,7 @@ import {ConversationPage} from './../conversation/conversation';
 import {AlertService} from "./../../services/alert.service";
 import {ContactService} from "./../../services/contact.service";
 import {CommonService} from "./../../services/common.service";
+import {ConversationService} from "./../../services/conversation.service";
 
 @Component({
   selector: 'page-home',
@@ -16,7 +17,7 @@ export class HomePage {
 
   private model: any;
 
-  constructor(public navCtrl: NavController, private alertService: AlertService, private contactService: ContactService, private commonService: CommonService) {
+  constructor(public navCtrl: NavController, private alertService: AlertService, private contactService: ContactService, private commonService: CommonService, private conversation: ConversationService) {
     this.model = {};
     this.model.lifeContacts = [];
     this.commonService.getPresentUserData().then((userData) => {
@@ -71,6 +72,7 @@ export class HomePage {
         this.model.lifeContacts = value;
         setTimeout(() => {
           this.loadImages();
+          this.conversation.turnOnConversationConnection(phoneNumber);
         }, 2000);
       }).catch(() => {
         alert("failed");

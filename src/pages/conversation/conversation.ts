@@ -18,7 +18,7 @@ export class ConversationPage {
     this.model = {};
     this.model.user = this.conversation.getCurrentUserData();
     this.displayImage(this.model.user.image);
-    this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);alert(JSON.stringify(this.model.user));
+    this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);
   }
 
   private displayImage(imageName: any) {
@@ -30,7 +30,6 @@ export class ConversationPage {
   }
 
   sendMessage() {
-    alert($("#txt_message").val());
     let messageText = $("#txt_message").val();
     this.conversation.sendMessage(messageText, this.model.user.phoneNumber);
   }

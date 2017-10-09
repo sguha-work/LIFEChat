@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import * as $ from 'jquery';
 
 import {CommonService} from './../../services/common.service';
@@ -14,11 +15,18 @@ import {Message} from './../../interfaces/message.interface';
 })
 export class ConversationPage {
   public model: any;
-  constructor(public navCtrl: NavController, private conversation: ConversationService, private common: CommonService, private file: FileService) {
+  constructor(public navCtrl: NavController, private conversation: ConversationService, private common: CommonService, private file: FileService, private events: Events) {
     this.model = {};
     this.model.user = this.conversation.getCurrentUserData();
     this.displayImage(this.model.user.image);
     this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);
+    this.bindEvents();
+  }
+
+  private bindEvents() {
+    this.events.subscribe("CHAT-FILE-UPDATED", (value)=> {
+      alert(value);
+    });
   }
 
   private displayImage(imageName: any) {

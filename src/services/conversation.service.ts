@@ -197,4 +197,20 @@ export class ConversationService {
         sessionStorage["currentActiveUser"] = null;
         return userData
     }
+
+    public getLatestConversation(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.getChatFileList(phoneNumber).then(() => {
+                
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public getChatFileList(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.getAllChatFile();
+        });
+    }
 }

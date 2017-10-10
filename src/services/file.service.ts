@@ -68,6 +68,16 @@ export class FileService {
         
     }
 
+    public getAllChatFile(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.listDir(this.file.dataDirectory, rootFolderName).then((value) => {
+                alert(JSON.stringify(value));
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
     public writeFile(data: string, fileName: string): Promise<any> {
         let directoryPath = this.getPath();
         return new Promise((resolve, reject) => {

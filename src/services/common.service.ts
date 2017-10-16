@@ -77,11 +77,35 @@ export class CommonService {
 
     public getMMYYYY(): string {
         let date = new Date();
-        return date.getMonth() + "-" + date.getFullYear();
+        let month = date.getMonth(); 
+        let monthString = "";
+        if(month<10) {
+            monthString = "0" + month.toString();
+        }
+        return monthString + "-" + date.getFullYear();
     }
 
     public getChatFileName(phoneNumber: string): string {
-        let chatFileName = phoneNumber+"-"+this.getMMYYYY()+".chat";
+        let chatFileName = phoneNumber+"_"+this.getMMYYYY()+".chat";
         return chatFileName;
+    }
+
+    private isLargeMMYYYY(mmyyyy1: string, mmyyyy2: string): any {
+
+    }
+
+    public sortChatFileNameDateWise(chatFileList: any): any {
+        for(let index1=0; index1<chatFileList.length; index1++) {
+            for(let index2=0; index2<chatFileList.length-1-index1; index2++) {
+                let mmyyyy1 = chatFileList[index2].split("_").pop().split(".")[0];
+                let mmyyyy2 = chatFileList[index2+1].split("_").pop().split(".")[0];
+                if(!this.isLargeMMYYYY(mmyyyy1, mmyyyy2)) {
+                    let temp = chatFileList[index2];
+                    chatFileList[index2] = chatFileList[index2 +1];
+                    chatFileList[index2+1] = temp;
+                }
+            }
+        }
+        return chatFileList;
     }
 }

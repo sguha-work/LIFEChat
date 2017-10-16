@@ -71,7 +71,13 @@ export class FileService {
     public getAllChatFile(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.listDir(this.file.dataDirectory, rootFolderName).then((value) => {
-                alert(JSON.stringify(value));
+                let chatFileList = [];
+                for(let fileIndex=0; fileIndex<value.length; fileIndex++) {
+                    if(value[fileIndex].isFile && !value[fileIndex].isDirectory && (value[fileIndex].name.indexOf(".chat")!== -1)) {
+                        chatFileList.push(value[fileIndex].name);
+                    }
+                }
+                resolve(chatFileList);
             }).catch(() => {
                 reject();
             });

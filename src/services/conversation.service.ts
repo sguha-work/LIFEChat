@@ -210,7 +210,28 @@ export class ConversationService {
 
     public getChatFileList(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.getAllChatFile();
+            this.file.getAllChatFile().then((allChatFileList) => {
+                let chatFileList = [];
+                for(let fileIndex=0; fileIndex<allChatFileList.length; fileIndex++) {
+                    if(allChatFileList[fileIndex].indexOf(phoneNumber) !== -1) {
+                        chatFileList.push(allChatFileList[fileIndex]);
+                    }
+                }
+                resolve(chatFileList);
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    public getChatData(phoneNumber: string, date?: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.getChatFileList(phoneNumber).then((chatFileList) => {
+                chatFileList = this.common.sortChatFileNameDateWise(chatFileList);
+                alert("hello "+JSON.stringify(chatFileList));
+            }).catch(() => {
+                reject();
+            });
         });
     }
 }

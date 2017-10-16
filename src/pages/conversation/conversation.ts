@@ -21,12 +21,17 @@ export class ConversationPage {
     this.displayImage(this.model.user.image);
     this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);
     this.bindEvents();
+    this.populateChat(this.model.user.phoneNumber);
   }
 
   private bindEvents() {
     this.events.subscribe("CHAT-FILE-UPDATED", (value)=> {
-      alert(value);
+      this.populateChat(value);
     });
+  }
+
+  private populateChat(fromPhoneNumber?: string) {alert(fromPhoneNumber);
+    this.conversation.getChatData(fromPhoneNumber);
   }
 
   private displayImage(imageName: any) {

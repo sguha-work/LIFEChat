@@ -90,8 +90,21 @@ export class CommonService {
         return chatFileName;
     }
 
+    // return true if first is larger than second
     private isLargeMMYYYY(mmyyyy1: string, mmyyyy2: string): any {
+        let mm1, yyyy1, mm2, yyyy2;
+        
+        mm1 = parseInt(mmyyyy1.split("-")[0]);
+        yyyy1 = parseInt(mmyyyy1.split("-")[1]);
 
+        mm2 = parseInt(mmyyyy2.split("-")[0]);
+        yyyy2 = parseInt(mmyyyy2.split("-")[1]);
+
+        if(mm2>mm1) {
+
+        }
+
+        return true;
     }
 
     public sortChatFileNameDateWise(chatFileList: any): any {

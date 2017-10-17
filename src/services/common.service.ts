@@ -101,7 +101,13 @@ export class CommonService {
         yyyy2 = parseInt(mmyyyy2.split("-")[1]);
 
         if(mm2>mm1) {
+            return false;
+        }
 
+        if(mm2 === mm1) {
+            if(yyyy2>yyyy1) {
+                return false;
+            }
         }
 
         return true;

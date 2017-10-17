@@ -31,7 +31,7 @@ export class ConversationPage {
   }
 
   private populateChat(fromPhoneNumber?: string) {alert(fromPhoneNumber);
-    this.conversation.getChatData(fromPhoneNumber);
+    this.conversation.getChatDataFileList(fromPhoneNumber);
   }
 
   private displayImage(imageName: any) {

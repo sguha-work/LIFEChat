@@ -195,7 +195,7 @@ export class ConversationService {
     public getCurrentUserData() {
         let userData = JSON.parse(sessionStorage["currentActiveUser"]);
         sessionStorage["currentActiveUser"] = null;
-        return userData
+        return userData;
     }
 
     public getLatestConversation(phoneNumber: string): Promise<any> {
@@ -224,14 +224,19 @@ export class ConversationService {
         });
     }
 
-    public getChatData(phoneNumber: string, date?: string): Promise<any> {
+    public getChatDataFileList(phoneNumber: string, date?: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.getChatFileList(phoneNumber).then((chatFileList) => {
                 chatFileList = this.common.sortChatFileNameDateWise(chatFileList);
-                alert("hello "+JSON.stringify(chatFileList));
+                sessionStorage["presentChatFileList"] = JSON.stringify(chatFileList);
+                resolve(chatFileList);
             }).catch(() => {
                 reject();
             });
         });
+    }
+
+    public getChatDataFromFile(fileName: string) {
+
     }
 }

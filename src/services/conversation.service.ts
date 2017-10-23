@@ -81,7 +81,6 @@ export class ConversationService {
     }
 
     private receiveMessage(value: any) {
-        //alert("new message "+JSON.stringify(value));
         this.prepareAndShowNotofication(value);
         this.updateMessagesToFile(value).then(() => {
             this.clearChatDatabase();
@@ -236,7 +235,11 @@ export class ConversationService {
         });
     }
 
-    public getChatDataFromFile(fileName: string) {
-
+    public getChatDataFromFile(fileName: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+           this.file.readFile(fileName).then((chatData) => {
+               resolve(JSON.parse(chatData));
+           }).catch(() => {});
+        });
     }
 }

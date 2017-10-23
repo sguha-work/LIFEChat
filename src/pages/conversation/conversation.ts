@@ -15,8 +15,12 @@ import {Message} from './../../interfaces/message.interface';
 })
 export class ConversationPage {
   public model: any;
+
+  private presentFileIndex: any;
   constructor(public navCtrl: NavController, private conversation: ConversationService, private common: CommonService, private file: FileService, private events: Events) {
+    this.presentFileIndex = 0;
     this.model = {};
+    this.model.chatData = [];
     this.model.user = this.conversation.getCurrentUserData();
     this.displayImage(this.model.user.image);
     this.model.user.lastSeen = this.common.getTimeFromTimeStamp(this.model.user.lastSeen);
@@ -30,8 +34,29 @@ export class ConversationPage {
     });
   }
 
-  private populateChat(fromPhoneNumber?: string) {alert(fromPhoneNumber);
-    this.conversation.getChatDataFileList(fromPhoneNumber);
+  private populateChat(fromPhoneNumber?: string) {
+    this.conversation.getChatDataFileList(fromPhoneNumber).then(() => {
+      //alert("hello"+sessionStorage["presentChatFileList"]);
+      let fileListArray = JSON.parse(sessionStorage["presentChatFileList"]);
+      let file = fileListArray[this.presentFileIndex];
+      this.conversation.getChatDataFromFile(file).then((value) => {
+        
+        for(let index=0; index< value.length; index++) {
+          if(value[index].from === this.model.user.phoneNumber) {
+            value[index].isReceived = true;
+            value[index].isSent = false;
+          } else {
+            value[index].isReceived = false;
+            value[index].isSent = true;
+          }
+        }alert(JSON.stringify(value));
+        this.model.chatData = value;
+      }).catch(() => {
+        alert("unable to load chat data");
+      });
+    }).catch(() => {
+      alert("unable to load chat data");
+    });
   }
 
   private displayImage(imageName: any) {

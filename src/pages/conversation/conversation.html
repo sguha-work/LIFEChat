@@ -15,8 +15,8 @@
         </ion-item>
     </ion-navbar>
 </ion-header>
-<ion-content padding id="page7">
-    <ion-list id="conversation-list5">
+<ion-content padding id="messageList">
+    <ion-list>
         <!-- <ion-item-sliding class="message">
             <ion-item class="received" color="balanced" id="conversation-list-item10">
 
@@ -29,13 +29,13 @@
                 <button ion-button color="dark">Reply</button>
             </ion-item-options>
         </ion-item-sliding> -->
-        <ion-item *ngFor="let messege of model.chatData" class="message">
+        <ion-item *ngFor="let message of model.chatData" class="message">
 
             <h2>
                 <p style="white-space:normal;">{{message.message}}</p>
                 <p class="time">
-                    <!--<label class="status">sent</label>-->&nbsp; 21-9-2017 12:12PM
-                    <!--<i class="fa fa-upload fa-1" aria-hidden="true"></i>--></p>
+                    <label class="status"></label>&nbsp; {{message.time}}
+                </p>
             </h2>
         </ion-item>
 

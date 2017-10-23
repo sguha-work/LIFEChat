@@ -127,4 +127,18 @@ export class CommonService {
         }
         return chatFileList;
     }
+
+    public updateMessageArray(messageArray: any, phoneNumber: string): any {
+        for(let index=0; index< messageArray.length; index++) {
+            if(messageArray[index].from === phoneNumber) {
+              messageArray[index].isReceived = true;
+              messageArray[index].isSent = false;
+            } else {
+              messageArray[index].isReceived = false;
+              messageArray[index].isSent = true;
+            }
+            messageArray[index].time = this.getTimeFromTimeStamp(parseInt(messageArray[index].senton));
+          }
+          return messageArray;
+    }
 }

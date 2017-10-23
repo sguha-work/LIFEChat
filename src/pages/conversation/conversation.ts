@@ -40,17 +40,11 @@ export class ConversationPage {
       let fileListArray = JSON.parse(sessionStorage["presentChatFileList"]);
       let file = fileListArray[this.presentFileIndex];
       this.conversation.getChatDataFromFile(file).then((value) => {
-        
-        for(let index=0; index< value.length; index++) {
-          if(value[index].from === this.model.user.phoneNumber) {
-            value[index].isReceived = true;
-            value[index].isSent = false;
-          } else {
-            value[index].isReceived = false;
-            value[index].isSent = true;
-          }
-        }alert(JSON.stringify(value));
-        this.model.chatData = value;
+        this.model.chatData = this.common.updateMessageArray(value, this.model.user.phoneNumber);
+        window.setTimeout(()=> {
+          let d = $('#messageList');alert(d.prop("scrollHeight"));
+          d.scrollTop(d.prop("scrollHeight"));
+        }, 2000);
       }).catch(() => {
         alert("unable to load chat data");
       });

@@ -9,7 +9,7 @@ export class SignupService {
         
     }
 
-    private validate() {
+    private validate(phoneNumber: string, emailId: string, password: string) {
         
     }
 
@@ -33,6 +33,7 @@ export class SignupService {
     public signUp(phoneNumber: string, password: string, email: string, image?: string) {
         let userObject: User;
         //userObject = {};
+        if(this.validate())
         userObject.phoneNumber = phoneNumber
                 
     }

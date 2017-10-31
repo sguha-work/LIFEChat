@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import {User} from './../interfaces/user.interface';
-
 import {FileService} from './file.service';
+
 @Injectable()
 export class CommonService {
 
@@ -140,5 +140,11 @@ export class CommonService {
             messageArray[index].time = this.getTimeFromTimeStamp(parseInt(messageArray[index].senton));
           }
           return messageArray;
+    }
+
+    public encryptPassword(password: string): string {
+        let newPassword: string;
+        newPassword = btoa(password);
+        return newPassword;
     }
 }

@@ -6,12 +6,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // my declaration
 import * as $ from 'jquery';
 
+import {CommonService} from "./../services/common.service";
+
 
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
-import { JoinLIFEPage } from '../pages/join-life/join-life';
-import { ConversationPage } from '../pages/conversation/conversation';
-import { ImagePage } from '../pages/image/image';
+// import { JoinLIFEPage } from '../pages/join-life/join-life';
+// import { ConversationPage } from '../pages/conversation/conversation';
+// import { ImagePage } from '../pages/image/image';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,30 +22,36 @@ export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
     rootPage:any = TabsControllerPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private common: CommonService) {
+    this.common.getPresentUserData().then().catch(() => {
+      
+      // no present user found going to login page
+      this.navCtrl.push(LoginPage);
+    });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      
     });
   }
 
   // public methods
   public action(actionName: string): void {
-    switch (actionName) {
-      case "login":
-        this.navCtrl.push(LoginPage);
-      break;
-      case "conversation":  
-        this.navCtrl.push(ConversationPage);
-      break;
-      case "image":  
-        this.navCtrl.push(ImagePage);
-      break;
-    }
+    // switch (actionName) {
+    //   case "login":
+    //     this.navCtrl.push(LoginPage);
+    //   break;
+    //   case "conversation":  
+    //     this.navCtrl.push(ConversationPage);
+    //   break;
+    //   case "image":  
+    //     this.navCtrl.push(ImagePage);
+    //   break;
+    // }
     
-    this.closeMenu();
+    //this.closeMenu();
   }
 
   public closeMenu(): void {

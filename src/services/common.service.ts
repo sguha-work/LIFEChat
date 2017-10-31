@@ -3,11 +3,12 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import {User} from './../interfaces/user.interface';
 import {FileService} from './file.service';
+import {MessageService} from './message.service';
 
 @Injectable()
 export class CommonService {
 
-    constructor(private uniqueDeviceID: UniqueDeviceID, private file: FileService) {
+    constructor(private uniqueDeviceID: UniqueDeviceID, private file: FileService, private messageService: MessageService) {
 
     }
 
@@ -70,7 +71,7 @@ export class CommonService {
                 resolve(userData as User);
             }).catch(() => {
                 // cant read user data
-                reject();
+                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE);
             });
         });
     }

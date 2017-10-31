@@ -10,7 +10,6 @@ export class FileService {
         this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
             this.prepareMessageData();
         }).catch(() => {
-            alert("Unable to create initial files. Exiting app");
             this.platform.exitApp();;
         });
         

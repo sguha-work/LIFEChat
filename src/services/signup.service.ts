@@ -3,17 +3,36 @@ import {Injectable} from '@angular/core';
 import {Database} from './database.service';
 import {User} from "./../interfaces/user.interface";
 import {CommonService} from "./common.service";
-import {ErrorService} from "./error.service";
+import {MessageService} from "./message.service";
 
 @Injectable()
 export class SignupService {
 
-    constructor(private database: Database, private common: CommonService, private error: ErrorService) {
+    constructor(private database: Database, private common: CommonService, private messageService: MessageService) {
         
     }
 
     private validate(phoneNumber: string, emailId: string, password: string) {
-        
+        if(!this.common.validatePhoneNumber(phoneNumber)) {
+            return false;
+        }
+        if(!this.common.validatePassword(password)) {
+            return false;
+        }
+        if(!this.common.validateEmail(emailId)) {
+            return false;
+        }
+        return true;
+    }
+
+    private writeUserToDatabase(userObject: User): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {
+                resolve();
+            }).catch(() => {
+                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+            });
+        });
     }
 
     public isUserExists(phoneNumber: string): Promise<any> {
@@ -25,7 +44,7 @@ export class SignupService {
                     resolve(false);
                 }
             }).catch(() => {
-                reject();
+                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
             });
         });
         
@@ -41,19 +60,24 @@ export class SignupService {
             if(this.validate(phoneNumber, email, password)) {
                 this.isUserExists(phoneNumber).then((result) => {
                     if(result) {
-                        reject(this.error.errorMessage.USER_ALREADY_EXISTS);
+                        reject(this.messageService.messages.USER_ALREADY_EXISTS);
                     } else {
-
+                        userObject.phoneNumber = phoneNumber;
+                        userObject.email = email;
+                        userObject.password = this.common.encryptPassword(password);
+                        userObject.lastSeen = Date.now();
+                        this.writeUserToDatabase(userObject).then(() => {
+                            resolve();
+                        }).catch(() => {
+                            reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+                        });
                     }
                 }).catch(() => {
-                    reject(this.error.errorMessage.UNABLE_TO_CONNECT_TO_DATABASE.en);
+                    reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
                 });
-                userObject.phoneNumber = phoneNumber;
-                userObject.email = email;
-                userObject.password = this.common.encryptPassword(password);
-                userObject.lastSeen = Date.now();
+                
             } else {
-                reject(this.error.errorMessage.INVALID_INPUT);
+                reject(this.messageService.messages.INVALID_INPUT);
             }
         });
     }

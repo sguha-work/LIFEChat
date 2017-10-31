@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class ErrorService {
-    public errorMessage = {
+export class MessageService {
+    public messages = {
         "UNABLE_TO_CONNECT_TO_DATABASE": {
             "en": "Cannot connect to databse"
         },

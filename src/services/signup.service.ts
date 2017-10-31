@@ -33,8 +33,8 @@ export class SignupService {
     public signUp(phoneNumber: string, password: string, email: string, image?: string) {
         let userObject: User;
         //userObject = {};
-        if(this.validate())
-        userObject.phoneNumber = phoneNumber
+        //if(this.validate())
+        userObject.phoneNumber = phoneNumber;
                 
     }
 }

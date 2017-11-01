@@ -5,9 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { File } from '@ionic-native/file';
-import { AngularFireModule } from "angularfire2";
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule  } from 'angularfire2/database';
+//import { AngularFireModule } from "angularfire2";
+//import { AngularFireAuthModule } from 'angularfire2/auth';
+//import { AngularFireDatabaseModule  } from 'angularfire2/database';
 
 // importing app
 import { MyApp } from './app.component';
@@ -29,14 +29,6 @@ import {Database} from "./../services/database.service";
 import {MessageService} from "./../services/message.service";
 import {SignupService} from "./../services/signup.service";
 
-export const firebaseConfig = {
-  apiKey: "AIzaSyA9wyEcX_Qvceyzz6-a51Gd4TbGgZa5wfY",
-  authDomain: "lifechat-909d7.firebaseapp.com",
-  databaseURL: "https://lifechat-909d7.firebaseio.com",
-  projectId: "lifechat-909d7",
-  storageBucket: "lifechat-909d7.appspot.com",
-  messagingSenderId: "580846990214"
-};
 
 @NgModule({
   declarations: [
@@ -53,9 +45,9 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFireDatabaseModule
+    //AngularFireModule.initializeApp(firebaseConfig),
+    //AngularFireAuthModule,
+    //AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

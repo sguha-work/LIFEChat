@@ -57,28 +57,23 @@ export class SignupService {
         userObject = {};
 
         return new Promise((resolve, reject) => {
-            if(this.validate(phoneNumber, email, password)) {
-                this.isUserExists(phoneNumber).then((result) => {
-                    if(result) {
-                        reject(this.messageService.messages.USER_ALREADY_EXISTS);
-                    } else {
-                        userObject.phoneNumber = phoneNumber;
-                        userObject.email = email;
-                        userObject.password = this.common.encryptPassword(password);
-                        userObject.lastSeen = Date.now();
-                        this.writeUserToDatabase(userObject).then(() => {
-                            resolve();
-                        }).catch(() => {
-                            reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
-                        });
-                    }
-                }).catch(() => {
-                    reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
-                });
-                
-            } else {
-                reject(this.messageService.messages.INVALID_INPUT);
-            }
+           this.isUserExists(phoneNumber).then((result) => {
+                if(result) {
+                    reject(this.messageService.messages.USER_ALREADY_EXISTS);
+                } else {
+                    userObject.phoneNumber = phoneNumber;
+                    userObject.email = email;
+                    userObject.password = this.common.encryptPassword(password);
+                    userObject.lastSeen = Date.now();
+                    this.writeUserToDatabase(userObject).then(() => {
+                        resolve();
+                    }).catch(() => {
+                        reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+                    });
+                }
+            }).catch(() => {
+                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+            });
         });
     }
 }

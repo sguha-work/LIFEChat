@@ -10,6 +10,8 @@ import { LoginPage } from '../login/login';
 import {SignupService} from "./../../services/signup.service";
 import {MessageService} from "./../../services/message.service";
 import {AlertService} from "./../../services/alert.service";
+import {CommonService} from "./../../services/common.service";
+
 // importing interfaces
 import {User} from "./../../interfaces/user.interface";
 
@@ -36,7 +38,7 @@ export class JoinLIFEPage {
   private signUpButtonDOM: any;
   private imageData: any;
 
-  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService) {
+  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService, private common: CommonService) {
   }
   
   private readURL(input) {
@@ -67,11 +69,50 @@ export class JoinLIFEPage {
     });
   }
 
+  private validate(): boolean {
+    let email = this.emailDOM.val().trim();
+    if(!this.common.validateEmail(email)) {
+      this.emailDOM.css({
+        "border-bottom": "1px solid red"
+      });
+      return false;
+    } else {
+      this.emailDOM.css({
+        "border-bottom": "1px solid transparent"
+      });
+    }
+
+    let phoneNumber = this.phoneNUmberDOM.val().trim();
+    if(!this.common.validateEmail(phoneNumber)) {
+      this.phoneNUmberDOM.css({
+        "border-bottom": "1px solid red"
+      });
+      return false;
+    } else {
+      this.phoneNUmberDOM.css({
+        "border-bottom": "1px solid transparent"
+      });
+    }
+
+    let password = this.passwordDOM.val().trim();
+    if(!this.common.validatePassword(password)) {
+      this.passwordDOM.css({
+        "border-bottom": "1px solid red"
+      });
+      return false;
+    } else {
+      this.passwordDOM.css({
+        "border-bottom": "1px solid transparent"
+      });
+    }
+    return true;
+  }
+
   triggerUploadFile() {
     $("#file_image").trigger("click");
   }
 
-  displayImageThumbnail(event: any) {
+  public displayImageThumbnail(event: any) {
     let extension = event.currentTarget.value.toString().split(".").pop();
     if(extension==="jpg" || extension === "png" || extension === "jpeg") {
       this.readURL(event.currentTarget);
@@ -81,8 +122,14 @@ export class JoinLIFEPage {
     
   }
 
-  gotoLoginPage() {
+  public gotoLoginPage() {
     this.navCtrl.push(LoginPage);
+  }
+
+  public beginSignUp() {
+    if(this.validate()) {
+
+    }
   }
 
   ngAfterViewInit() {

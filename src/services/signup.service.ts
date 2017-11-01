@@ -12,19 +12,6 @@ export class SignupService {
         
     }
 
-    private validate(phoneNumber: string, emailId: string, password: string) {
-        if(!this.common.validatePhoneNumber(phoneNumber)) {
-            return false;
-        }
-        if(!this.common.validatePassword(password)) {
-            return false;
-        }
-        if(!this.common.validateEmail(emailId)) {
-            return false;
-        }
-        return true;
-    }
-
     private writeUserToDatabase(userObject: User): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.writeToDatabase(userObject.phoneNumber, userObject).then(() => {

@@ -12,9 +12,6 @@ import {MessageService} from "./../../services/message.service";
 import {AlertService} from "./../../services/alert.service";
 import {CommonService} from "./../../services/common.service";
 
-// importing interfaces
-import {User} from "./../../interfaces/user.interface";
-
 interface FileReaderEventTarget extends EventTarget {
   result:string
 }
@@ -38,7 +35,7 @@ export class JoinLIFEPage {
   private signUpButtonDOM: any;
   private imageData: any;
 
-  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService, private common: CommonService) {
+  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService, private common: CommonService, private signUpService: SignupService) {
   }
   
   private readURL(input) {
@@ -83,7 +80,7 @@ export class JoinLIFEPage {
     }
 
     let phoneNumber = this.phoneNUmberDOM.val().trim();
-    if(!this.common.validateEmail(phoneNumber)) {
+    if(!this.common.validatePhoneNumber(phoneNumber)) {
       this.phoneNUmberDOM.css({
         "border-bottom": "1px solid red"
       });
@@ -128,7 +125,14 @@ export class JoinLIFEPage {
 
   public beginSignUp() {
     if(this.validate()) {
+      let phoneNumber = this.phoneNUmberDOM.val().trim();
+      let email = this.emailDOM.val().trim();
+      let password = this.passwordDOM.val().trim();
+      this.signUpService.signUp(phoneNumber, password, email).then(() => {
 
+      }).catch((message) => {
+        this.alertService.showAlert(message);
+      });
     }
   }
 

@@ -11,9 +11,6 @@ import {CommonService} from "./../services/common.service";
 
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
-// import { JoinLIFEPage } from '../pages/join-life/join-life';
-// import { ConversationPage } from '../pages/conversation/conversation';
-// import { ImagePage } from '../pages/image/image';
 
 @Component({
   templateUrl: 'app.html'
@@ -39,19 +36,6 @@ export class MyApp {
 
   // public methods
   public action(actionName: string): void {
-    // switch (actionName) {
-    //   case "login":
-    //     this.navCtrl.push(LoginPage);
-    //   break;
-    //   case "conversation":  
-    //     this.navCtrl.push(ConversationPage);
-    //   break;
-    //   case "image":  
-    //     this.navCtrl.push(ImagePage);
-    //   break;
-    // }
-    
-    //this.closeMenu();
   }
 
   public closeMenu(): void {

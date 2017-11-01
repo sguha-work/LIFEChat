@@ -28,6 +28,7 @@ import {FileService} from "./../services/file.service";
 import {Database} from "./../services/database.service";
 import {MessageService} from "./../services/message.service";
 import {SignupService} from "./../services/signup.service";
+import {AlertService} from "./../services/alert.service"
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import {SignupService} from "./../services/signup.service";
     Database,
     FileService,
     MessageService,
-    SignupService
+    SignupService,
+    AlertService
   ]
 })
 export class AppModule {}

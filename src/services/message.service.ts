@@ -11,6 +11,9 @@ export class MessageService {
         },
         "INVALID_INPUT": {
             "en": "Provided data is not supported"
+        },
+        "IMAGE_NOT_SUPPORTED": {
+            "en": "Only JPEG, PNG image supported"
         }
     };
 }

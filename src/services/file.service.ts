@@ -8,7 +8,7 @@ const rootFolderName = "LIFEChat";
 export class FileService {
     constructor(private file: File, private platform: Platform) {
         this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
-            this.prepareMessageData();
+            
         }).catch(() => {
             this.platform.exitApp();;
         });
@@ -35,10 +35,6 @@ export class FileService {
             });
         });
         
-    }
-
-    private prepareMessageData() {
-        //alert("prepare message data");
     }
 
     private getPath() {
@@ -103,4 +99,6 @@ export class FileService {
             });
         });
     }
+
+    
 }

@@ -13,7 +13,7 @@ export class Database {
 
     public writeToDatabase(key: string, data: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.database.ref('/'+key).set(data).then(() => {
+            this.db.ref('/'+key).set(data).then(() => {
                 resolve();
             }).catch((error) => {
                 reject();
@@ -23,7 +23,7 @@ export class Database {
 
     public updateToDatabase(key: string, data: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.database.ref('/'+key).update(data).then(() => {
+            this.db.ref('/'+key).update(data).then(() => {
                 resolve();
             }).catch((error) => {
                 reject();
@@ -33,7 +33,7 @@ export class Database {
 
     public getFromDatabase(key: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.database.ref('/'+key).once('value').then((data) => {
+            this.db.ref('/'+key).once('value').then((data) => {
                 resolve(data.val());
             }).catch((error) => {
                 reject(error);
@@ -43,7 +43,7 @@ export class Database {
 
    public writeMessageToDatabase(key: string, data: any) {
        return new Promise((resolve, reject) => {
-        this.db.database.ref("/chat/"+key).push(data,(error) => {
+        this.db.ref("/chat/"+key).push(data,(error) => {
             if(error) {
                 alert("Failed to deliver the message");
                 reject();
@@ -56,14 +56,14 @@ export class Database {
    }
 
    public turnOnConversationConnection(myPhoneNumber: string) {
-        let databaseReference = this.db.database.ref('/' + '/chat/' + myPhoneNumber + '/');
+        let databaseReference = this.db.ref('/' + '/chat/' + myPhoneNumber + '/');
         databaseReference.on('value', (snapshot) => {
             this.events.publish("MESSAGES-RECEIVED", snapshot.val());
         });
    }
 
    public deleteChat(myPhoneNumber: string) {
-    let databaseReference = this.db.database.ref('/' + myPhoneNumber + '/chat/');
+    let databaseReference = this.db.ref('/' + myPhoneNumber + '/chat/');
     databaseReference.remove(() => {
         // deleted from database
     });

@@ -4,11 +4,12 @@ import {Database} from './database.service';
 import {User} from "./../interfaces/user.interface";
 import {CommonService} from "./common.service";
 import {MessageService} from "./message.service";
+import {StorageService} from "./storage.service";
 
 @Injectable()
 export class SignupService {
 
-    constructor(private database: Database, private common: CommonService, private messageService: MessageService) {
+    constructor(private database: Database, private common: CommonService, private messageService: MessageService, private storage: StorageService) {
         
     }
 
@@ -39,7 +40,7 @@ export class SignupService {
 
     
 
-    public signUp(phoneNumber: string, password: string, email: string, image?: string): Promise<any> {
+    public signUp(phoneNumber: string, password: string, email: string, image?: any): Promise<any> {
         let userObject: any;
         userObject = {};
 
@@ -52,11 +53,26 @@ export class SignupService {
                     userObject.email = email;
                     userObject.password = this.common.encryptPassword(password);
                     userObject.lastSeen = Date.now();
-                    this.writeUserToDatabase(userObject).then(() => {
-                        resolve();
-                    }).catch(() => {
-                        reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
-                    });
+                    if(typeof image !== "undefined") {
+                        this.storage.uploadFile(image, phoneNumber).then((image) => {
+                            userObject.image = image.downloadURL;
+                            this.writeUserToDatabase(userObject).then(() => {
+                                resolve();
+                            }).catch(() => {
+                                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+                            });
+                        }).catch(() => {
+                            reject(this.messageService.messages.IMAGE_UPLOAD_FAILED.en);
+                        });
+                    }
+                    else {
+                        this.writeUserToDatabase(userObject).then(() => {
+                            resolve();
+                        }).catch(() => {
+                            reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+                        });
+                    }
+                    
                 }
             }).catch(() => {
                 reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);

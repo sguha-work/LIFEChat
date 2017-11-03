@@ -25,7 +25,7 @@ interface FileReaderEvent extends Event {
   selector: 'page-join-life',
   templateUrl: 'join-life.html'
 })
-export class JoinLIFEPage {
+export class JoinLIFEPage implements AfterViewInit{
 
   private phoneNUmberDOM: any;
   private passwordDOM: any;

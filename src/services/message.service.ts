@@ -14,6 +14,9 @@ export class MessageService {
         },
         "IMAGE_NOT_SUPPORTED": {
             "en": "Only JPEG, PNG image supported"
+        },
+        "IMAGE_UPLOAD_FAILED": {
+            "en": "Failed to upload image probably due to network issue. Try again Latter."
         }
     };
 }

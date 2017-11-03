@@ -47,17 +47,17 @@ export class SignupService {
         return new Promise((resolve, reject) => {
            this.isUserExists(phoneNumber).then((result) => {
                 if(result) {
-                    reject(this.messageService.messages.USER_ALREADY_EXISTS);
+                    reject(this.messageService.messages.USER_ALREADY_EXISTS.en);
                 } else {
                     userObject.phoneNumber = phoneNumber;
                     userObject.email = email;
                     userObject.password = this.common.encryptPassword(password);
                     userObject.lastSeen = Date.now();
-                    if(typeof image !== "undefined") {
+                    if(typeof image !== "undefined" && image !== "") {
                         this.storage.uploadFile(image, phoneNumber).then((image) => {
                             userObject.image = image.downloadURL;
                             this.writeUserToDatabase(userObject).then(() => {
-                                resolve();
+                                resolve(this.messageService.messages.SIGN_UP_SUCCESS.en);
                             }).catch(() => {
                                 reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
                             });
@@ -67,7 +67,7 @@ export class SignupService {
                     }
                     else {
                         this.writeUserToDatabase(userObject).then(() => {
-                            resolve();
+                            resolve(this.messageService.messages.SIGN_UP_SUCCESS.en);
                         }).catch(() => {
                             reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
                         });

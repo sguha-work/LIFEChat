@@ -17,6 +17,9 @@ export class MessageService {
         },
         "IMAGE_UPLOAD_FAILED": {
             "en": "Failed to upload image probably due to network issue. Try again Latter."
+        },
+        "SIGN_UP_SUCCESS": {
+            "en": "Congratulation! you are in LIFE now. Go to login page for logging in"
         }
     };
 }

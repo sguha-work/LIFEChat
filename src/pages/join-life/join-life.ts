@@ -66,6 +66,12 @@ export class JoinLIFEPage implements AfterViewInit{
     });
   }
 
+  private resetInputs() {
+    this.phoneNUmberDOM.val("");
+    this.passwordDOM.val("");
+    this.emailDOM.val("");
+  }
+
   private validate(): boolean {
     let email = this.emailDOM.val().trim();
     if(!this.common.validateEmail(email)) {
@@ -125,13 +131,18 @@ export class JoinLIFEPage implements AfterViewInit{
 
   public beginSignUp() {
     if(this.validate()) {
+      this.disableSignUpButton();
       let phoneNumber = this.phoneNUmberDOM.val().trim();
       let email = this.emailDOM.val().trim();
       let password = this.passwordDOM.val().trim();
-      this.signUpService.signUp(phoneNumber, password, email).then(() => {
-
+      let imageData = (typeof this.imageData === "undefined")?"":this.imageData;
+      this.signUpService.signUp(phoneNumber, password, email, imageData).then((message) => {
+        this.alertService.showAlert(message);
+        this.enableSignUpButton();
+        this.resetInputs();
       }).catch((message) => {
         this.alertService.showAlert(message);
+        this.enableSignUpButton();
       });
     }
   }

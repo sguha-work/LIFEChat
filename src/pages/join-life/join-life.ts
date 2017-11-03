@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
 import * as $ from 'jquery';
 
@@ -35,7 +35,8 @@ export class JoinLIFEPage implements AfterViewInit{
   private signUpButtonDOM: any;
   private imageData: any;
 
-  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService, private common: CommonService, private signUpService: SignupService) {
+  constructor(public navCtrl: NavController, private message: MessageService, private alertService: AlertService, private common: CommonService, private signUpService: SignupService, private menu: MenuController) {
+    this.menu.swipeEnable(false);
   }
   
   private readURL(input) {

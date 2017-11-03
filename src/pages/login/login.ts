@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 
 import { JoinLIFEPage } from '../join-life/join-life';
 
@@ -9,7 +9,8 @@ import { JoinLIFEPage } from '../join-life/join-life';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private menu: MenuController) {
+    this.menu.swipeEnable(false);
   }
 
   public goToSignUpPage() {

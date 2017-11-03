@@ -11,7 +11,7 @@ export class StorageService {
 
     public uploadFile(fileData: any, fileName: string): Promise<any> {
         //let childRef = this.storage.child(fileData);
-        let fileRef = this.storage.child("myfile");
+        let fileRef = this.storage.child(fileName);
         return new Promise((resolve, reject) => {
             fileRef.putString(fileData, 'data_url').then((snapshot) => {
                 resolve(snapshot);

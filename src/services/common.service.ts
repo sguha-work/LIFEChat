@@ -64,12 +64,13 @@ export class CommonService {
         });
     }
 
-    public getPresentUserData(): Promise<any> {
+    public getPresentUserData(): Promise<any> {alert(1);
         return new Promise((resolve, reject) => {
-            this.file.readFile("user").then((value) => {
+            this.file.readFile("user").then((value) => {alert(2);
                 let userData = JSON.parse(value);
+                localStorage["user"] = value;
                 resolve(userData as User);
-            }).catch(() => {
+            }).catch(() => {alert(3);
                 // cant read user data
                 reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE);
             });

@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "id": "cordova-plugin-android-permissions.Permissions",
+        "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+        "pluginId": "cordova-plugin-android-permissions",
+        "clobbers": [
+            "cordova.plugins.permissions"
+        ]
+    },
+    {
         "id": "cordova-plugin-contacts.contacts",
         "file": "plugins/cordova-plugin-contacts/www/contacts.js",
         "pluginId": "cordova-plugin-contacts",
@@ -92,6 +100,109 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.email",
             "plugin.email"
+        ]
+    },
+    {
+        "id": "cordova-plugin-sim.Sim",
+        "file": "plugins/cordova-plugin-sim/www/sim.js",
+        "pluginId": "cordova-plugin-sim",
+        "merges": [
+            "window.plugins.sim"
+        ]
+    },
+    {
+        "id": "cordova-plugin-sim.SimAndroid",
+        "file": "plugins/cordova-plugin-sim/www/android/sim.js",
+        "pluginId": "cordova-plugin-sim",
+        "merges": [
+            "window.plugins.sim"
+        ]
+    },
+    {
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "pluginId": "cordova-plugin-splashscreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
+    },
+    {
+        "id": "cordova-plugin-statusbar.statusbar",
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "pluginId": "cordova-plugin-statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
+    },
+    {
+        "id": "cordova-plugin-uniquedeviceid.UniqueDeviceID",
+        "file": "plugins/cordova-plugin-uniquedeviceid/www/uniqueid.js",
+        "pluginId": "cordova-plugin-uniquedeviceid",
+        "merges": [
+            "window.plugins.uniqueDeviceID"
+        ]
+    },
+    {
+        "id": "es6-promise-plugin.Promise",
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
+    },
+    {
+        "id": "info.protonet.imageresizer.ImageResizer",
+        "file": "plugins/info.protonet.imageresizer/www/image_resizer.js",
+        "pluginId": "info.protonet.imageresizer",
+        "clobbers": [
+            "ImageResizer"
+        ]
+    },
+    {
+        "id": "ionic-plugin-keyboard.keyboard",
+        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
+        "pluginId": "ionic-plugin-keyboard",
+        "clobbers": [
+            "cordova.plugins.Keyboard"
+        ],
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-camera.Camera",
+        "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "Camera"
+        ]
+    },
+    {
+        "id": "cordova-plugin-camera.CameraPopoverOptions",
+        "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "CameraPopoverOptions"
+        ]
+    },
+    {
+        "id": "cordova-plugin-camera.camera",
+        "file": "plugins/cordova-plugin-camera/www/Camera.js",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "navigator.camera"
+        ]
+    },
+    {
+        "id": "cordova-plugin-camera.CameraPopoverHandle",
+        "file": "plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
+        "pluginId": "cordova-plugin-camera",
+        "clobbers": [
+            "CameraPopoverHandle"
         ]
     },
     {
@@ -266,106 +377,28 @@ module.exports = [
             "cordova"
         ],
         "runs": true
-    },
-    {
-        "id": "cordova-plugin-sim.Sim",
-        "file": "plugins/cordova-plugin-sim/www/sim.js",
-        "pluginId": "cordova-plugin-sim",
-        "merges": [
-            "window.plugins.sim"
-        ]
-    },
-    {
-        "id": "cordova-plugin-sim.SimAndroid",
-        "file": "plugins/cordova-plugin-sim/www/android/sim.js",
-        "pluginId": "cordova-plugin-sim",
-        "merges": [
-            "window.plugins.sim"
-        ]
-    },
-    {
-        "id": "cordova-plugin-splashscreen.SplashScreen",
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "pluginId": "cordova-plugin-splashscreen",
-        "clobbers": [
-            "navigator.splashscreen"
-        ]
-    },
-    {
-        "id": "cordova-plugin-statusbar.statusbar",
-        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-        "pluginId": "cordova-plugin-statusbar",
-        "clobbers": [
-            "window.StatusBar"
-        ]
-    },
-    {
-        "id": "es6-promise-plugin.Promise",
-        "file": "plugins/es6-promise-plugin/www/promise.js",
-        "pluginId": "es6-promise-plugin",
-        "runs": true
-    },
-    {
-        "id": "cordova-plugin-x-socialsharing.SocialSharing",
-        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
-        "pluginId": "cordova-plugin-x-socialsharing",
-        "clobbers": [
-            "window.plugins.socialsharing"
-        ]
-    },
-    {
-        "id": "ionic-plugin-keyboard.keyboard",
-        "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
-        "pluginId": "ionic-plugin-keyboard",
-        "clobbers": [
-            "cordova.plugins.Keyboard"
-        ],
-        "runs": true
-    },
-    {
-        "id": "cordova-plugin-uniquedeviceid.UniqueDeviceID",
-        "file": "plugins/cordova-plugin-uniquedeviceid/www/uniqueid.js",
-        "pluginId": "cordova-plugin-uniquedeviceid",
-        "merges": [
-            "window.plugins.uniqueDeviceID"
-        ]
-    },
-    {
-        "id": "cordova-plugin-android-permissions.Permissions",
-        "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
-        "pluginId": "cordova-plugin-android-permissions",
-        "clobbers": [
-            "cordova.plugins.permissions"
-        ]
-    },
-    {
-        "id": "info.protonet.imageresizer.ImageResizer",
-        "file": "plugins/info.protonet.imageresizer/www/image_resizer.js",
-        "pluginId": "info.protonet.imageresizer",
-        "clobbers": [
-            "ImageResizer"
-        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "cordova-plugin-android-permissions": "1.0.0",
+    "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-console": "1.0.5",
-    "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-contacts": "2.3.1",
     "cordova-plugin-device": "1.1.4",
     "cordova-plugin-email-composer": "0.8.8",
-    "cordova-plugin-file": "4.3.3",
     "cordova-plugin-sim": "1.3.3",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.2",
+    "cordova-plugin-uniquedeviceid": "1.3.2",
     "cordova-plugin-whitelist": "1.3.1",
     "es6-promise-plugin": "4.1.0",
     "cordova-plugin-x-socialsharing": "5.1.8",
+    "info.protonet.imageresizer": "0.1.1",
     "ionic-plugin-keyboard": "2.2.1",
-    "cordova-plugin-uniquedeviceid": "1.3.2",
-    "cordova-plugin-android-permissions": "1.0.0",
-    "info.protonet.imageresizer": "0.1.1"
+    "cordova-plugin-camera": "2.4.1",
+    "cordova-plugin-file": "4.3.3"
 };
 // BOTTOM OF METADATA
 });

@@ -2,13 +2,12 @@ import {Injectable} from '@angular/core';
 
 import {Database} from './database.service';
 import {User} from "./../interfaces/user.interface";
-import {CommonService} from "./common.service";
 import {MessageService} from "./message.service";
-import {StorageService} from "./storage.service";
+import {FileService} from "./file.service";
 
 @Injectable()
 export class LoginService {
-    constructor(private database: Database, private common: CommonService, private messageService: MessageService, private storage: StorageService) {
+    constructor(private database: Database, private messageService: MessageService, private file: FileService) {
 
     }
 
@@ -18,8 +17,14 @@ export class LoginService {
                 if(data !== null) {
                     let userData: User;
                     userData = data;
-                    if(atob(password)===userData.password) {
-                        resolve();
+                    if(btoa(password)===userData.password) {alert(JSON.stringify(userData));
+                        this.file.writeFile(JSON.stringify(userData), "user").then(() => {
+                            alert("writing done");
+                            resolve();
+                        }).catch(() => {
+                            alert("writing failed");
+                        });
+                        
                     } else {
                         reject(this.messageService.messages.PASSWORD_MISSMATCH.en);
                     }

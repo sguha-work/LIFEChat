@@ -30,7 +30,7 @@ import {MessageService} from "./../services/message.service";
 import {SignupService} from "./../services/signup.service";
 import {AlertService} from "./../services/alert.service";
 import {StorageService} from "./../services/storage.service";
-
+import {LoginService} from "./../services/login.service";
 
 @NgModule({
   declarations: [
@@ -75,7 +75,8 @@ import {StorageService} from "./../services/storage.service";
     MessageService,
     SignupService,
     AlertService,
-    StorageService
+    StorageService,
+    LoginService
   ]
 })
 export class AppModule {}

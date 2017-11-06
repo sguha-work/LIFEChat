@@ -11,6 +11,7 @@ import {CommonService} from "./../services/common.service";
 
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +21,10 @@ export class MyApp {
     rootPage:any = TabsControllerPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private common: CommonService) {
-    this.common.getPresentUserData().then().catch(() => {
+    this.common.getPresentUserData().then(() => {
+      // present user data found so going to home page
+      this.navCtrl.push(HomePage);
+    }).catch(() => {
       
       // no present user found going to login page
       this.navCtrl.push(LoginPage);

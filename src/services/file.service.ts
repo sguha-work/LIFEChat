@@ -8,8 +8,8 @@ const rootFolderName = "LIFEChat";
 export class FileService {
     constructor(private file: File, private platform: Platform) {
         this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
-            
-        }).catch(() => {
+            alert("initial directory created");
+        }).catch(() => {alert("initial failed");
             this.platform.exitApp();;
         });
         
@@ -18,16 +18,16 @@ export class FileService {
     private checkAndCreateInitialDirectories(): Promise<any> {
         let prepareMessageData = false;
         return new Promise((resolve, reject) => {
-            this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
+            this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {alert("root directory exists");
                 // root directory exists
                 resolve(prepareMessageData);
-            }).catch(() => {
+            }).catch(() => {alert("root directory doesnot exists, so creating");
                 // root directory doesnot exists, so creating
-                this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {
+                this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {alert("root directory created successfully");
                     // root directory created successfully
                     prepareMessageData = true;
                     resolve(prepareMessageData);
-                }).catch(() => {
+                }).catch((message) => {alert("root directory creation failed");alert(JSON.stringify(message));
                     // root directory creation failed
                     reject();
                     

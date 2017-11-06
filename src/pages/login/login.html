@@ -14,23 +14,23 @@
                 <ion-label stacked>
                     Phone number
                 </ion-label>
-                <ion-input type="tel" placeholder="Enter 10 digit phone number"></ion-input>
+                <ion-input id="txt_phoneNumber" type="tel" placeholder="Enter 10 digit phone number"></ion-input>
             </ion-item>
         </ion-list>
         <div class="spacer" style="height:40px;" id="login-spacer6"></div>
         <div id="login-markdown2" style="text-align:center;" class="show-list-numbers-and-dots">
             <p style="color:#666;letter-spacing: 1px;">
-                Enter the OTP provided to above number
+                Enter the password
             </p>
         </div>
         <ion-item id="login-input2">
             <ion-label stacked>
-                OTP
+                Password
             </ion-label>
-            <ion-input type="password" placeholder="Will be sent to 9830612244"></ion-input>
+            <ion-input id="txt_password" type="password" placeholder="Enter the password"></ion-input>
         </ion-item>
         <div class="spacer" style="height:40px;" id="login-spacer3"></div>
-        <button id="login-button5" ion-button color="calm" block>
+        <button id="button_login" ion-button color="calm" (click)="login()" block>
       Log in
     </button>
         <button id="login-button6" style="color: white" ion-button clear color="positive" (click)="goToSignUpPage()" block href-inappbrowser="/signup">

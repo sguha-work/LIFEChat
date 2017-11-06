@@ -20,6 +20,12 @@ export class MessageService {
         },
         "SIGN_UP_SUCCESS": {
             "en": "Congratulation! you are in LIFE now. Go to login page for logging in"
+        },
+        "PASSWORD_MISSMATCH": {
+            "en": "Wrong password"
+        },
+        "No_USER_FOUND": {
+            "en": "Provided user doesn't exists"
         }
     };
 }

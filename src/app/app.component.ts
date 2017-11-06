@@ -21,20 +21,20 @@ export class MyApp {
     rootPage:any = TabsControllerPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private common: CommonService) {
-    this.common.getPresentUserData().then(() => {
-      // present user data found so going to home page
-      this.navCtrl.push(HomePage);
-    }).catch(() => {
-      
-      // no present user found going to login page
-      this.navCtrl.push(LoginPage);
-    });
+    
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      
+      this.common.getPresentUserData().then(() => {
+        // present user data found so going to home page
+        this.navCtrl.push(HomePage);
+      }).catch(() => {
+        
+        // no present user found going to login page
+        this.navCtrl.push(LoginPage);
+      });
     });
   }
 

@@ -17,12 +17,12 @@ export class LoginService {
                 if(data !== null) {
                     let userData: User;
                     userData = data;
-                    if(btoa(password)===userData.password) {alert(JSON.stringify(userData));
+                    if(btoa(password)===userData.password) {
                         this.file.writeFile(JSON.stringify(userData), "user").then(() => {
-                            alert("writing done");
+                            // writing data to local file done
                             resolve();
                         }).catch(() => {
-                            alert("writing failed");
+                            // writing to local file failed
                         });
                         
                     } else {

@@ -64,16 +64,21 @@ export class CommonService {
         });
     }
 
-    public getPresentUserData(): Promise<any> {alert(1);
+    public getPresentUserData(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.readFile("user").then((value) => {alert(2);
-                let userData = JSON.parse(value);
-                localStorage["user"] = value;
-                resolve(userData as User);
-            }).catch(() => {alert(3);
-                // cant read user data
-                reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE);
+            this.file.checkAndCreateInitialDirectories().then(() => {
+                this.file.readFile("user").then((value) => {
+                    let userData = JSON.parse(value);
+                    localStorage["user"] = value;
+                    resolve(userData as User);
+                }).catch(() => {
+                    // cant read user data
+                    reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE);
+                });
+            }).catch(() => {
+
             });
+            
         });
     }
 

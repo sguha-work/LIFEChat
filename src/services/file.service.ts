@@ -1,33 +1,32 @@
 import {Injectable} from '@angular/core';
 import { File } from '@ionic-native/file';
-import {Platform} from 'ionic-angular';
 
 const rootFolderName = "LIFEChat";
 
 @Injectable()
 export class FileService {
-    constructor(private file: File, private platform: Platform) {
-        this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
-            alert("initial directory created");
-        }).catch(() => {alert("initial failed");
-            this.platform.exitApp();;
-        });
+    constructor(private file: File) {
+        // this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
+            
+        // }).catch(() => {
+        //     this.platform.exitApp();;
+        // });
         
     }
 
-    private checkAndCreateInitialDirectories(): Promise<any> {
+    public checkAndCreateInitialDirectories(): Promise<any> {
         let prepareMessageData = false;
         return new Promise((resolve, reject) => {
-            this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {alert("root directory exists");
+            this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
                 // root directory exists
                 resolve(prepareMessageData);
-            }).catch(() => {alert("root directory doesnot exists, so creating");
+            }).catch(() => {
                 // root directory doesnot exists, so creating
-                this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {alert("root directory created successfully");
+                this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {
                     // root directory created successfully
                     prepareMessageData = true;
                     resolve(prepareMessageData);
-                }).catch((message) => {alert("root directory creation failed");alert(JSON.stringify(message));
+                }).catch((message) => {
                     // root directory creation failed
                     reject();
                     

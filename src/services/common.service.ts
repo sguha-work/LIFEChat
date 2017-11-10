@@ -9,7 +9,7 @@ import {MessageService} from './message.service';
 export class CommonService {
 
     constructor(private uniqueDeviceID: UniqueDeviceID, private file: FileService, private messageService: MessageService) {
-
+        
     }
 
     public getTimeFromTimeStamp(timeStamp) {

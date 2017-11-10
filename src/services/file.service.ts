@@ -1,37 +1,54 @@
 import {Injectable} from '@angular/core';
 import { File } from '@ionic-native/file';
+import { Platform } from 'ionic-angular';
 
 const rootFolderName = "LIFEChat";
 
 @Injectable()
 export class FileService {
-    constructor(private file: File) {
+    constructor(private file: File, private platform: Platform) {
         // this.checkAndCreateInitialDirectories().then((prepareMessageData) => {
             
         // }).catch(() => {
         //     this.platform.exitApp();;
         // });
-        
+        this.checkAndSetPlatform();   
+    }
+    
+    private checkAndSetPlatform() {
+        if (this.platform.is('browser')) {
+            localStorage.platform = "browser";
+        } else {
+            localStorage.platform = "ionic";
+        }
     }
 
     public checkAndCreateInitialDirectories(): Promise<any> {
         let prepareMessageData = false;
         return new Promise((resolve, reject) => {
-            this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
+            if(localStorage.platform === "browser") {
+                if(typeof localStorage.rootFolderName === "undefined") {
+                    localStorage.rootFolderName = "{}";
+                }
+                resolve();
+            } else {
+                this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
                 // root directory exists
                 resolve(prepareMessageData);
-            }).catch(() => {
-                // root directory doesnot exists, so creating
-                this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {
-                    // root directory created successfully
-                    prepareMessageData = true;
-                    resolve(prepareMessageData);
-                }).catch((message) => {
-                    // root directory creation failed
-                    reject();
-                    
-                });
-            });
+                }).catch(() => {
+                    // root directory doesnot exists, so creating
+                    this.file.createDir(this.file.dataDirectory, rootFolderName, false).then(() => {
+                        // root directory created successfully
+                        prepareMessageData = true;
+                        resolve(prepareMessageData);
+                    }).catch((message) => {
+                        // root directory creation failed
+                        reject();
+                        
+                    });
+                });    
+            }
+            
         });
         
     }
@@ -42,11 +59,20 @@ export class FileService {
 
     public readFile(fileName): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.file.readAsText(this.getPath(), fileName).then((value) => {
-                resolve(value);
-            }).catch(() => {
-                reject();
-            });
+            if(localStorage.platform === "browser") {
+                if(typeof localStorage[rootFolderName][fileName] === "undefined") {
+                    reject();
+                } else {
+                    resolve(localStorage[rootFolderName][fileName]);
+                }
+            } else {
+                this.file.readAsText(this.getPath(), fileName).then((value) => {
+                    resolve(value);
+                }).catch(() => {
+                    reject();
+                });    
+            }
+            
         });
         
     }

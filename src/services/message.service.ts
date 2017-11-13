@@ -26,6 +26,9 @@ export class MessageService {
         },
         "No_USER_FOUND": {
             "en": "Provided user doesn't exists"
+        },
+        "UNABLE_TO_READ_CONTACTS_FROM_PHONE": {
+            "en": "Can't read phone contacts"
         }
     };
 }

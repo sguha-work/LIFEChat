@@ -5,6 +5,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { File } from '@ionic-native/file';
+import { Contacts} from '@ionic-native/contacts';
+import { SocialSharing } from '@ionic-native/social-sharing';
 //import { AngularFireModule } from "angularfire2";
 //import { AngularFireAuthModule } from 'angularfire2/auth';
 //import { AngularFireDatabaseModule  } from 'angularfire2/database';
@@ -70,6 +72,8 @@ import {ContactService} from "./../services/contact.service";
     SplashScreen,
     UniqueDeviceID,
     File,
+    Contacts,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CommonService,
     Database,

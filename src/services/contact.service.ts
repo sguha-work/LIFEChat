@@ -44,14 +44,19 @@ export class ContactService {
         
     
     }
-    public getPhoneContacts(): Promise<any> {
+    public getPhoneContacts(userPhoneNumber): Promise<any> {
 
         return new Promise((resolve, reject) => {
             this.file.readFile("contacts").then().catch(() => {
                 // file not found creating
-                this.getPhoneContacts().then((contactsList) => {
-                    this.file.writeFile(JSON.stringify(contactsList), "contacts");
-                    resolve(contactsList);
+                this.readPhoneContactList(userPhoneNumber).then((contactsList) => {
+                    this.file.writeFile(JSON.stringify(contactsList), "contacts").then(() => {
+                        resolve(contactsList);
+                    }).catch(() => {
+                        alert("Writing done of contacts");
+                        resolve(contactsList);
+                    });
+                    
                 }).catch(() => {
                     // reading contacts failed so rejecting
                     reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_PHONE.en);
@@ -60,9 +65,13 @@ export class ContactService {
         });
         
     }
-    public getLIFEContacts(): Promise<any> {
+    public getLIFEContacts(userPhoneNumber): Promise<any> {
         return new Promise((resolve, reject) => {
-
+            this.getPhoneContacts(userPhoneNumber).then((contactList) => {
+                resolve(contactList);
+            }).catch(() => {
+                reject();
+            });
         });
     }
 }

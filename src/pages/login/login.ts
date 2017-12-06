@@ -76,7 +76,8 @@ export class LoginPage  implements AfterViewInit {
       let password = this.passwordDOM.val().trim();
       this.disableLoginButton();
       this.loginService.login(phoneNumber, password).then(() => {
-        this.navCtrl.push(HomePage);
+          this.navCtrl.push(HomePage);
+          window.location.reload();
       }).catch((message) => {
         this.alertService.showAlert(message);
         this.enableLoginButton();

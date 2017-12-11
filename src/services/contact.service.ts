@@ -44,10 +44,13 @@ export class ContactService {
         
     
     }
-    public getPhoneContacts(userPhoneNumber): Promise<any> {
+    public getPhoneContacts(userPhoneNumber: string, fromPhone?: boolean): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            this.file.readFile("contacts").then().catch(() => {
+            this.file.readFile("contacts").then((dataFromFile) => {
+                alert("data from file");
+                alert(dataFromFile);
+            }).catch(() => {
                 // file not found creating
                 this.readPhoneContactList(userPhoneNumber).then((contactsList) => {
                     this.file.writeFile(JSON.stringify(contactsList), "contacts").then(() => {
@@ -65,9 +68,12 @@ export class ContactService {
         });
         
     }
-    public getLIFEContacts(userPhoneNumber): Promise<any> {
+    public getLIFEContacts(userPhoneNumber: string, fromPhone?:boolean): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getPhoneContacts(userPhoneNumber).then((contactList) => {
+            if(typeof fromPhone === "undefined") {
+                fromPhone = false;
+            }
+            this.getPhoneContacts(userPhoneNumber, fromPhone).then((contactList) => {
                 resolve(contactList);
             }).catch(() => {
                 reject();

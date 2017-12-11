@@ -20,6 +20,10 @@ export class HomePage {
     this.loadLIFEContacts(localStorage["user"]);
   }
 
+  public refreshLIFEContacts() {
+    alert("refresh cALLED000");
+  }
+
   private loadLIFEContacts(userObject: User) {
     //this.model.LIFEContacts
     this.contactService.getLIFEContacts(userObject.phoneNumber).then((contactList) => {

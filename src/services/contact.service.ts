@@ -2,13 +2,12 @@ import {Injectable} from '@angular/core';
 import { Contacts} from '@ionic-native/contacts';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
-import {Database} from './database.service';
 import {FileService} from './file.service';
 import {MessageService} from "./message.service";
 @Injectable()
 export class ContactService { 
 
-    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing, private database: Database, private message: MessageService) {
+    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing, private message: MessageService) {
         
     }
     private readPhoneContactList(userPhoneNumber: string): Promise<any> {

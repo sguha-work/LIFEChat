@@ -5,20 +5,22 @@ import {User} from "./../interfaces/user.interface";
 import {MessageService} from "./message.service";
 import {FileService} from "./file.service";
 
+const userFileName = "user";
+
 @Injectable()
 export class LoginService {
     constructor(private database: Database, private messageService: MessageService, private file: FileService) {
 
     }
 
-    login(phoneNumber: string, password: string): Promise<any> {
+    public login(phoneNumber: string, password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.database.getFromDatabase(phoneNumber).then((data) => {
                 if(data !== null) {
                     let userData: User;
                     userData = data;
                     if(btoa(password)===userData.password) {
-                        this.file.writeFile(JSON.stringify(userData), "user").then(() => {
+                        this.file.writeFile(JSON.stringify(userData), userFileName).then(() => {
                             // writing data to local file done
                             resolve();
                         }).catch(() => {
@@ -33,6 +35,16 @@ export class LoginService {
                 }
             }).catch(() => {
                 reject(this.messageService.messages.UNABLE_TO_CONNECT_TO_DATABASE.en);
+            });
+        });
+    }
+
+    public isLoogedIn(): Promise<any> {
+        return new Promise(( resolve, reject) => {
+            this.file.checkIfFileExists(userFileName).then((dataFromFile) => {
+                resolve(dataFromFile);
+            }).catch(() => {
+                reject();
             });
         });
     }

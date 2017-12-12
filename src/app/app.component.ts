@@ -13,19 +13,28 @@ import { JoinLIFEPage } from '../pages/join-life/join-life';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { ImagePage } from '../pages/image/image';
 
+// importing services
+import {LoginService} from '../services/login.service'
+import { HomePage } from '../pages/home/home';
+
+
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = TabsControllerPage;
+    rootPage:any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private loginService: LoginService) {
+    
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      
       statusBar.styleDefault();
       splashScreen.hide();
+      this.navigateBasedOnUserStatus();
     });
   }
 
@@ -49,4 +58,17 @@ export class MyApp {
   public closeMenu(): void {
     $("#menu-button-close").trigger('click');
   }
+
+  private navigateBasedOnUserStatus() {
+    this.loginService.isLoogedIn().then((userData) => {
+      // user logged in going to home page
+      this.rootPage = TabsControllerPage;
+      this.navCtrl.push(HomePage);
+    }).catch(() => {
+      // no logged in user going to login page
+      //this.rootPage = LoginPage;
+      this.navCtrl.push(LoginPage);
+    });
+  }
 }
+

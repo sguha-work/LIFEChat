@@ -124,11 +124,25 @@ export class ContactService {
 
     public refreshPhoneContactList(userPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getPhoneContacts(userPhoneNumber).then((contactsList) => {
+            this.readPhoneContactList(userPhoneNumber).then((contactsList) => {
                 this.file.writeFile(JSON.stringify(contactsList), PhoneContactListFile).then(() => {
                     resolve(contactsList);
                 }).catch(() => {
                     resolve(contactsList);
+                });
+            }).catch(() => {
+                reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_PHONE.en);
+            });
+        });
+    }
+
+    public refreshLIFEContactList(userPhoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.refreshPhoneContactList(userPhoneNumber).then(() => {
+                this.readLIFEContactsFromDatabase(userPhoneNumber).then((lifeContacts) => {
+                    resolve(lifeContacts);
+                }).catch(() => {
+                    reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_DATABASE.en);
                 });
             }).catch(() => {
                 reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_PHONE.en);

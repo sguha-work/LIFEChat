@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+
 import * as $ from 'jquery';
 
 import {ContactService} from "./../../services/contact.service";
@@ -18,26 +19,36 @@ export class HomePage {
     this.populateLIFEContacts();
   }
 
+  private startSpinner() {
+    $("#refresh").addClass("fa-spin").css({
+      "pointer-events": "none",
+      "opacity": "0.5"
+    });
+  }
+
+  private stopSpinner() {
+    $("#refresh").removeClass("fa-spin").removeAttr("style");
+  }
   private populateLIFEContacts() {
+    this.startSpinner();
     let user = JSON.parse(localStorage["user"]);
     this.contactService.getLIFEContacts(user.phoneNumber).then((contactList)=>{
       this.model.lifeContacts = contactList;
+      this.stopSpinner();
     }).catch((message)=> {
       this.alertService.showAlert(message);
+      this.stopSpinner();
     });
   }
   
   public refreshLIFEContacts() {
     let user = JSON.parse(localStorage["user"]);
-    $("#refresh").addClass("fa-spin").css({
-      "pointer-events": "none",
-      "opacity": "0.5"
-    });
+    this.startSpinner();
     this.contactService.refreshLIFEContactList(user.phoneNumber).then((data) => {
       this.model.lifeContacts = data;
-      $("#refresh").removeClass("fa-spin").removeAttr("style");
+      this.stopSpinner();
     }).catch(() => {
-      $("#refresh").removeClass("fa-spin").removeAttr("style");
+      this.stopSpinner();
     });
   }
 }

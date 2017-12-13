@@ -7,6 +7,7 @@ import {Database} from './database.service';
 import {MessageService} from "./message.service";
 
 const PhoneContactListFile = "contacts";
+const LIFEContactListFile = "life-contacts";
 
 @Injectable()
 export class ContactService { 
@@ -47,6 +48,38 @@ export class ContactService {
         
     
     }
+
+    private readLIFEContactsFromDatabase(userPhoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.getPhoneContacts(userPhoneNumber).then((contactList) => {
+                let promiseArray = [];
+                let lifeContactsArray = [];
+                for(let index=0; index<contactList.length; index++) {
+                    let promise = new Promise((resolve, reject) => {
+                        this.database.getFromDatabase(contactList[index].phoneNumber).then((lifeObject) => {
+                            if(lifeObject != null) {
+                                lifeObject.name = contactList[index].name;
+                                lifeContactsArray.push(lifeObject);
+                            }
+                            resolve();
+                        }).catch(() => {
+                            resolve();
+                        });
+                    });
+                    promiseArray.push(promise);
+                }
+
+                Promise.all(promiseArray).then(() => {
+                    resolve(lifeContactsArray);
+                }).catch(() => {
+                    resolve(lifeContactsArray)
+                });
+            }).catch(() => {
+                reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_DATABASE.en);
+            });
+        });
+    }
+
     public getPhoneContacts(userPhoneNumber: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
@@ -72,17 +105,20 @@ export class ContactService {
 
     public getLIFEContacts(userPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.getPhoneContacts(userPhoneNumber).then((contactList) => {
-                resolve(contactList);
-                // let promiseArray = [];
-                // for(let index=0; index<contactList.length; index++) {
-                //     let promise = new Promise((resolve, reject) => {
-                //         this.database.getFromDatabase(contactList[index].+"/phoneNumber")
-                //     });
-                // }
-            }).catch(() => {
-                reject();
+            this.file.readFile(LIFEContactListFile).then(((lifeContactsData)=>{
+                resolve(JSON.parse(lifeContactsData));
+            })).catch(() => {
+                this.readLIFEContactsFromDatabase(userPhoneNumber).then((lifeContacts) => {
+                    this.file.writeFile(JSON.stringify(lifeContacts), LIFEContactListFile).then(() => {
+                        resolve(lifeContacts);
+                    }).catch(() => {
+                        resolve(lifeContacts);
+                    });
+                }).catch(() => {
+                    reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_DATABASE.en);
+                });
             });
+            
         });
     }
 

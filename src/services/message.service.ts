@@ -29,6 +29,9 @@ export class MessageService {
         },
         "UNABLE_TO_READ_CONTACTS_FROM_PHONE": {
             "en": "Can't read phone contacts"
+        },
+        "UNABLE_TO_READ_CONTACTS_FROM_DATABASE": {
+            "en": "Can't read LIFE contacts"
         }
     };
 }

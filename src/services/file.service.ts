@@ -53,20 +53,11 @@ export class FileService {
 
     public readFile(fileName): Promise<any> {
         return new Promise((resolve, reject) => {
-            if(localStorage.platform === "browser") {
-                if(typeof localStorage[rootFolderName][fileName] === "undefined") {
-                    reject();
-                } else {
-                    resolve(localStorage[rootFolderName][fileName]);
-                }
-            } else {
-                this.file.readAsText(this.getPath(), fileName).then((value) => {
-                    resolve(value);
-                }).catch((error) => {
-                    reject();
-                });    
-            }
-            
+            this.file.readAsText(this.getPath(), fileName).then((value) => {
+                resolve(value);
+            }).catch((error) => {
+                reject();
+            });    
         });
         
     }

@@ -25,6 +25,7 @@ export class LoginService {
                             resolve();
                         }).catch(() => {
                             // writing to local file failed
+                            
                         });
                         
                     } else {

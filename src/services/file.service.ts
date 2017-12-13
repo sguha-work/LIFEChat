@@ -26,12 +26,6 @@ export class FileService {
     public checkAndCreateInitialDirectories(): Promise<any> {
         let prepareMessageData = false;
         return new Promise((resolve, reject) => {
-            if(localStorage.platform === "browser") {
-                if(typeof localStorage.rootFolderName === "undefined") {
-                    localStorage.rootFolderName = "{}";
-                }
-                resolve();
-            } else {
                 this.file.checkDir(this.file.dataDirectory, rootFolderName).then(() => {
                 // root directory exists
                 resolve(prepareMessageData);
@@ -47,7 +41,7 @@ export class FileService {
                         
                     });
                 });    
-            }
+           
             
         });
         
@@ -68,7 +62,7 @@ export class FileService {
             } else {
                 this.file.readAsText(this.getPath(), fileName).then((value) => {
                     resolve(value);
-                }).catch(() => {
+                }).catch((error) => {
                     reject();
                 });    
             }
@@ -111,7 +105,7 @@ export class FileService {
                 // file already exists, rewriting
                 this.file.writeExistingFile(directoryPath, fileName, data).then(() => {
                     resolve();
-                }).catch(() => {
+                }).catch((error) => {
                     reject();
                 });
             }).catch(() => {

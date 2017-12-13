@@ -9,7 +9,6 @@ import * as $ from 'jquery';
 
 import { TabsControllerPage } from '../pages/tabs-controller/tabs-controller';
 import { LoginPage } from '../pages/login/login';
-import { JoinLIFEPage } from '../pages/join-life/join-life';
 import { ConversationPage } from '../pages/conversation/conversation';
 import { ImagePage } from '../pages/image/image';
 
@@ -68,7 +67,6 @@ export class MyApp {
     this.loginService.isLoogedIn().then((userData) => {
       // user logged in going to home page
       this.rootPage = TabsControllerPage;
-      this.navCtrl.push(HomePage);
     }).catch(() => {
       // no logged in user going to login page
       this.navCtrl.push(LoginPage);

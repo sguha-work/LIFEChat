@@ -22,6 +22,7 @@ export class LoginService {
                     if(btoa(password)===userData.password) {
                         this.file.writeFile(JSON.stringify(userData), userFileName).then(() => {
                             // writing data to local file done
+                            localStorage["user"] = JSON.stringify(userData);
                             resolve();
                         }).catch(() => {
                             // writing to local file failed
@@ -43,6 +44,7 @@ export class LoginService {
     public isLoogedIn(): Promise<any> {
         return new Promise(( resolve, reject) => {
             this.file.checkIfFileExists(userFileName).then((dataFromFile) => {
+                localStorage["user"] = dataFromFile;
                 resolve(dataFromFile);
             }).catch(() => {
                 reject();

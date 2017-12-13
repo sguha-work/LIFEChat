@@ -79,7 +79,6 @@ export class LoginPage  implements AfterViewInit {
       this.disableLoginButton();
       this.loginService.login(phoneNumber, password).then(() => {
           this.navCtrl.setRoot(TabsControllerPage);
-          this.navCtrl.push(TabsControllerPage);
       }).catch((message) => {
         this.alertService.showAlert(message);
         this.enableLoginButton();

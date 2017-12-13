@@ -1,13 +1,17 @@
 import {Injectable} from '@angular/core';
 import { Contacts} from '@ionic-native/contacts';
-import { SocialSharing } from '@ionic-native/social-sharing';
+//import { SocialSharing } from '@ionic-native/social-sharing';
 
 import {FileService} from './file.service';
+import {Database} from './database.service';
 import {MessageService} from "./message.service";
+
+const PhoneContactListFile = "contacts";
+
 @Injectable()
 export class ContactService { 
 
-    constructor(private file: FileService, private contacts: Contacts, private socialSharing: SocialSharing, private message: MessageService) {
+    constructor(private file: FileService, private contacts: Contacts, private message: MessageService, private database: Database) {
         
     }
     private readPhoneContactList(userPhoneNumber: string): Promise<any> {
@@ -43,19 +47,17 @@ export class ContactService {
         
     
     }
-    public getPhoneContacts(userPhoneNumber: string, fromPhone?: boolean): Promise<any> {
+    public getPhoneContacts(userPhoneNumber: string): Promise<any> {
 
         return new Promise((resolve, reject) => {
-            this.file.readFile("contacts").then((dataFromFile) => {
-                alert("data from file");
-                alert(dataFromFile);
+            this.file.readFile(PhoneContactListFile).then((dataFromFile) => {
+                resolve(JSON.parse(dataFromFile));
             }).catch(() => {
                 // file not found creating
                 this.readPhoneContactList(userPhoneNumber).then((contactsList) => {
-                    this.file.writeFile(JSON.stringify(contactsList), "contacts").then(() => {
+                    this.file.writeFile(JSON.stringify(contactsList), PhoneContactListFile).then(() => {
                         resolve(contactsList);
                     }).catch(() => {
-                        alert("Writing done of contacts");
                         resolve(contactsList);
                     });
                     
@@ -67,15 +69,33 @@ export class ContactService {
         });
         
     }
-    public getLIFEContacts(userPhoneNumber: string, fromPhone?:boolean): Promise<any> {
+
+    public getLIFEContacts(userPhoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            if(typeof fromPhone === "undefined") {
-                fromPhone = false;
-            }
-            this.getPhoneContacts(userPhoneNumber, fromPhone).then((contactList) => {
+            this.getPhoneContacts(userPhoneNumber).then((contactList) => {
                 resolve(contactList);
+                // let promiseArray = [];
+                // for(let index=0; index<contactList.length; index++) {
+                //     let promise = new Promise((resolve, reject) => {
+                //         this.database.getFromDatabase(contactList[index].+"/phoneNumber")
+                //     });
+                // }
             }).catch(() => {
                 reject();
+            });
+        });
+    }
+
+    public refreshPhoneContactList(userPhoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.getPhoneContacts(userPhoneNumber).then((contactsList) => {
+                this.file.writeFile(JSON.stringify(contactsList), PhoneContactListFile).then(() => {
+                    resolve(contactsList);
+                }).catch(() => {
+                    resolve(contactsList);
+                });
+            }).catch(() => {
+                reject(this.message.messages.UNABLE_TO_READ_CONTACTS_FROM_PHONE.en);
             });
         });
     }

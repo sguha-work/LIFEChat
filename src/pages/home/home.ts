@@ -29,7 +29,6 @@ export class HomePage {
   
   public refreshLIFEContacts() {
     let user = JSON.parse(localStorage["user"]);
-    this.model.lifeContacts = [];
     $("#refresh").addClass("fa-spin").css({
       "pointer-events": "none",
       "opacity": "0.5"

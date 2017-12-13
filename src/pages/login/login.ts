@@ -3,6 +3,7 @@ import { NavController, MenuController } from 'ionic-angular';
 import { AfterViewInit } from '@angular/core';
 import * as $ from 'jquery';
 
+import { TabsControllerPage } from '../tabs-controller/tabs-controller';
 import { JoinLIFEPage } from '../join-life/join-life';
 import { HomePage } from '../home/home';
 
@@ -19,6 +20,7 @@ export class LoginPage  implements AfterViewInit {
   private phoneNUmberDOM: any;
   private passwordDOM: any;
   private loginButtonDOM: any;
+  public rootPage:any;
 
   constructor(public navCtrl: NavController, private menu: MenuController, private loginService: LoginService, private common: CommonService, private alertService: AlertService) {
     this.menu.swipeEnable(false);
@@ -76,7 +78,8 @@ export class LoginPage  implements AfterViewInit {
       let password = this.passwordDOM.val().trim();
       this.disableLoginButton();
       this.loginService.login(phoneNumber, password).then(() => {
-          this.navCtrl.push(HomePage);
+          this.navCtrl.setRoot(TabsControllerPage);
+          this.navCtrl.push(TabsControllerPage);
       }).catch((message) => {
         this.alertService.showAlert(message);
         this.enableLoginButton();

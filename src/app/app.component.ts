@@ -71,7 +71,6 @@ export class MyApp {
       this.navCtrl.push(HomePage);
     }).catch(() => {
       // no logged in user going to login page
-      //this.rootPage = LoginPage;
       this.navCtrl.push(LoginPage);
     });
   }

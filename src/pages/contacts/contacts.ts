@@ -17,7 +17,7 @@ export class ContactsPage {
   constructor(public navCtrl: NavController, private contactService: ContactService, private alertService: AlertService, public common: CommonService) {
     this.model = {};
     this.model.contacts = [];
-    this.populateLIFEContacts();
+    this.populatePhoneContacts();
   }
 
   private startSpinner() {
@@ -28,9 +28,9 @@ export class ContactsPage {
   }
 
   private stopSpinner() {
-    $("#refresh").removeClass("fa-spin").removeAttr("style");
+    $("page-contacts .icon-refresh").removeClass("fa-spin").removeAttr("style");
   }
-  private populateLIFEContacts() {
+  private populatePhoneContacts() {
     this.startSpinner();
     let user = JSON.parse(localStorage["user"]);
     this.contactService.getPhoneContacts(user.phoneNumber).then((contactList)=>{

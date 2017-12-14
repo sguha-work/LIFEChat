@@ -153,7 +153,13 @@ export class ContactService {
     public getLIFEContactFromPhoneNumber(phoneNumber: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.file.readFile(LIFEContactListFile).then(((lifeContactsData)=>{
-                resolve(JSON.parse(lifeContactsData));
+                let parsedLifeContactsData = JSON.parse(lifeContactsData);
+                for(let index=0; index<parsedLifeContactsData.length; index++) {
+                    if(parsedLifeContactsData[index].phoneNumber == phoneNumber) {
+                        resolve((parsedLifeContactsData[index]));
+                    }
+                }
+                reject();
             })).catch(() => {
                 reject();
             });

@@ -57,7 +57,7 @@ export class ContactsPage {
 
   public shareWith(name: string) {
     if(window.confirm("Like to share LIFE with "+name+"?")) {
-      this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/file/d/1nNJbthK7HgQsAe6f5mY8kES5Zir4F6RX/view?usp=sharing"); 
+      this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/drive/folders/0B7H8-Q6hAIvNdFNmZUxYSlRGZTA?usp=sharing"); 
     }
   }
   

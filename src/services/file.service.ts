@@ -56,7 +56,7 @@ export class FileService {
             this.file.readAsText(this.getPath(), fileName).then((value) => {
                 resolve(value);
             }).catch((error) => {
-                reject();
+                reject(error);
             });    
         });
         

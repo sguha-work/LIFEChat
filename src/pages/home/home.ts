@@ -6,6 +6,8 @@ import * as $ from 'jquery';
 import {ContactService} from "./../../services/contact.service";
 import {AlertService} from "./../../services/alert.service";
 import {CommonService} from "./../../services/common.service";
+import {Database} from "./../../services/database.service";
+import {ConversationService} from "./../../services/conversation.service";
 
 import {ConversationPage} from "./../conversation/conversation";
 
@@ -15,10 +17,11 @@ import {ConversationPage} from "./../conversation/conversation";
 })
 export class HomePage {
   public model: any;
-  constructor(public navCtrl: NavController, private contactService: ContactService, private alertService: AlertService, public common: CommonService) {
+  constructor(public navCtrl: NavController, private contactService: ContactService, private alertService: AlertService, public common: CommonService, private databaseService: Database, private conversationService: ConversationService) {
     this.model = {};
     this.model.lifeContacts = [];
     this.populateLIFEContacts();
+    this.conversationService.bindEvents();
   }
 
   private startSpinner() {
@@ -34,6 +37,7 @@ export class HomePage {
   private populateLIFEContacts() {
     this.startSpinner();
     let user = JSON.parse(localStorage["user"]);
+    this.databaseService.turnOnConversationConnection(user.phoneNumber);
     this.contactService.getLIFEContacts(user.phoneNumber).then((contactList)=>{
       this.model.lifeContacts = contactList;
       this.stopSpinner();

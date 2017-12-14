@@ -22,6 +22,7 @@ import { ImagePage } from '../pages/image/image';
 
 // importing services
 import {CommonService} from "./../services/common.service";
+import {ConversationService} from "./../services/conversation.service";
 import {FileService} from "./../services/file.service";
 import {Database} from "./../services/database.service";
 import {MessageService} from "./../services/message.service";
@@ -79,7 +80,8 @@ import {ContactService} from "./../services/contact.service";
     AlertService,
     StorageService,
     LoginService,
-    ContactService
+    ContactService,
+    ConversationService
   ]
 })
 export class AppModule {}

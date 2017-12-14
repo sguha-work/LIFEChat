@@ -14,7 +14,6 @@ import { ImagePage } from '../pages/image/image';
 
 // importing services
 import {LoginService} from './../services/login.service'
-import { HomePage } from '../pages/home/home';
 import { FileService } from './../services/file.service';
 import {AlertService} from "./../services/alert.service";
 

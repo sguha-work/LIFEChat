@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import * as $ from 'jquery';
 
 import {ContactService} from "./../../services/contact.service";
 import {AlertService} from "./../../services/alert.service";
 import {CommonService} from "./../../services/common.service";
+import {MessageService} from "./../../services/message.service";
 
 @Component({
   selector: 'page-contacts',
@@ -14,7 +16,7 @@ import {CommonService} from "./../../services/common.service";
 export class ContactsPage {
 
   public model: any;
-  constructor(public navCtrl: NavController, private contactService: ContactService, private alertService: AlertService, public common: CommonService) {
+  constructor(public navCtrl: NavController, private contactService: ContactService, private alertService: AlertService, public common: CommonService, private socialSharing: SocialSharing) {
     this.model = {};
     this.model.contacts = [];
     this.populatePhoneContacts();
@@ -51,6 +53,12 @@ export class ContactsPage {
     }).catch(() => {
       this.stopSpinner();
     });
+  }
+
+  public shareWith(name: string) {
+    if(window.confirm("Like to share LIFE with "+name+"?")) {
+      this.socialSharing.share("You are invited to LIFEChat, a new fresh simple chat application, click link to download ", null, null, "https://drive.google.com/file/d/1nNJbthK7HgQsAe6f5mY8kES5Zir4F6RX/view?usp=sharing"); 
+    }
   }
   
 }

@@ -7,6 +7,8 @@ import {ContactService} from "./../../services/contact.service";
 import {AlertService} from "./../../services/alert.service";
 import {CommonService} from "./../../services/common.service";
 
+import {ConversationPage} from "./../conversation/conversation";
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -49,6 +51,15 @@ export class HomePage {
       this.stopSpinner();
     }).catch(() => {
       this.stopSpinner();
+    });
+  }
+
+  public startConversation(phoneNumber: string) {
+    this.contactService.getLIFEContactFromPhoneNumber(phoneNumber).then((contactObject) => {
+      sessionStorage["chatWith"] = JSON.stringify(contactObject);
+      this.navCtrl.push(ConversationPage);
+    }).catch(() => {
+      alert("error");
     });
   }
 }

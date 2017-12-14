@@ -149,4 +149,14 @@ export class ContactService {
             });
         });
     }
+
+    public getLIFEContactFromPhoneNumber(phoneNumber: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.file.readFile(LIFEContactListFile).then(((lifeContactsData)=>{
+                resolve(JSON.parse(lifeContactsData));
+            })).catch(() => {
+                reject();
+            });
+        });
+    }
 }

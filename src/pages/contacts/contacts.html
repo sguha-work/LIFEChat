@@ -10,13 +10,13 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
-    <ion-item color="calm" id="contacts-list-item1" *ngFor="let contact of model.contacts">
-        <ion-avatar item-left>
-            <img src="{{contact.image?contact.image:'assets/img/no-photo_40x40.png'}}" />
+    <ion-item color="calm" id="contacts-list-item1" *ngFor="let contact of model.contacts" >
+        <ion-avatar (click)="shareWith(contact.name)" item-left>
+            <img src="assets/img/no-photo_40x40.png" />
         </ion-avatar>
-        <h2>
+        <h2 (click)="shareWith(contact.name)">
             {{contact.name}}
-            <p style="white-space:normal;"><b>{{contact.phoneNumber}}</b> Last seen {{common.getTimeFromTimeStamp(contact.lastSeen)}}</p>
+            <p style="white-space:normal;"><b>{{contact.phoneNumber}}</b></p>
 
         </h2>
     </ion-item>

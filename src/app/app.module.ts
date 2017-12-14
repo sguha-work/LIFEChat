@@ -7,10 +7,6 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { File } from '@ionic-native/file';
 import { Contacts} from '@ionic-native/contacts';
 import { SocialSharing } from '@ionic-native/social-sharing';
-//import { AngularFireModule } from "angularfire2";
-//import { AngularFireAuthModule } from 'angularfire2/auth';
-//import { AngularFireDatabaseModule  } from 'angularfire2/database';
-
 // importing app
 import { MyApp } from './app.component';
 
